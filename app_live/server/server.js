@@ -50,8 +50,7 @@ function db_table_init()
         participant_id TEXT NOT NULL,
         study_id INTEGER NOT NULL,
         xray_image TEXT NOT NULL,
-        participant_diagnosis TEXT NOT NULL,
-        page_index INTEGER NOT NULL
+        participant_diagnosis TEXT NOT NULL
     )`);
     });
 }
@@ -78,15 +77,16 @@ function register_get_event(route, callback) {
 
 function cb_even_write_db(req, res) 
 {
-    const { participant_id,study_id,xray_image,participant_diagnosis, page_index} = req.body;
+    const { participant_id,study_id,xray_image,participant_diagnosis } = req.body;
     console.log(`Saving to database: participant_id=${participant_id}, study_id=${study_id}, xray_image=${xray_image}, participant_diagnosis=${participant_diagnosis}`);
     
     let p_diagnosis = (participant_diagnosis === "healthy") ? "Healthy" : "OCDegen";
 
-    db.run(`INSERT INTO participant_feedback (participant_id, study_id, xray_image, participant_diagnosis, page_index) VALUES (?, ?, ?, ?, ?)`, [participant_id, study_id, xray_image, p_diagnosis, page_index], (err) => {
+    db.run(`INSERT INTO participant_feedback (participant_id, study_id, xray_image, participant_diagnosis) VALUES (?, ?, ?, ?)`, [participant_id, study_id, xray_image, p_diagnosis], (err) => {
         if (err) {
             return res.status(500).send('Error saving data');
         }
+        //res.redirect('/reader.html');
         res.json({ message: "Data stored successfully!" });
     });
 }
@@ -101,26 +101,6 @@ function cb_even_read_db(req, res) {
         res.json(rows); 
     });
 }
-
-function cb_even_read_db_prev(req, res) {
-    const { participant_id, study_id, page_index } = req.query;
-
-    const query = `
-        SELECT * FROM participant_feedback
-        WHERE participant_id = ? AND study_id = ? AND page_index = ?`;
-
-    const params = [participant_id, study_id, page_index];
-
-    db.all(query, params, (err, rows) => {
-        if (err) {
-            console.error("Database Error:", err);
-            res.status(500).json({ error: "Error reading data" });
-            return;
-        }
-        res.json(rows);
-    });
-}
-
 
 function cb_even_participant_id(req, res)
 {
@@ -144,5 +124,4 @@ init();
 register_post_event("/write_db", cb_even_write_db);
 register_post_event("/post_participant_id", cb_even_participant_id);
 register_get_event("/read_db", cb_even_read_db);
-register_get_event("/read_db_prev", cb_even_read_db_prev);
 start_http_server(PORT);

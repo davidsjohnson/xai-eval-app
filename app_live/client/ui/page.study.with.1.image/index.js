@@ -76,27 +76,6 @@ function get_radio_button_status()
     return selected_value;
 }
 
-function set_participant_diagnosis(val) {
-
-    if (typeof val === "string") {
-        val = val.toLowerCase(); 
-    } else {
-        console.error("Invalid diagnosis string received from DB");
-        return false;
-    }
-
-    if (val === "healthy") {
-        document.getElementById("radio-healthy").checked = true;
-    } else if (val === "ocdegen") {
-        document.getElementById("radio-unhealthy").checked = true;
-    } else {
-        console.error("Invalid value:", val);
-        return false;
-    }
-
-    return true;
-}
-
 function clear_radio_buttons() {
     for (const radio of radio_buttons) {
         radio.checked = false;
@@ -138,7 +117,7 @@ function get_params_from_url()
 }
 
 async function db_update() 
-{
+{ 
     const url_params = get_params_from_url();
     const participant_diagnosis = get_radio_button_status();
 
@@ -156,7 +135,6 @@ async function db_update()
     const study_id = url_params.study_id;
     const xray_image_url = get_x_ray_image();
     const xray_image = xray_image_url.split('/').pop(); // Extracts "05.png"
-    const page_index = g_curr_page_number; 
 
     try {
         const response = await fetch('/write_db', {
@@ -164,32 +142,16 @@ async function db_update()
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ participant_id, study_id, xray_image, participant_diagnosis, page_index })
+            body: JSON.stringify({ participant_id, study_id, xray_image, participant_diagnosis })
         });
 
         if (!response.ok) {
             alert('Error submitting participant ID.');
         } else {
-            //const result = await response.json();
-            //if (result.redirect) {
-                // Get current URL parameters
-            const url_params = new URLSearchParams(window.location.search);
-            const current_participant_id = url_params.get('participant_id');
-            const current_study_id = url_params.get('study_id');
-            const current_page_index = g_curr_page_number; // assuming g_page_index is set
-            const total_pages = g_total_page_count; // assuming g_total_page is set
-            const prev_diagnosis = participant_diagnosis; // assuming participant_diagnosis is set
-            let new_url = "/page.study/index.html?";
-            new_url += "participant_id=" + current_participant_id;
-            new_url += "&study_id=" + current_study_id;
-            new_url += "&page_no=" + current_page_index;
-            new_url += "&total_pages=" + total_pages;
-            new_url += "&prev_diagnosis=" + encodeURIComponent(prev_diagnosis);
-
-            alert(new_url);
-                // Redirect to the new URL
-            window.location.href = new_url;
-            //}
+            const result = await response.json();
+            if (result.redirect) {
+                window.location.href = result.redirect; 
+            }
         }
     } catch (error) {
         console.error('Error:', error);
@@ -200,13 +162,12 @@ async function db_update()
 
 function next_button_action()
 {
+    db_update();
     //alert("Next button clicked!");
     let ret = get_radio_button_status();
     if(ret == null ){
         return;
     }
-    
-    db_update();
 
     if(g_curr_page_number >= g_total_page_count)
     {
@@ -217,47 +178,15 @@ function next_button_action()
     g_curr_page_number = g_curr_page_number + 1;
     set_progress(g_curr_page_number, g_total_page_count);
     clear_radio_buttons();
-    csv_json_get_all_attributes_and_set_in_html_page();
+    csv_json_get_all_attributes_and_set_in_html_page(g_study_id);
 }
-
-async function db_get_participant_diagnosis(participant_id, study_id, page_index) {
-    try {
-        const response = await fetch(`/read_db_prev?participant_id=${participant_id}&study_id=${study_id}&page_index=${page_index}`);
-        const data = await response.json();
-        return data.participant_diagnosis || null;
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return null;
-    }
-}
-
 
 function prev_button_action()
 {
     //alert("Prev button clicked!");
     g_curr_page_number = (g_curr_page_number - 1);
-    
-    if(g_curr_page_number <= 0){
-        g_curr_page_number = 1;
-        return;
-    }
-    
-    const url_params = get_params_from_url();
-    diagnosis = db_get_participant_diagnosis(url_params.participant_id, url_params.study_id, g_curr_page_number);
-    alert(diagnosis);
-    if(!diagnosis){
-        alert("Unable to fetch participant_diagnosis for the previous page: db_error");
-        g_curr_page_number = g_curr_page_number + 1; // reset as we are not going to mvoe to prev page ( due to failure )
-        return;
-    }
-    ret = set_participant_diagnosis(diagnosis);
-
-    if(ret == false){
-        return;
-    }
-
-    //Set all attributes from csv_json info
-    csv_json_get_all_attributes_and_set_in_html_page();
+    if(g_curr_page_number <= 0) g_curr_page_number = 1;
+    set_progress(g_curr_page_number, g_total_page_count);
 }
 
 function set_suggested_diag(value)
@@ -325,8 +254,9 @@ function set_main_attributes_in_html_page(page_number, attr)
     set_progress(page_number, g_total_page_count);
 }
 
-function csv_json_get_all_attributes_and_set_in_html_page()
+function csv_json_get_all_attributes_and_set_in_html_page(study_id)
 {
+    g_total_page_count = csv_json_get_total_page_count();
     attr = csv_json_get_main_attributes(g_curr_page_number);
     set_main_attributes_in_html_page(g_curr_page_number, attr);
 }
@@ -334,8 +264,7 @@ function csv_json_get_all_attributes_and_set_in_html_page()
 function init()
 {
     console.log('App is running!');
-    g_total_page_count = csv_json_get_total_page_count();
-    csv_json_get_all_attributes_and_set_in_html_page();
+    csv_json_get_all_attributes_and_set_in_html_page(g_study_id);
 }
 
 function main()
