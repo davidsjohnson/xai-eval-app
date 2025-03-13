@@ -72,6 +72,10 @@ To stop the running Docker container, execute:
 ./docker.stop.sh
 ```
 
+## Tested OS
+
+    1. Ubuntu 24.04
+
 ---
 
 ## Notes
@@ -79,7 +83,9 @@ To stop the running Docker container, execute:
 - Users do not need to modify `app_live` manually.
 - The `database` folder will be created dynamically when the application runs.
 
+
 ## Bugs
 
 - **1. Previous Page Issue:** The "Previous Page" functionality is not working correctly; it does not properly retrieve the participant's diagnosis.
+
 
