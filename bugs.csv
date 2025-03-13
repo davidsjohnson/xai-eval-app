@@ -1,0 +1,17 @@
+List,Description,
+Test in Firefox,Radio button not working in firefox,
+Test in Firefox,First Page loading after login not working ( image not loading in the first page from second page it is working fine ) ,
+Resume Function,Check if a participant completed the study if yes -> Display a participant already completed page otherwise resume from the last updated page number,
+Feedback Complete Page,Use a hash function and hash code in the page,"
+def hash_prof_id(prof_id, stage, len=15):
+
+hash_text = prof_id + f'supersecret_stage-{stage}'
+
+full_hash = hashlib.sha256(hash_text.encode()).hexdigest()
+
+return HASH_INTROS[stage] + full_hash[:len-3] # truncate
+"
+Content are not displaying properly on bigger monitor,Limit to fixed boundary ( for the entire page ) -> 2560 x 1440 ( resolution - it is not clear ),
+Remove Pop Up messages when participant click on next wihout selecting radio button,Just disable next button,
+Prev button fix,,
+Add page number in database table,,

@@ -136,6 +136,7 @@ async function db_update()
     const xray_image_url = get_x_ray_image();
     const xray_image = xray_image_url.split('/').pop(); // Extracts "05.png"
 
+
     try {
         const response = await fetch('/write_db', {
             method: 'POST',
@@ -243,6 +244,32 @@ function csv_json_get_main_attributes(page_number)
     return attributes; 
 }
 
+function csv_json_get_additional_attributes(page_number)
+{
+
+    index = page_number - 1;
+    l_patient_id = input.PATIENT_ID[index];
+ 
+    concept_card_1_title    = "Concept 1";
+    concept_card_1_image    = "img/"        + input.Concept1[index];
+    concept_card_1_caption  = "Concept:"    + input.Concept1_Caption[index];
+ 
+    concept_card_2_title    = "Concept 2";
+    concept_card_2_image    = "img/"        + input.Concept2[index];
+    concept_card_2_caption  = "Concept:"    + input.Concept2_Caption[index];
+   
+    concept_card_3_title    = "Concept 3";
+    concept_card_3_image    = "img/"        + input.Concept3[index];
+    concept_card_3_caption  = "Concept:"    + input.Concept3_Caption[index];
+ 
+    attributes = [concept_card_1_title, concept_card_1_image, concept_card_1_caption,
+                  concept_card_2_title, concept_card_2_image, concept_card_2_caption,
+                  concept_card_3_title, concept_card_3_image, concept_card_3_caption]; 
+
+    return attributes; 
+}
+
+
 function set_main_attributes_in_html_page(page_number, attr)
 {
     //attributes = [patient_id, image, x_ray_loc, true_diag, suggested_diag] 
@@ -254,11 +281,50 @@ function set_main_attributes_in_html_page(page_number, attr)
     set_progress(page_number, g_total_page_count);
 }
 
+function csv_json_get_additional_attributes(study_id, page_number)
+{
+
+    concept_card_1_title = "Concept 1";
+    concept_card_1_image = generate_random_image_name();
+    concept_card_1_caption = "Concept: Strong Bend";
+
+    concept_card_2_title = "Concept 2";
+    concept_card_2_image = generate_random_image_name();
+    concept_card_2_caption = "Concept: Red Bones";
+ 
+    concept_card_3_title = "Concept 3";
+    concept_card_3_image = generate_random_image_name();
+    concept_card_3_caption = "Concept: Red Bones";
+ 
+    attributes = [concept_card_1_title, concept_card_1_image, concept_card_1_caption,
+                  concept_card_2_title, concept_card_2_image, concept_card_2_caption,
+                  concept_card_3_title, concept_card_3_image, concept_card_3_caption]; 
+    
+    return attributes; 
+}
+
+function set_additional_attributes_in_html_page(page_number, attr)
+{
+    document.getElementById("concept-card-1-title").textContent = attr[0];
+    document.getElementById("concept-card-1-image").src = attr[1];
+    document.getElementById("concept-card-1-caption").textContent = attr[2];
+
+    document.getElementById("concept-card-2-title").textContent = attr[3];
+    document.getElementById("concept-card-2-image").src = attr[4];
+    document.getElementById("concept-card-2-caption").textContent = attr[5];
+
+    document.getElementById("concept-card-3-title").textContent = attr[6];
+    document.getElementById("concept-card-3-image").src = attr[7];
+    document.getElementById("concept-card-3-caption").textContent = attr[8];
+}
+
 function csv_json_get_all_attributes_and_set_in_html_page(study_id)
 {
     g_total_page_count = csv_json_get_total_page_count();
     attr = csv_json_get_main_attributes(g_curr_page_number);
     set_main_attributes_in_html_page(g_curr_page_number, attr);
+    attr = csv_json_get_additional_attributes(g_curr_page_number);
+    set_additional_attributes_in_html_page(g_curr_page_number, attr);
 }
 
 function init()

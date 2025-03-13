@@ -14,7 +14,7 @@
   --var-card-row2-height: 210px;
   
   /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
-  --grid-ncolumns: 2; /* viki_comment: only change this value to increase or decrease columns in first row */
+  --grid-ncolumns: 5; /* viki_comment: only change this value to increase or decrease columns in first row */
   --grid-template-columns: repeat(var(--grid-ncolumns), 1fr); /* Use var() inside repeat() */
   --grid-row2-ncolumns: span var(--grid-ncolumns); /* Use var() inside span */
   --warning-title-margin-top: 120px; /* For 6_CARDS it is 100px. For rest it is 120px */
