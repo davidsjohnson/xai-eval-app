@@ -45,11 +45,14 @@ Run the following command:
 
 ## Running the Project
 
-To start the application, use:
+To start the application, use (ubuntu users):
 ```bash
-./docker.run.sh
+./docker.start.ubuntu.sh
 ```
-
+To start the application, use (mac osx users):
+```bash
+./docker.start.mac.osx.sh
+```
 ## Accessing the Application
 
 Open a browser and navigate to:
@@ -67,10 +70,15 @@ http://0.0.0.0:7000/page.db.reader/index.html
 
 ## Stopping the Project
 
-To stop the running Docker container, execute:
+To stop the running Docker container, execute (ubuntu users):
 ```bash
-./docker.stop.sh
+./docker.stop.ubuntu.sh
 ```
+To stop the running Docker container, execute (mac osx users):
+```bash
+./docker.stop.mac.osx.sh
+```
+
 
 ## Tested OS
 
