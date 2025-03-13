@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participant Feedback</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .export-btn {
+            margin: 10px 0;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .export-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- <h2>Participant Feedback Data</h2> -->
+    
+    <button class="export-btn" onclick="exportToCSV()">Export to CSV</button>
+
+    <table id="feedbackTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Participant ID</th>
+                <th>Study ID</th>
+                <th>X-Ray Image</th>
+                <th>Participant Diagnosis</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Data will be populated here -->
+        </tbody>
+    </table>
+
+    <script>
+        let fetchedData = []; // Store fetched data globally
+
+        // Fetch the data from the server
+        async function fetchData() {
+            try {
+                const response = await fetch('/read_db');
+                const data = await response.json();
+                fetchedData = data; // Store data globally for export
+
+                const tableBody = document.getElementById('tableBody');
+                tableBody.innerHTML = ''; // Clear the table body before inserting new rows
+
+                // Populate the table with data
+                data.forEach(row => {
+                    const rowElement = document.createElement('tr');
+                    rowElement.innerHTML = `
+                        <td>${row.id}</td>
+                        <td>${row.participant_id}</td>
+                        <td>${row.study_id}</td>
+                        <td>${row.xray_image}</td>
+                        <td>${row.participant_diagnosis}</td>
+                    `;
+                    tableBody.appendChild(rowElement);
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Function to export table data to CSV
+        function exportToCSV() {
+            if (fetchedData.length === 0) {
+                alert("No data available to export!");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";  
+            csvContent += "ID,Participant ID,Study ID,X-Ray Image,Participant Diagnosis\n"; // CSV Header
+
+            fetchedData.forEach(row => {
+                const rowData = [row.id, row.participant_id, row.study_id, row.xray_image, row.participant_diagnosis].join(",");
+                csvContent += rowData + "\n";
+            });
+
+            // Create a downloadable link
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "participant_feedback.csv");
+            document.body.appendChild(link); // Required for Firefox
+
+            link.click(); // Auto click to trigger download
+            document.body.removeChild(link); // Cleanup
+        }
+
+        // Call fetchData when the page loads
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
+

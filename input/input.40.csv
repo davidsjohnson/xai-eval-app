@@ -1,0 +1,49 @@
+INDEX,PATIENT_ID,X_RAY_IMAGE,TRUE_DIAG,SUGGESTED_DIAG,Concept1,Concept1_Caption,Concept2,Concept2_Caption,Concept3,Concept3_Caption,X_RAY_LOCATION
+1,TN16GG530F,05.png,Healthy,Healthy,06.png,Strong Bend,18.png,Strong Bend,03.png,Strong Bend,NYC
+2,YPBZ4X4S1R,14.png,OCDegen,Healthy,10.png,Weak Bend,06.png,Weak Bend,14.png,Weak Bend,LA
+3,V1N5N1DCMW,01.png,Healthy,Healthy,06.png,Strong Bend,02.png,Strong Bend,15.png,Strong Bend,CHI
+4,74B611HQ1I,09.png,Healthy,Healthy,16.png,Weak Bend,17.png,Weak Bend,03.png,Weak Bend,SF
+5,IF2NCSC3FR,02.png,OCDegen,OCDegen,01.png,Strong Bend,18.png,Strong Bend,02.png,Strong Bend,MIA
+6,GQE7ZXOUF2,17.png,Healthy,OCDegen,04.png,Weak Bend,13.png,Weak Bend,16.png,Weak Bend,HOU
+7,A8PGGOEZTH,03.png,OCDegen,OCDegen,17.png,Strong Bend,09.png,Strong Bend,11.png,Strong Bend,ATL
+8,Y6GZLKFGN7,04.png,OCDegen,Healthy,15.png,Weak Bend,03.png,Weak Bend,07.png,Weak Bend,DAL
+9,DXBOVO7SMC,01.png,Healthy,OCDegen,06.png,Strong Bend,02.png,Strong Bend,11.png,Strong Bend,SEA
+10,INI8GIKRKL,05.png,OCDegen,OCDegen,15.png,Weak Bend,15.png,Weak Bend,11.png,Weak Bend,BOS
+11,FXGU2AU780,08.png,Healthy,Healthy,10.png,Strong Bend,16.png,Strong Bend,14.png,Strong Bend,DEN
+12,WMZXSSP40Y,08.png,Healthy,OCDegen,10.png,Weak Bend,07.png,Weak Bend,05.png,Weak Bend,PHX
+13,BMKKII7D95,15.png,Healthy,Healthy,17.png,Strong Bend,15.png,Strong Bend,06.png,Strong Bend,NYC
+14,JMU5EBKPBD,09.png,OCDegen,OCDegen,19.png,Weak Bend,19.png,Weak Bend,12.png,Weak Bend,LA
+15,LCL30IC9BQ,10.png,OCDegen,OCDegen,11.png,Strong Bend,04.png,Strong Bend,01.png,Strong Bend,CHI
+16,0E9RN078KR,02.png,Healthy,OCDegen,20.png,Weak Bend,20.png,Weak Bend,17.png,Weak Bend,SF
+17,AW4HTWHQLH,10.png,Healthy,Healthy,17.png,Strong Bend,06.png,Strong Bend,17.png,Strong Bend,MIA
+18,BF7XEPH309,15.png,OCDegen,OCDegen,15.png,Weak Bend,10.png,Weak Bend,02.png,Weak Bend,HOU
+19,2C8XEZ2UG9,16.png,OCDegen,Healthy,10.png,Strong Bend,17.png,Strong Bend,19.png,Strong Bend,ATL
+20,NV3F03PY0L,17.png,OCDegen,OCDegen,10.png,Weak Bend,19.png,Weak Bend,08.png,Weak Bend,DAL
+21,MKB9C4DNAH,14.png,OCDegen,OCDegen,19.png,Strong Bend,03.png,Strong Bend,15.png,Strong Bend,SEA
+22,FIW8W67JIH,07.png,OCDegen,Healthy,11.png,Weak Bend,18.png,Weak Bend,08.png,Weak Bend,BOS
+23,ZU5QLR2ZZU,14.png,OCDegen,OCDegen,05.png,Strong Bend,18.png,Strong Bend,05.png,Strong Bend,DEN
+24,AMIDHNBIDQ,03.png,OCDegen,Healthy,11.png,Weak Bend,11.png,Weak Bend,17.png,Weak Bend,PHX
+25,1FUEDP7XGL,06.png,Healthy,OCDegen,04.png,Strong Bend,12.png,Strong Bend,20.png,Strong Bend,NYC
+26,Y4ZXTQ11IK,12.png,OCDegen,Healthy,12.png,Weak Bend,06.png,Weak Bend,04.png,Weak Bend,LA
+27,UZJFE2PFLI,05.png,Healthy,OCDegen,15.png,Strong Bend,12.png,Strong Bend,10.png,Strong Bend,CHI
+28,A2TZE9QKUU,09.png,Healthy,OCDegen,06.png,Weak Bend,09.png,Weak Bend,16.png,Weak Bend,SF
+29,52WUKVTKMP,15.png,Healthy,OCDegen,03.png,Strong Bend,02.png,Strong Bend,17.png,Strong Bend,MIA
+30,3BQ7NG131K,18.png,OCDegen,Healthy,06.png,Weak Bend,13.png,Weak Bend,18.png,Weak Bend,HOU
+31,COCG7BQEW2,06.png,OCDegen,OCDegen,17.png,Strong Bend,07.png,Strong Bend,08.png,Strong Bend,ATL
+32,E9ZQI3IFR1,19.png,OCDegen,Healthy,12.png,Weak Bend,19.png,Weak Bend,03.png,Weak Bend,DAL
+33,90YREKRK5Y,04.png,OCDegen,Healthy,02.png,Strong Bend,01.png,Strong Bend,06.png,Strong Bend,SEA
+34,TWRZ0HAOGS,02.png,OCDegen,OCDegen,06.png,Weak Bend,06.png,Weak Bend,15.png,Weak Bend,BOS
+35,ASX01OAY7Q,01.png,Healthy,Healthy,10.png,Strong Bend,04.png,Strong Bend,15.png,Strong Bend,DEN
+36,RBZ5DWHB9Q,02.png,Healthy,Healthy,04.png,Weak Bend,12.png,Weak Bend,14.png,Weak Bend,PHX
+37,3VIUTZQPDI,15.png,OCDegen,OCDegen,06.png,Strong Bend,12.png,Strong Bend,18.png,Strong Bend,NYC
+38,G0YNQKT0D2,19.png,Healthy,Healthy,08.png,Weak Bend,11.png,Weak Bend,12.png,Weak Bend,LA
+39,MISFV02DG4,19.png,OCDegen,OCDegen,09.png,Strong Bend,20.png,Strong Bend,01.png,Strong Bend,CHI
+40,IJB5XSUFB1,07.png,OCDegen,OCDegen,17.png,Weak Bend,03.png,Weak Bend,04.png,Weak Bend,SF
+,,,,,, ,,,,,
+,,,,,, ,,,,,
+,,,,,, ,,,,,
+,,,,,, ,,,,,
+,,,,,, ,,,,,
+,,,,,, ,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,

@@ -1,0 +1,3 @@
+INDEX,PATIENT_ID,X_RAY_IMAGE,TRUE_DIAG,SUGGESTED_DIAG,Concept1,Concept1_Caption,Concept2,Concept2_Caption,Concept3,Concept3_Caption,X_RAY_LOCATION
+1,TN16GG530F,05.png,Healthy,Healthy,06.png,Strong Bend,18.png,Strong Bend,03.png,Strong Bend,NYC
+2,YPBZ4X4S1R,14.png,OCDegen,Healthy,10.png,Weak Bend,06.png,Weak Bend,14.png,Weak Bend,LA

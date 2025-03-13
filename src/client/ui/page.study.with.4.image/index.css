@@ -1,0 +1,391 @@
+:root {
+  --blue: #1e90ff;
+  --white: #ffffff;
+  --orange: #FF5733;
+  --green: #4CAF50;
+  --bg-green: #4CAF50;
+  --bg-gray: #1d2327; 
+  --border1: 2px solid black;
+  --border2: 2px solid black;
+  /*Disable Border*/
+  --border1: none;
+  --border2: none;
+  --var-card-row1-height: 320px;
+  --var-card-row2-height: 210px;
+  
+  /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
+  --grid-ncolumns: 5; /* viki_comment: only change this value to increase or decrease columns in first row */
+  --grid-template-columns: repeat(var(--grid-ncolumns), 1fr); /* Use var() inside repeat() */
+  --grid-row2-ncolumns: span var(--grid-ncolumns); /* Use var() inside span */
+  --warning-title-margin-top: 120px; /* For 6_CARDS it is 100px. For rest it is 120px */
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: 10vh 80vh 10vh;
+    grid-template-columns: auto;
+}
+
+header {
+    background: var(--bg-green);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+header > h1{
+    align-items: center;
+    justify-content:left;
+    text-align: left;
+    margin-top:8px;
+}
+
+.header-info {
+    position: absolute;
+    top: 12px;
+    right: 60px;
+    background: #1d2327;
+    color: white;
+    padding: 5px 5px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header-info table {
+    border-collapse: collapse;
+    border: 1px solid #ccc;  /* Border for the entire table */
+}
+
+.header-info td {
+    padding: 0px 2px;
+    text-align: left;
+    border: 1px solid #ccc;  /* Border for individual cells */
+}
+
+.unhealthy {
+    color: var(--orange);  /* Red color for Unhealthy */
+    font-weight: bold;
+}
+
+.healthy {
+    color: var(--green);  /* Red color for Unhealthy */
+    font-weight: bold;
+}
+
+main {
+    display: grid;
+    grid-template-columns: var(--grid-template-columns);  
+    grid-template-rows: 60% 38%;   /* Adjust the height of row1 and row2*/
+    column-gap: 1px; /* 10px gap between columns */
+    row-gap: 1px;    /* 5px gap between rows */
+    padding: 0.1rem;
+    background: #f4f4f9;
+    overflow-y: auto;
+    /*viki_comment: The following Disable : For the main columns to be full length*/
+    /*
+    align-items: center;
+    justify-content: center;
+    */
+}
+
+.main-row1 {
+    /* Make Border For the column */
+    border: var(--border1);
+    background: none;
+    padding: 1rem;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-row2 {
+    display:grid;
+    grid-column: var(--grid-row2-ncolumns);
+    grid-template-columns: 60% 39%;
+    overflow: hidden;
+    background: none;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    */
+    border-radius: 8px;
+    column-gap: 1px;
+    padding-left: 5px;
+}
+
+.main-row2 .e1{
+    background: none;
+    padding: 1rem;
+    border-radius: 8px;
+    border: var(--border2);
+}
+
+.main-row2 .e2{
+    background: none;
+    padding: 1rem;
+    border-radius: 8px;
+    border: var(--border2);
+}
+
+
+/* Card Styles */
+.card-row1-col-2-3-4-5 {
+    width: 100%;                /* Matches the width of the column */
+    height: var(--var-card-row1-height);              /* Fixed height */
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 10% 60% 30%;  /* Row heights as specified */
+    border: 1px solid #ccc;   /* Border around the entire card */
+}
+
+/* First Row - Patient ID */
+.card-row1-col-2-3-4-5 .title {
+    color: #555;
+    background: white;
+    display: flex;
+    text-align: left;
+    margin-left: 5px;
+    justify-content: left;
+    padding-left: 8px;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Second Row - Image */
+.card-row1-col-2-3-4-5 .image {
+    width: 100%;
+    height: 100%;
+    background: none;
+    object-fit: contain;
+    display: block;
+    border-bottom: none;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Third Row - Text */
+.card-row1-col-2-3-4-5 .caption {
+    padding-left: 8px;
+    background: none;
+    padding-top: 0px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    color: #555;
+    align-items: center;
+    justify-content: center;
+}
+.card-row1-col-2-3-4-5 .caption p {
+	  /*vertical horizantal*/
+  margin: 8px 0;
+}
+
+
+.main-row2 .user-diagnosis {
+    color: #555;
+    text-align: center;
+    align-items: center;
+    justify-content:center;
+    margin-top: 60px; /*Move radio button up / down*/
+}
+
+.main-row2 .user-diagnosis .title{
+    text-align: center;
+    font-size: 1.2rem;  /* Larger text size */
+    font-weight: bold;  /* Make it bold */
+    margin-bottom: 10px;  /* Space between the text and radio buttons */
+}
+
+.main-row2 .user-diagnosis .rectangle {
+    display: flex;
+    gap: 0.5rem; /* Small gap between radio buttons */
+    justify-content: center;
+    align-items: center;
+}
+
+.main-row2 .user-diagnosis .rectangle label {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.main-row2 .user-diagnosis .rectangle  input[type="radio"] {
+    margin-right: 5px; /* Space between radio button and label text */
+}
+
+.main-row2 .user-diagnosis .rectangle .healthy-label {
+    background-color: var(--green);  /* Green background for Healthy */
+    color: white;
+}
+
+.main-row2 .user-diagnosis .rectangle .unhealthy-label {
+    background-color: var(--orange);  /* Orange background for Unhealthy */
+    color: white;
+}
+
+footer {
+    background: var(--bg-gray);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+footer .nav-buttons {
+    position: absolute;
+    /*distance from bottom*/
+    bottom: 30px;
+    right: 10px;
+    display: flex;
+    gap: 0.5rem;
+}
+
+footer .nav-buttons button {
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+footer .nav-buttons button:hover {
+    background: #45a049;
+}
+
+footer .progress-bar-container {
+    position: absolute;
+    bottom: 30px;  /* Adjusts the distance from the bottom of the footer */
+    left: 50%;
+    transform: translateX(-50%); /* Centers the bar horizontally */
+    width: 500px;
+    height: 30px;
+    background-color: #555; /* Background color of the progress bar */
+    border-radius: 5px; /* Rounded corners for the container */
+    overflow: hidden;  /* Ensures text stays within the bar */
+
+}
+
+footer .progress-bar {
+    display: flex;
+    width: 50%; /* Set the progress here */
+    height: 100%;
+    background-color: var(--green); /* Progress color */
+    border-radius: 5px; /* Rounded corners for the progress bar */
+    align-items: center;
+    justify-content: center;   /* Center text horizontally */
+    overflow: hidden;           /* Prevents overflow of text */
+    white-space: nowrap;        /* Prevents text from wrapping */
+    text-align: center; 
+}
+
+footer .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+    pointer-events: none;  /* Makes the text unclickable */
+}
+
+/* Text Card Styles */
+.card-row1-col1 {
+    width: 100%;                 /* Ensure card width matches the width of column 2 */
+    box-sizing: border-box;      /* Ensures padding and border are included in width */
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;                    /* 5px gap between elements */
+}
+
+.card-row2-col1 {
+    width: 100%;                 /* Ensure card width matches the width of column 2 */
+    height: var(--var-card-row2-height);              /* Fixed height */
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: grid;
+    border: 1px solid #ccc;   /* Border around the entire card */
+}
+
+.card-row2-col2 {
+    width: 100%;                 /* Ensure card width matches the width of column 2 */
+    height: var(--var-card-row2-height);              /* Fixed height */
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: grid;
+    border: 1px solid #ccc;   /* Border around the entire card */
+}
+
+/* Card Title */
+.card-row1-col1 .title {
+    color: #555;
+    font-size: 20px;
+    margin: 0;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Numbered Biomarkers List */
+.card-row1-col1 .biomarkers-list {
+    color: #555;
+    list-style-type: decimal;  /* Changes to numbered list */
+    padding-left: 20px;
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Warning Title */
+.card-row1-col1 .card-warning {
+    font-size: 20px;
+    margin: 0;
+    font-weight: bold;
+    color: var(--orange);
+    margin-top: var(--warning-title-margin-top);
+}
+
+/* Warning Text */
+.card-row1-col1 .card-warning-text {
+    color: #555;
+    font-size: 12px;
+    margin: 0;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Card Title */
+.card-row2-col1 .title {
+    color: #555;
+    font-size: 20px;
+    margin: 0;
+    font-weight: bold;
+    padding-left: 15px;
+    padding-top: 15px;
+}
+
+/* Warning Text */
+.card-row2-col1 .text {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.5;
+    padding-left: 15px;
+    padding-top: 15px;
+
+}
+
+
