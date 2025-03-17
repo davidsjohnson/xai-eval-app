@@ -1,4 +1,11 @@
 :root {
+    /*My Browser Inner Width and Height: 1484px  x  756px*/
+    /*HD Screen Resolution : 1920px x 1080px*/
+  --fixed-screen-width: 1420px; /* 1920px  */
+  --fixed-screen-height: 700px; /* 1080px */
+  --app-width: calc(var(--fixed-screen-width)   *  (1 - 0.0)); /*reduce app-width */
+  --app-height: calc(var(--fixed-screen-height) *  (1 - 0.0)); /*reduce app-height */
+
   --blue: #1e90ff;
   --white: #ffffff;
   --orange: #FF5733;
@@ -10,26 +17,54 @@
   /*Disable Border*/
   --border1: none;
   --border2: none;
-  --var-card-row1-height: 320px;
-  --var-card-row2-height: 210px;
-  
+ 
   /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
-  --grid-ncolumns: 4; /* viki_comment: only change this value to increase or decrease columns in first row */
-  --grid-template-columns: repeat(var(--grid-ncolumns), 1fr); /* Use var() inside repeat() */
-  --grid-row2-ncolumns: span var(--grid-ncolumns); /* Use var() inside span */
-  --warning-title-margin-top: 120px; /* For 6_CARDS it is 100px. For rest it is 120px */
+  --grid-row1-ncolumns: 4; /* viki_comment: only change this value to increase or decrease columns in first row */
+  --grid-template-row1-columns: repeat(var(--grid-row1-ncolumns), 1fr); /* Use var() inside repeat() */
+
+  --grid-row2-ncolumns: 2; 
+  --grid-template-row2-columns: repeat(var(--grid-row2-ncolumns), 1fr); /* Use var() inside repeat() */
+  /* --grid-template-row2-columns: calc(var(--app-width) * 0.6) calc(var(--app-width) * 0.39);  */
+  
+  --warning-title-margin-top: 80px; 
+  
+    /* Calculate the reduced values */
+  --header-height: calc(var(--app-height) * 0.1);
+  --body-height: calc(var(--app-height) * 0.75);
+  --footer-height: calc(var(--app-height) * 0.1); 
+ 
+  --row1-height: calc(var(--body-height) * 0.59);
+  --row2-height: calc(var(--body-height) * 0.39);
+ 
+  --row1-card-height: calc(var(--row1-height) * 0.9);
+  --row2-card-height: calc(var(--row2-height) * 0.9);
+ 
 }
 
-body {
+html,body {
     margin: 0;
     font-family: Arial, sans-serif;
+    /*overflow: hidden;*/ /* Prevents scrolling */
+    width: 100vw; /* 100% of viewport width */
+    height: 100vh; /* 100% of viewport height */
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.fixed-page-dimension {
     display: grid;
-    min-height: 100vh;
-    grid-template-rows: 10vh 80vh 10vh;
+    max-width: var(--app-width); /* Reduced width */
+    max-height: var(--app-height); /* Reduced height */
+    margin: 0 auto; /* Centers the content horizontally */
+    width: 100%; /* Ensures it scales on smaller screens */
+    grid-template-rows:var(--header-height) var(--body-height) var(--footer-height);
     grid-template-columns: auto;
 }
 
 header {
+    position: relative;
     background: var(--bg-green);
     color: white;
     padding: 1rem;
@@ -76,14 +111,16 @@ header > h1{
 }
 
 main {
+    position: relative;
     display: grid;
-    grid-template-columns: var(--grid-template-columns);  
-    grid-template-rows: 60% 38%;   /* Adjust the height of row1 and row2*/
+    /* 60% 38%; */  /* Adjust the height of row1 and row2*/
+    grid-template-rows: calc(var(--body-height) * 0.6)   /* 10% of --app-height */
+                       calc(var(--body-height) * 0.3);  /* 10% of --app-height */
     column-gap: 1px; /* 10px gap between columns */
     row-gap: 1px;    /* 5px gap between rows */
     padding: 0.1rem;
     background: #f4f4f9;
-    overflow-y: auto;
+    overflow-y: hidden;
     /*viki_comment: The following Disable : For the main columns to be full length*/
     /*
     align-items: center;
@@ -92,59 +129,50 @@ main {
 }
 
 .main-row1 {
-    /* Make Border For the column */
-    border: var(--border1);
+    display: grid;
     background: none;
-    padding: 1rem;
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
     border-radius: 8px;
+    grid-template-columns: var(--grid-template-row1-columns);  
+    height: var(--row1-height);              /* Fixed height */
+    border: var(--border1);
+    overflow: hidden;
+    column-gap: 5px;
+    padding: 1rem;
     align-items: center;
     justify-content: center;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
 }
 
 .main-row2 {
-    display:grid;
-    grid-column: var(--grid-row2-ncolumns);
-    grid-template-columns: 60% 39%;
-    overflow: hidden;
+    display: grid;
     background: none;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    */
     border-radius: 8px;
+    grid-template-columns: var(--grid-template-row2-columns); /*60% 39%*/
+    height: var(--row2-height);              /* Fixed height */
+    border: var(--border2);
+    overflow: hidden;
     column-gap: 1px;
     padding-left: 5px;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
 }
-
-.main-row2 .e1{
-    background: none;
-    padding: 1rem;
-    border-radius: 8px;
-    border: var(--border2);
-}
-
-.main-row2 .e2{
-    background: none;
-    padding: 1rem;
-    border-radius: 8px;
-    border: var(--border2);
-}
-
 
 /* Card Styles */
-.card-row1-col-2-3-4-5 {
+.card-row1-col2-3-4-5 {
+    display: grid;
     width: 100%;                /* Matches the width of the column */
-    height: var(--var-card-row1-height);              /* Fixed height */
+    gap: 1px;                    /* 5px gap between elements */
+    
+    height: var(--row1-card-height);              /* Fixed height */
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    overflow: hidden;
-    display: grid;
     grid-template-rows: 10% 60% 30%;  /* Row heights as specified */
     border: 1px solid #ccc;   /* Border around the entire card */
+    overflow: hidden;
 }
 
 /* First Row - Patient ID */
-.card-row1-col-2-3-4-5 .title {
+.card-row1-col2-3-4-5 .title {
     color: #555;
     background: white;
     display: flex;
@@ -158,7 +186,7 @@ main {
 }
 
 /* Second Row - Image */
-.card-row1-col-2-3-4-5 .image {
+.card-row1-col2-3-4-5 .image {
     width: 100%;
     height: 100%;
     background: none;
@@ -170,7 +198,7 @@ main {
 }
 
 /* Third Row - Text */
-.card-row1-col-2-3-4-5 .caption {
+.card-row1-col2-3-4-5 .caption {
     padding-left: 8px;
     background: none;
     padding-top: 0px;
@@ -180,10 +208,11 @@ main {
     align-items: center;
     justify-content: center;
 }
-.card-row1-col-2-3-4-5 .caption p {
+.card-row1-col2-3-4-5 .caption p {
 	  /*vertical horizantal*/
   margin: 8px 0;
 }
+
 
 
 .main-row2 .user-diagnosis {
@@ -230,6 +259,7 @@ main {
 }
 
 footer {
+    position: relative;
     background: var(--bg-gray);
     color: white;
     text-align: center;
@@ -273,6 +303,7 @@ footer .progress-bar-container {
 }
 
 footer .progress-bar {
+    position: absolute;
     display: flex;
     width: 50%; /* Set the progress here */
     height: 100%;
@@ -298,38 +329,43 @@ footer .progress-text {
 
 /* Text Card Styles */
 .card-row1-col1 {
+    display: flex;
     width: 100%;                 /* Ensure card width matches the width of column 2 */
+    gap: 1px;                    /* 5px gap between elements */
+    padding-left: 15px;
+    padding-top: 15px;
+    height: var(--row1-card-height);              /* Fixed height */
     box-sizing: border-box;      /* Ensures padding and border are included in width */
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    display: flex;
     flex-direction: column;
-    gap: 5px;                    /* 5px gap between elements */
+    border: 1px solid #ccc;
+    overflow:hidden;
 }
-
 .card-row2-col1 {
-    width: 100%;                 /* Ensure card width matches the width of column 2 */
-    height: var(--var-card-row2-height);              /* Fixed height */
+    display: grid;
+    gap: 1px;                    /* 5px gap between elements */
+    width: 97.5%;                 /* Ensure card width matches the width of column 2 */
+    height: var(--row2-card-height);              /* Fixed height */
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
-    display: grid;
     border: 1px solid #ccc;   /* Border around the entire card */
+    margin-left:10px;
 }
 
 .card-row2-col2 {
-    width: 100%;                 /* Ensure card width matches the width of column 2 */
-    height: var(--var-card-row2-height);              /* Fixed height */
+    display: grid;
+    gap: 1px;                    /* 5px gap between elements */
+    width: 97.5%;                 /* Ensure card width matches the width of column 2 */
+    height: var(--row2-card-height);              /* Fixed height */
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    overflow: hidden;
-    display: grid;
     border: 1px solid #ccc;   /* Border around the entire card */
+    overflow: hidden;
 }
 
 /* Card Title */
@@ -388,4 +424,41 @@ footer .progress-text {
 
 }
 
+/* Basic styles for the radio button */
+input[type="radio"] {
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Chrome/Safari */
+    appearance: none; /* Standardize across browsers */
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    border-radius: 50%;  /* Ensure the button is round */
+    width: 15px;
+    height: 15px;
+    background-color: #fff; /* White background when not selected */
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    border: 2px solid #888;  /* Default border color */
+}
+
+/* when radio button is selected */
+input[type="radio"]:checked {
+    background-color: #fff;  /* Keep background white */
+    border-color: #2196F3;   /* Blue border when selected */
+}
+
+/* Inner blue circle when radio button is selected */
+input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;     /* Center vertically */
+    left: 50%;    /* Center horizontally */
+    width: 8px;  /* Size of the inner blue circle */
+    height: 8px; /* Size of the inner blue circle */
+    background-color: #2196F3;  /* Blue inner circle */
+    border-radius: 50%;
+    transform: translate(-50%, -50%); /* Center the inner circle perfectly */
+}
 

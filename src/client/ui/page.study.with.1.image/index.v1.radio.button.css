@@ -14,7 +14,7 @@
   --var-card-row2-height: 210px;
   
   /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
-  --grid-ncolumns: 5; /* viki_comment: only change this value to increase or decrease columns in first row */
+  --grid-ncolumns: 2; /* viki_comment: only change this value to increase or decrease columns in first row */
   --grid-template-columns: repeat(var(--grid-ncolumns), 1fr); /* Use var() inside repeat() */
   --grid-row2-ncolumns: span var(--grid-ncolumns); /* Use var() inside span */
   --warning-title-margin-top: 120px; /* For 6_CARDS it is 100px. For rest it is 120px */
@@ -388,4 +388,47 @@ footer .progress-text {
 
 }
 
+input[type="radio"] {
+    /* Firefox */
+    -moz-appearance: none;
+    /* Chrome/Safari */
+    -webkit-appearance: none;
+    /* Standardize across browsers */
+    appearance: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    /* Ensure the button is round */
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    /* White background when not selected */
+    background-color: #fff;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    /* Default border color */
+    border: 2px solid #888;
+}
+
+/* When radio button is selected */
+input[type="radio"]:checked {
+    background-color: #fff;  /* Keep background white */
+    border-color: #2196F3;   /* Blue border when selected */
+}
+
+/* Ensure the smaller blue circle appears in the center when selected */
+input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;     /* Center vertically */
+    left: 50%;    /* Center horizontally */
+    width: 8px;  /* Size of the inner blue circle */
+    height: 8px; /* Size of the inner blue circle */
+    background-color: #2196F3;  /* Blue inner circle */
+    border-radius: 50%;
+    /* Center the blue circle perfectly */
+    transform: translate(-50%, -50%);
+}
 

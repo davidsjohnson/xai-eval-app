@@ -1,6 +1,4 @@
-// Sync Load Json
-const input = loadJsonDataSync();  // Blocking Call
-console.log(input);  
+let input = null;
 
 const button_next = document.getElementById("button-next");
 const button_prev = document.getElementById("button-prev");
@@ -13,50 +11,28 @@ const suggested_diag2 = document.getElementById("suggested-diag-location2");
 const true_diag   = document.getElementById("true-diag");
 const x_ray_image = document.getElementById("patient-x-ray-image");
 
-//image list
-var g_total_page_count=10;
-var g_curr_page_number=1;
-var g_study_id   = 1;
+let diagnosis = null;
 
-function loadJsonDataSync() {
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", "input.json", false);  // 'false' makes it synchronous
-  xhr.send();
-
-  if (xhr.status === 200) {
-    return JSON.parse(xhr.responseText);  // Return parsed JSON
-  } else {
-    console.error("Request failed with status", xhr.status);
-    return null;
-  }
-}
-
-
-
-function generate_random_string(length = 10) {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
-
-    for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        result += characters.charAt(randomIndex);
+function get_page_nr_from_url()
+{
+    const url_params = get_params_from_url();
+    if(url_params.page_nr == null){
+        return 1; //if page_nr is null in the url it should be the first page ( or page refresh happened without url encoding details )
     }
 
-    return result;
+    return parseInt(url_params.page_nr);
 }
 
-function generate_random_diag() {
-    const diag = ["OCDegen", "Healthy"];
-
-    const random_index = Math.floor(Math.random() * diag.length);
-    return diag[random_index];
+function get_study_id_from_url()
+{
+    const url_params = get_params_from_url();
+    return url_params.study_id;
 }
 
-function generate_random_image_name() {
-    let num = Math.floor(Math.random() * 21); // Generate a number between 0 and 20
-    digit = num.toString().padStart(2, "0"); // Convert to string and ensure two-digit format
-    image_name = "img/" + digit + ".png"; 
-    return image_name;
+function get_participant_id_from_url()
+{
+    const url_params = get_params_from_url();
+    return url_params.participant_id;
 }
 
 function get_radio_button_status()
@@ -70,10 +46,31 @@ function get_radio_button_status()
     }
 
     if (!selected_value) {
-        alert("Please select an option before proceeding!"); // If no option is selected
+        console.log("WARN: Please select an option before proceeding!"); // If no option is selected
     }
 
     return selected_value;
+}
+
+function set_participant_diagnosis(val) {
+
+    if (typeof val === "string") {
+        val = val.toLowerCase(); 
+    } else {
+        console.error("Invalid diagnosis string received from DB");
+        return false;
+    }
+
+    if (val === "healthy") {
+        document.getElementById("radio-healthy").checked = true;
+    } else if (val === "ocdegen") {
+        document.getElementById("radio-unhealthy").checked = true;
+    } else {
+        console.error("Invalid value:", val);
+        return false;
+    }
+
+    return true;
 }
 
 function clear_radio_buttons() {
@@ -82,12 +79,12 @@ function clear_radio_buttons() {
     }
 }
 
-function set_progress(current_page_number, total_page_count) {
-    let progress_value = (current_page_number / total_page_count) * 100; // Convert to percentage
+function set_progress(current_page_nr, total_page_count) {
+    let progress_value = (current_page_nr / total_page_count) * 100; // Convert to percentage
     let progress_bar = document.querySelector("footer .progress-bar");
     progress_bar.style.width = progress_value + "%";
 
-    document.getElementById("progress-bar-text").textContent = "Diagnosis " + current_page_number.toString() + "/" + total_page_count.toString();
+    document.getElementById("progress-bar-text").textContent = "Diagnosis " + current_page_nr.toString() + "/" + total_page_count.toString();
 }
 
 function set_patient_id(id)
@@ -112,29 +109,41 @@ function get_params_from_url()
 
     return {
         participant_id: params.get('participant_id') ? decodeURIComponent(params.get('participant_id')) : null,
-        study_id: params.get('study_id') ? decodeURIComponent(params.get('study_id')) : null
+        study_id: params.get('study_id') ? decodeURIComponent(params.get('study_id')) : null,
+        page_nr: params.get('page_nr') ? decodeURIComponent(params.get('page_nr')) : null,
     };
 }
 
-async function db_update() 
-{ 
-    const url_params = get_params_from_url();
+function update_study_url(participant_id, study_id, page_nr)
+{
+    let new_url = "/page.study/index.html?";
+    new_url += "participant_id=" +participant_id;
+    new_url += "&study_id=" + study_id;
+    new_url += "&page_nr=" + page_nr;
+    window.location.href = new_url;
+}
+
+async function db_update_async() 
+{
+    console.log("Updating database...");
     const participant_diagnosis = get_radio_button_status();
+    let participant_id = get_participant_id_from_url();
+    let study_id = get_study_id_from_url();
+    let page_nr = get_page_nr_from_url();
 
-    if (!url_params.participant_id) {
-        alert("Error: URL doesn’t have participant_id");
+    if (!participant_id) {
+        console.log("Error: URL doesn’t have participant_id");
         return;
     }
 
-    if (!url_params.study_id) {
-        alert("Error: URL doesn’t have study_id");
+    if (!study_id) {
+        console.log("Error: URL doesn’t have study_id");
         return;
     }
 
-    const participant_id = url_params.participant_id;
-    const study_id = url_params.study_id;
-    const xray_image_url = get_x_ray_image();
-    const xray_image = xray_image_url.split('/').pop(); // Extracts "05.png"
+    let xray_image_url = get_x_ray_image();
+    let xray_image = xray_image_url;
+    //let xray_image = xray_image_url.split('/').pop(); // Extracts "05.png"
 
     try {
         const response = await fetch('/write_db', {
@@ -142,51 +151,135 @@ async function db_update()
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ participant_id, study_id, xray_image, participant_diagnosis })
+            body: JSON.stringify({ participant_id, study_id, xray_image, participant_diagnosis, page_nr })
         });
 
+        const response_data = await response.json(); // Read JSON response
+
         if (!response.ok) {
-            alert('Error submitting participant ID.');
-        } else {
-            const result = await response.json();
-            if (result.redirect) {
-                window.location.href = result.redirect; 
+            if (response.status === 400 && response_data.error === "DUPLICATE ENTRY") {
+                console.log('Entry already exists. Cannot submit duplicate.');
+                db_update_duplicate_entry_action(participant_id, study_id, page_nr);
+                //ToDo: Get and Set actual Entry in the database ( Diagnosis )
+            } else {
+                console.log('Database error occurred. Please try again.');
             }
+        } else {
+            db_update_success_action(participant_id, study_id, page_nr);
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Something went wrong. Please try again.');
+        console.log('Something went wrong. Please try again.');
+    }
+
+}
+
+async function db_update() {
+    try {
+        //await function make the fn block until it completes exec
+        await db_update_async();
+        console.log("Database update completed successfully.");
+    } catch (error) {
+
+        console.error("Error during database update:", error);
     }
 }
+
+function db_update_success_action(participant_id, study_id, current_page_nr)
+{
+    //Last Page
+    if(current_page_nr >= csv_json_get_total_page_count())
+    {
+        window.location.href = "/page.feedback/index.html"; // Redirect to test.html
+        return;
+    }
+
+    //increment page number
+    page_nr = current_page_nr + 1;
+    update_study_url(participant_id, study_id, page_nr);
+    clear_radio_buttons();
+    csv_json_get_all_attributes_and_set_in_html_page(page_nr);
+    db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
+}
+
+function db_update_duplicate_entry_action(participant_id, study_id, current_page_nr)
+{
+    //Last Page
+    if(current_page_nr >= csv_json_get_total_page_count())
+    {
+        window.location.href = "/page.feedback/index.html"; // Redirect to test.html
+        return;
+    }
+
+    //increment page number
+    page_nr = current_page_nr + 1;
+    update_study_url(participant_id, study_id, page_nr);
+    clear_radio_buttons();
+    csv_json_get_all_attributes_and_set_in_html_page(page_nr);
+    db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
+}
+
 
 
 function next_button_action()
 {
-    db_update();
-    //alert("Next button clicked!");
     let ret = get_radio_button_status();
     if(ret == null ){
         return;
     }
-
-    if(g_curr_page_number >= g_total_page_count)
-    {
-        g_curr_page_number = g_total_page_count;
-        window.location.href = "/page.feedback/index.html"; // Redirect to test.html
-        return;
-    }
-    g_curr_page_number = g_curr_page_number + 1;
-    set_progress(g_curr_page_number, g_total_page_count);
-    clear_radio_buttons();
-    csv_json_get_all_attributes_and_set_in_html_page(g_study_id);
+    
+    db_update();
 }
 
-function prev_button_action()
+async function db_get_and_set_participant_diagnosis_prev_button_click(participant_id, study_id, page_nr) {
+    console.log("db_get_and_set_participant_diagnosis_prev_button_click");
+    try {
+        const response = await fetch(`/read_db_prev?participant_id=${participant_id}&study_id=${study_id}&page_nr=${page_nr}`);
+        const data = await response.json();
+
+        if (Array.isArray(data) && data.length > 0) {
+            diagnosis = data[0].participant_diagnosis;
+            //First URL Update
+            update_study_url(participant_id, study_id, page_nr);
+            set_participant_diagnosis(diagnosis);
+            //Set all attributes from csv_json info
+            csv_json_get_all_attributes_and_set_in_html_page(page_nr);
+            console.log(diagnosis);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+async function db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr) {
+    console.log("db_get_participant_diagnosis");
+    try {
+        const response = await fetch(`/read_db_prev?participant_id=${participant_id}&study_id=${study_id}&page_nr=${page_nr}`);
+        const data = await response.json();
+
+        if (Array.isArray(data) && data.length > 0) {
+            diagnosis = data[0].participant_diagnosis;
+            set_participant_diagnosis(diagnosis);
+            console.log(diagnosis);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+async function prev_button_action()
 {
-    //alert("Prev button clicked!");
-    g_curr_page_number = (g_curr_page_number - 1);
-    if(g_curr_page_number <= 0) g_curr_page_number = 1;
-    set_progress(g_curr_page_number, g_total_page_count);
+    let participant_id = get_participant_id_from_url();
+    let study_id = get_study_id_from_url();
+    let curr_page_nr = get_page_nr_from_url();
+
+    if(curr_page_nr == 1){
+        console.log("You are already in the first page!");
+        return;
+    }
+   
+    prev_page_nr = curr_page_nr - 1; 
+    db_get_and_set_participant_diagnosis_prev_button_click(participant_id, study_id, prev_page_nr);
 }
 
 function set_suggested_diag(value)
@@ -230,10 +323,10 @@ function csv_json_get_total_page_count()
     return input.PATIENT_ID.length;
 }
 
-function csv_json_get_main_attributes(page_number)
+function csv_json_get_main_attributes(page_nr)
 {
 
-    index = page_number - 1;
+    index = page_nr - 1;
     l_patient_id = input.PATIENT_ID[index];
     l_x_ray_loc  = input.X_RAY_LOCATION[index];
     l_true_diag = input.TRUE_DIAG[index];
@@ -243,7 +336,7 @@ function csv_json_get_main_attributes(page_number)
     return attributes; 
 }
 
-function set_main_attributes_in_html_page(page_number, attr)
+function set_main_attributes_in_html_page(page_nr, attr)
 {
     //attributes = [patient_id, image, x_ray_loc, true_diag, suggested_diag] 
     set_patient_id(attr[0]);
@@ -251,33 +344,56 @@ function set_main_attributes_in_html_page(page_number, attr)
     set_x_ray_location(attr[2]);
     set_true_diag(attr[3]);
     set_suggested_diag(attr[4])
-    set_progress(page_number, g_total_page_count);
+    set_progress(page_nr, csv_json_get_total_page_count());
 }
 
-function csv_json_get_all_attributes_and_set_in_html_page(study_id)
+function csv_json_get_all_attributes_and_set_in_html_page(page_nr)
 {
-    g_total_page_count = csv_json_get_total_page_count();
-    attr = csv_json_get_main_attributes(g_curr_page_number);
-    set_main_attributes_in_html_page(g_curr_page_number, attr);
+    attr = csv_json_get_main_attributes(page_nr);
+    set_main_attributes_in_html_page(page_nr, attr);
 }
 
-function init()
+async function init_page()
 {
+    if (input == null) {
+        console.log('Input is null, returning.');
+        return;
+    }
+
     console.log('App is running!');
-    csv_json_get_all_attributes_and_set_in_html_page(g_study_id);
+    let participant_id = get_participant_id_from_url();
+    let study_id = get_study_id_from_url();
+    let page_nr = get_page_nr_from_url();
+    db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
+    csv_json_get_all_attributes_and_set_in_html_page(page_nr);
 }
 
-function main()
-{
-    document.addEventListener('DOMContentLoaded', function() {init();});
-
-    button_next.addEventListener("click", function() {
-        next_button_action();
-    });
-
-    button_prev.addEventListener("click", function() {
-        prev_button_action();
-    });
+async function load_json_data() {
+    try {
+        const response = await fetch("input.json"); // Fetch JSON asynchronously
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        input = await response.json();  // Set input with the loaded JSON
+        console.log('Data loaded:', input);  // Debug: Confirm input data loaded
+        init_page();
+    } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+        input = null;  // Reset input in case of error
+    }
 }
 
-main()
+document.addEventListener('DOMContentLoaded', async function() {
+    await load_json_data();  
+});
+
+button_next.addEventListener("click", function() {
+    next_button_action();
+});
+
+button_prev.addEventListener("click", function() {
+    prev_button_action();
+});
+
+
+

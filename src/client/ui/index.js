@@ -1,5 +1,31 @@
 let url_params;
 
+function update_study_url(participant_id, study_id, page_nr)
+{
+    let new_url = "/page.study/index.html?";
+    new_url += "participant_id=" +participant_id;
+    new_url += "&study_id=" + study_id;
+    new_url += "&page_nr=" + page_nr;
+    window.location.href = new_url;
+}
+
+async function db_get_max_page_nr_and_set_url(participant_id, study_id) {
+    console.log("Fetching max page number...");
+    try {
+        const response = await fetch(`/read_db_get_max_page_nr?participant_id=${participant_id}&study_id=${study_id}`);
+        const data = await response.json();
+
+        let page_nr = data.max_page_nr || 1;  // Default to page 1 if no records found
+        console.log("Max page_nr:", page_nr);
+
+        update_study_url(participant_id, study_id, page_nr);
+    } catch (error) {
+        console.error("Error fetching max page number:", error);
+        update_study_url(participant_id, study_id, 1);  // Default to 1 on error
+    }
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const start_button = document.getElementById("start_button");
     const participant_id_input = document.getElementById("participant_id"); // Renamed variable
@@ -41,10 +67,10 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!response.ok) {
                 alert('Error submitting participant ID.');
             }else{
-                const result = await response.json();
-                if (result.redirect) {
-                    window.location.href = result.redirect; // Redirect manually
-                }
+                /*Resume Functionality - if db entry exist ( resume from the last updated page number )*/
+                db_get_max_page_nr_and_set_url(participant_id, study_id);
+                //page_nr = 1; //First Page After Login
+                //update_study_url(participant_id, study_id, page_nr);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -52,29 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-/*
-function get_participant_id_from_url() {
-    // Get the URL parameters
-    const params = new URLSearchParams(window.location.search);
-
-    // Get the value of 'id' parameter (e.g., '?id=123')
-    const content = params.get('id');
-
-    // Return decoded value or null if 'id' does not exist
-    return content ? decodeURIComponent(content) : null;
-}
-*/
-
-/*
-function get_participant_id_from_url() {
-    const params = new URLSearchParams(window.location.search);
-    const content = params.get('id');
-
-    // Check for null, undefined, or empty string
-    return content ? decodeURIComponent(content).trim() || null : null;
-}
-*/
 
 function getParamsFromURL() 
 {

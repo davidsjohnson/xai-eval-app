@@ -1,8 +1,5 @@
-List,Description,
-Test in Firefox,Radio button not working in firefox,
-Test in Firefox,First Page loading after login not working ( image not loading in the first page from second page it is working fine ) ,
-Resume Function,Check if a participant completed the study if yes -> Display a participant already completed page otherwise resume from the last updated page number,
-Feedback Complete Page,Use a hash function and hash code in the page,"
+List,BUG_STATUS,Description,Comment
+Feedback Complete Page,,Use a hash function and hash code in the page,"
 def hash_prof_id(prof_id, stage, len=15):
 
 hash_text = prof_id + f'supersecret_stage-{stage}'
@@ -11,7 +8,13 @@ full_hash = hashlib.sha256(hash_text.encode()).hexdigest()
 
 return HASH_INTROS[stage] + full_hash[:len-3] # truncate
 "
-Content are not displaying properly on bigger monitor,Limit to fixed boundary ( for the entire page ) -> 2560 x 1440 ( resolution - it is not clear ),
-Remove Pop Up messages when participant click on next wihout selecting radio button,Just disable next button,
-Prev button fix,,
-Add page number in database table,,
+Content are not displaying properly on bigger monitor,Fixed ( Made fixed screen dimension for the application ),Limit to fixed boundary ( for the entire page ) -> 2560 x 1440 ( resolution - it is not clear ),
+Test in Firefox,Fixed It ( Modified CSS ),Radio button not working in firefox,
+Test in Firefox,Fixed It ( Enabled Lazy Loading Of data with async function and await ),First Page loading after login not working ( image not loading in the first page from second page it is working fine ) ,
+Resume Function,Done ( Able to resume from the latest page updated by user ),Check if a participant completed the study if yes -> Display a participant already completed page otherwise resume from the last updated page number,
+Remove Pop Up messages when participant click on next wihout selecting radio button,Done,Just disable next button,
+Prev button fix,Done,,
+Add page number in database table,Done,,
+Need to get some sample concept explanation from David,,,
+"Need text below warning in card 1 of the study page ( OCDegen Biomarkers
+ )",,,

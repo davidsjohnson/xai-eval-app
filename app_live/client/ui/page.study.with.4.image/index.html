@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>xai.ui/latest</title>
+    <link rel="icon" href="data:image/x-icon;,">
     <link rel="stylesheet" href="index.css">
     <script src="index.js" defer></script>
 </head>
 <body>
+    <div class="fixed-page-dimension">
     <header>
         <h1>BLOCKIES EVALUATION</h1>
         <div class="header-info">
@@ -40,11 +42,8 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia.
                 </p>
             </div>
-        </div>
- 
-       <!-- COL 2 --> 
-        <div class="main-row1">
-            <div class="card-row1-col-2-3-4-5">
+            <!-- COL 2-->
+            <div class="card-row1-col2-3-4-5">
                 <!-- First Row: Patient ID -->
                 <div class="title" id="patient-id-location2"></div>
                 <!-- Second Row: Image -->
@@ -56,11 +55,9 @@
                     <p><b>True Diagnosis:</b> <span id="true-diag" class="healthy"></span></p>
                 </div>
             </div>
-        </div>
 
-       <!-- COL 3 --> 
-        <div class="main-row1">
-            <div class="card-row1-col-2-3-4-5">
+            <!-- COL 3 --> 
+            <div class="card-row1-col2-3-4-5">
                 <!-- First Row: Patient ID -->
                 <div id="concept-card-1-title" class="title"></div>
                 <!-- Second Row: Image -->
@@ -70,12 +67,10 @@
                     <p><b id="concept-card-1-caption"></b></p>
                 </div>
             </div>
-        </div>
  
 
-       <!-- COL 4 --> 
-      <div class="main-row1">
-            <div class="card-row1-col-2-3-4-5">
+             <!-- COL 4 --> 
+            <div class="card-row1-col2-3-4-5">
                 <!-- First Row: Patient ID -->
                 <div id="concept-card-2-title" class="title"></div>
                 <!-- Second Row: Image -->
@@ -85,12 +80,10 @@
                     <p><b id="concept-card-2-caption"></b></p>
                 </div>
             </div>
-        </div>
  
 
-       <!-- COL 5 --> 
-      <div class="main-row1">
-            <div class="card-row1-col-2-3-4-5">
+            <!-- COL 5 --> 
+            <div class="card-row1-col2-3-4-5">
                 <!-- First Row: Patient ID -->
                 <div id="concept-card-3-title" class="title"></div>
                 <!-- Second Row: Image -->
@@ -100,20 +93,17 @@
                     <p><b id="concept-card-3-caption"></b></p>
                 </div>
             </div>
-        </div>
  
+        </div>
 
         <div class="main-row2">
-            <div class="e1"> 
 		    <div class="card-row2-col1">
                     <h3 class="title">Concept Explanations</h3>
                     <p class="text">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia.
                     </p>
 		    </div><!-- <div class="card-row2-col1">  -->
-            </div> <!-- <div class="e1"> -->
 
-            <div class="e2">
 		    <div class="card-row2-col2"> 
                 <div class="user-diagnosis">
                     <div class="title">Your Diagnosis</div><!-- Text above the radio buttons -->
@@ -127,7 +117,6 @@
                     </div>
                 </div>
 		</div> 	<!-- <div class="card-row2-col2"> -->
-	    </div> 	<!-- <div class="e2"> -->
 	</div> 		<!-- <div class="main-row2"> --> 
 
 
@@ -142,5 +131,6 @@
             <div class="progress-text" id="progress-bar-text">Diagnosis 5/10</div>
         </div>
     </footer>
+</div>
 </body>
 </html>

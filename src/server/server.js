@@ -50,7 +50,8 @@ function db_table_init()
         participant_id TEXT NOT NULL,
         study_id INTEGER NOT NULL,
         xray_image TEXT NOT NULL,
-        participant_diagnosis TEXT NOT NULL
+        participant_diagnosis TEXT NOT NULL,
+        page_nr INTEGER NOT NULL
     )`);
     });
 }
@@ -75,23 +76,77 @@ function register_get_event(route, callback) {
     });
 }
 
-function cb_even_write_db(req, res) 
+/*
+function cb_event_write_db(req, res) 
 {
-    const { participant_id,study_id,xray_image,participant_diagnosis } = req.body;
-    console.log(`Saving to database: participant_id=${participant_id}, study_id=${study_id}, xray_image=${xray_image}, participant_diagnosis=${participant_diagnosis}`);
+    const { participant_id,study_id,xray_image,participant_diagnosis, page_nr} = req.body;
+    console.log(`Saving to database: participant_id=${participant_id}, study_id=${study_id}, xray_image=${xray_image}, participant_diagnosis=${participant_diagnosis}, page_nr=${page_nr}`);
     
     let p_diagnosis = (participant_diagnosis === "healthy") ? "Healthy" : "OCDegen";
 
-    db.run(`INSERT INTO participant_feedback (participant_id, study_id, xray_image, participant_diagnosis) VALUES (?, ?, ?, ?)`, [participant_id, study_id, xray_image, p_diagnosis], (err) => {
+    db.run(`INSERT INTO participant_feedback (participant_id, study_id, xray_image, participant_diagnosis, page_nr) VALUES (?, ?, ?, ?, ?)`, [participant_id, study_id, xray_image, p_diagnosis, page_nr], (err) => {
         if (err) {
             return res.status(500).send('Error saving data');
         }
-        //res.redirect('/reader.html');
         res.json({ message: "Data stored successfully!" });
     });
 }
+*/
 
-function cb_even_read_db(req, res) {
+/* 1. Checks if an entry exists with the same participant_id, study_id, and page_nr
+ * 2. If an entry exists  -> Updates participant_diagnosis and xray_image
+ * 3. If no entry         -> Inserts a new record into the database
+ */
+function cb_event_write_db(req, res) {
+    const { participant_id, study_id, xray_image, participant_diagnosis, page_nr } = req.body;
+
+    console.log(`Checking database for existing entry: participant_id=${participant_id}, study_id=${study_id}, page_nr=${page_nr}`);
+
+    let p_diagnosis = (participant_diagnosis === "healthy") ? "Healthy" : "OCDegen";
+
+    // First, check if an entry already exists
+    db.get(
+        `SELECT * FROM participant_feedback WHERE study_id = ? AND participant_id = ? AND page_nr = ?`,
+        [study_id, participant_id, page_nr],
+        (err, row) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            }
+
+            if (row) {
+                // If entry exists, update it
+                db.run(
+                    `UPDATE participant_feedback 
+                     SET participant_diagnosis = ?, xray_image = ? 
+                     WHERE study_id = ? AND participant_id = ? AND page_nr = ?`,
+                    [p_diagnosis, xray_image, study_id, participant_id, page_nr],
+                    (updateErr) => {
+                        if (updateErr) {
+                            return res.status(500).send('Error updating data');
+                        }
+                        res.json({ message: "Data updated successfully!" });
+                    }
+                );
+            } else {
+                // If no existing entry, insert a new one
+                db.run(
+                    `INSERT INTO participant_feedback (participant_id, study_id, xray_image, participant_diagnosis, page_nr)
+                     VALUES (?, ?, ?, ?, ?)`,
+                    [participant_id, study_id, xray_image, p_diagnosis, page_nr],
+                    (insertErr) => {
+                        if (insertErr) {
+                            return res.status(500).send('Error saving data');
+                        }
+                        res.json({ message: "Data stored successfully!" });
+                    }
+                );
+            }
+        }
+    );
+}
+
+
+function cb_event_read_db(req, res) {
     db.all("SELECT * FROM participant_feedback", [], (err, rows) => {
         if (err) {
             console.error("Database Error:", err);
@@ -102,26 +157,61 @@ function cb_even_read_db(req, res) {
     });
 }
 
-function cb_even_participant_id(req, res)
+function cb_event_read_db_prev(req, res) {
+    const { participant_id, study_id, page_nr } = req.query;
+
+    console.log(`Checking database for existing entry: participant_id=${participant_id}, study_id=${study_id}, page_nr=${page_nr}`);
+    const query = `SELECT * FROM participant_feedback WHERE participant_id = ? AND study_id = ? AND page_nr = ?`;
+
+    const params = [participant_id, study_id, page_nr];
+
+    db.all(query, params, (err, rows) => {
+        if (err) {
+            console.error("Database Error:", err);
+            res.status(500).json({ error: "Error reading data" });
+            return;
+        }
+        console.error(rows);
+        res.json(rows);
+    });
+}
+
+
+function cb_event_participant_id(req, res)
 {
     const { participant_id, study_id } = req.body; // Get both participant_id and study_id from the request body
     console.log(`[ CLIENT REQUEST ] Submit Participant ID: ${encodeURIComponent(participant_id)}`);
     console.log(`[ CLIENT REQUEST ] Submit Study ID: ${encodeURIComponent(study_id)}`);
 
     if (participant_id && study_id) {
-        res.json({
-            participant_id,    // Return participant_id
-            study_id,          // Return study_id
-            redirect: `/page.study/index.html?participant_id=${encodeURIComponent(participant_id)}&study_id=${encodeURIComponent(study_id)}`
-        });
+        //just return to client
+        res.json({participant_id, study_id});
     } else {
         res.status(400).send('Participant ID and Study ID are required');
     }
 
 }
 
+function cb_event_get_max_page_nr(req, res) {
+    const { participant_id, study_id } = req.query;
+
+    console.log(`Fetching max page_nr for: participant_id=${participant_id}, study_id=${study_id}`);
+
+    const query = `SELECT MAX(page_nr) AS max_page FROM participant_feedback WHERE participant_id = ? AND study_id = ?`;
+
+    db.get(query, [participant_id, study_id], (err, row) => {
+        if (err) {
+            console.error("Database error:", err);
+            return res.status(500).json({ error: "Error retrieving max page number" });
+        }
+        res.json({ max_page_nr: row?.max_page ?? 1 }); // Return max page or 1 if no records [ the study page starts with page 1]
+    });
+}
+
 init();
-register_post_event("/write_db", cb_even_write_db);
-register_post_event("/post_participant_id", cb_even_participant_id);
-register_get_event("/read_db", cb_even_read_db);
+register_post_event("/write_db", cb_event_write_db);
+register_post_event("/post_participant_id", cb_event_participant_id);
+register_get_event("/read_db", cb_event_read_db);
+register_get_event("/read_db_prev", cb_event_read_db_prev);
+register_get_event("/read_db_get_max_page_nr", cb_event_get_max_page_nr);
 start_http_server(PORT);

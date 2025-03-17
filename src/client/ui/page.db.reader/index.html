@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Participant Feedback</title>
+    <link rel="icon" href="data:image/x-icon;,">
     <style>
         table {
             width: 100%;
@@ -44,6 +45,7 @@
                 <th>Study ID</th>
                 <th>X-Ray Image</th>
                 <th>Participant Diagnosis</th>
+                <th>Page Number</th>
             </tr>
         </thead>
         <tbody id="tableBody">
@@ -73,6 +75,7 @@
                         <td>${row.study_id}</td>
                         <td>${row.xray_image}</td>
                         <td>${row.participant_diagnosis}</td>
+                        <td>${row.page_nr}</td>
                     `;
                     tableBody.appendChild(rowElement);
                 });
@@ -89,10 +92,10 @@
             }
 
             let csvContent = "data:text/csv;charset=utf-8,";  
-            csvContent += "ID,Participant ID,Study ID,X-Ray Image,Participant Diagnosis\n"; // CSV Header
+            csvContent += "ID,Participant ID,Study ID,X-Ray Image,Participant Diagnosis, Page Number\n"; // CSV Header
 
             fetchedData.forEach(row => {
-                const rowData = [row.id, row.participant_id, row.study_id, row.xray_image, row.participant_diagnosis].join(",");
+                const rowData = [row.id, row.participant_id, row.study_id, row.xray_image, row.participant_diagnosis, row.page_nr].join(",");
                 csvContent += rowData + "\n";
             });
 
