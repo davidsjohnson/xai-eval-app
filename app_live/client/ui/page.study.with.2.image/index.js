@@ -190,7 +190,10 @@ function db_update_success_action(participant_id, study_id, current_page_nr)
     //Last Page
     if(current_page_nr >= csv_json_get_total_page_count())
     {
-        window.location.href = "/page.feedback/index.html"; // Redirect to test.html
+        let feedback_url = "/page.feedback/index.html?";
+        feedback_url += "participant_id=" +participant_id;
+        feedback_url += "&study_id=" + study_id;
+        window.location.href = feedback_url; // Redirect to test.html
         return;
     }
 
