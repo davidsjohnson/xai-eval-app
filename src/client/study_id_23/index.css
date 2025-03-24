@@ -19,7 +19,7 @@
   --border2: none;
  
   /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
-  --grid-row1-ncolumns: 5; /* viki_comment: only change this value to increase or decrease columns in first row */
+  --grid-row1-ncolumns: 2; /* viki_comment: only change this value to increase or decrease columns in first row */
   --grid-template-row1-columns: repeat(var(--grid-row1-ncolumns), 1fr); /* Use var() inside repeat() */
 
   --grid-row2-ncolumns: 2; 
@@ -37,7 +37,7 @@
  
   --row1-card-height: calc(var(--row1-height) * 0.9);
   --row2-card-height: calc(var(--row2-height) * 0.9);
-  --warning-title-y-placement: 6px; 
+  --warning-title-y-placement: 50px; 
   --warning-text-y-placement: 5px; 
   --concept-based-explanation-text-y-placement: -80px; 
 }

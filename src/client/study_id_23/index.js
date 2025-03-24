@@ -1,5 +1,5 @@
 /**
- * Description: Client logic for study page with four images
+ * Description: Client logic for study page with one image
  *
  * Author: Vignesh Natarjan
  * Contact: vnatarajan@uni-bielefeld.de
@@ -111,7 +111,6 @@ function get_x_ray_image()
     return x_ray_image.src;
 }
 
-
 function get_params_from_url()
 {
     const params = new URLSearchParams(window.location.search);
@@ -202,6 +201,7 @@ async function db_update() {
 
 function db_update_success_action(participant_id, study_id, current_page_nr)
 {
+    up = get_params_from_url();
     //Last Page
     if(current_page_nr >= csv_json_get_total_page_count())
     {
@@ -214,9 +214,9 @@ function db_update_success_action(participant_id, study_id, current_page_nr)
 
     //increment page number
     page_nr = current_page_nr + 1;
-    up = get_params_from_url();
     update_study_url(participant_id, study_id, up.study_type, page_nr, up.total_pages);
     clear_radio_buttons();
+
     csv_json_get_all_attributes_and_set_in_html_page(page_nr);
     db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
     button_toggle_next_or_submit();
@@ -237,6 +237,7 @@ function button_toggle_next_or_submit()
 
 function db_update_duplicate_entry_action(participant_id, study_id, current_page_nr)
 {
+    up = get_params_from_url();
     //Last Page
     if(current_page_nr >= csv_json_get_total_page_count())
     {
@@ -246,7 +247,6 @@ function db_update_duplicate_entry_action(participant_id, study_id, current_page
 
     //increment page number
     page_nr = current_page_nr + 1;
-    up = get_params_from_url();
     update_study_url(participant_id, study_id, up.study_type, page_nr, up.total_pages);
     clear_radio_buttons();
     csv_json_get_all_attributes_and_set_in_html_page(page_nr);
@@ -267,6 +267,7 @@ function next_button_action()
 }
 
 async function db_get_and_set_participant_diagnosis_prev_button_click(participant_id, study_id, page_nr) {
+    up = get_params_from_url();
     console.log("db_get_and_set_participant_diagnosis_prev_button_click");
     try {
         const response = await fetch(`/read_db_prev?participant_id=${participant_id}&study_id=${study_id}&page_nr=${page_nr}`);
@@ -275,7 +276,6 @@ async function db_get_and_set_participant_diagnosis_prev_button_click(participan
         if (Array.isArray(data) && data.length > 0) {
             diagnosis = data[0].participant_diagnosis;
             //First URL Update
-            up = get_params_from_url();
             update_study_url(participant_id, study_id, up.study_type, page_nr, up.total_pages);
             set_participant_diagnosis(diagnosis);
             //Set all attributes from csv_json info
@@ -389,51 +389,7 @@ function csv_json_get_all_attributes_and_set_in_html_page(page_nr)
 {
     attr = csv_json_get_main_attributes(page_nr);
     set_main_attributes_in_html_page(page_nr, attr);
-    attr = csv_json_get_additional_attributes(page_nr);
-    set_additional_attributes_in_html_page(page_nr, attr);
 }
-
-function csv_json_get_additional_attributes(page_nr)
-{
-
-    index = page_nr - 1;
-    l_patient_id = input.PATIENT_ID[index];
-
-    concept_card_1_title    = "Concept 1";
-    concept_card_1_image    = "img/"        + input.Concept1[index];
-    concept_card_1_caption  = "Concept:"    + input.Concept1_Caption[index];
-
-    concept_card_2_title    = "Concept 2";
-    concept_card_2_image    = "img/"        + input.Concept2[index];
-    concept_card_2_caption  = "Concept:"    + input.Concept2_Caption[index];
-
-    concept_card_3_title    = "Concept 3";
-    concept_card_3_image    = "img/"        + input.Concept3[index];
-    concept_card_3_caption  = "Concept:"    + input.Concept3_Caption[index];
-
-    attributes = [concept_card_1_title, concept_card_1_image, concept_card_1_caption,
-                  concept_card_2_title, concept_card_2_image, concept_card_2_caption,
-                  concept_card_3_title, concept_card_3_image, concept_card_3_caption];
-
-    return attributes;
-}
-
-function set_additional_attributes_in_html_page(page_nr, attr)
-{
-    document.getElementById("concept-card-1-title").textContent = attr[0];
-    document.getElementById("concept-card-1-image").src = attr[1];
-    document.getElementById("concept-card-1-caption").textContent = attr[2];
-
-    document.getElementById("concept-card-2-title").textContent = attr[3];
-    document.getElementById("concept-card-2-image").src = attr[4];
-    document.getElementById("concept-card-2-caption").textContent = attr[5];
-
-    document.getElementById("concept-card-3-title").textContent = attr[6];
-    document.getElementById("concept-card-3-image").src = attr[7];
-    document.getElementById("concept-card-3-caption").textContent = attr[8];
-}
-
-
 
 async function init_page()
 {
