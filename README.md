@@ -88,17 +88,14 @@ http://0.0.0.0:7000/db/index.html
 
 To stop the running Docker container, execute (ubuntu users):
 ```bash
-./docker.stop.ubuntu.sh
+./docker.stop.sh
 ```
-To stop the running Docker container, execute (mac osx users):
-```bash
-./docker.stop.mac.osx.sh
-```
-
 ## Useful Scripts
 
 1. `db.show.study.table` - Show records in the study table.
 2. `db.show.participant_feedback.table` - Show records in the participant feedback table.
+3. `db.export.study.table.to.csv`  - Export study table to csv
+4. `db.export.participant.feedback.table.to.csv`- Export participant feedback table to csv
 
 ## Code Modification
 
