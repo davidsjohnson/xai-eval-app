@@ -79,6 +79,12 @@ To stop the running Docker container, execute (mac osx users):
 ./docker.stop.mac.osx.sh
 ```
 
+## Code Modification
+
+    1. Client-side code can be modified live, and the effects can be seen immediately.
+    2. When server-side code is modified, the Docker container needs to be rebuilt.
+
+
 
 ## Tested OS
 

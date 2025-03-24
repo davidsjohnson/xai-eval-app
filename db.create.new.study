@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# Validate all 4 arguments are provided
+if [[ -z $1 ]] || [[ -z $2 ]] || [[ -z $3 ]] || [[ -z $4 ]]; then
+    echo "Usage: $0 <study_id> <study_type> <input_csv_file> <study_image_dir>"
+    exit 1
+fi
+
+study_id="$1"
+study_type="$2"
+csv_input_file="$3"
+study_image_dir="$4"
+
+study_dir="src/client/study_id_${study_id}"
+
+if [[ -d $study_dir ]]; then
+    echo "Error: Directory ($study_dir) already exists. Delete it and retry."
+    exit 1
+fi
+
+if [[ ! -d $study_image_dir ]]; then
+    echo "Error: Image directory ($study_image_dir) does not exist. Feed proper image directory for the study."
+    exit 1
+fi
+
+if [[ "$study_type" -lt 1 ]] || [[ "$study_type" -gt 4 ]]; then
+    echo "Error: study_type must be between 1 and 4."
+    exit 1
+fi
+
+
+echo "Creating study_id record in study table"
+python3 db.create.new.study.py "$study_id" "$study_type" "$csv_input_file"
+ret=$?
+if (( ret != 0 )); then
+    echo "Error: DB error -> creating study_id in study table."
+    exit 1
+fi
+
+echo "Creating study directory: $study_dir"
+mkdir -p "$study_dir/img"
+
+# Copy images from the study image directory to the new directory
+echo "Copying images from $study_image_dir to $study_dir/img/"
+cp -rf "$study_image_dir"/* "$study_dir/img/"
+
+# Convert CSV to JSON
+echo "Converting CSV to JSON: $csv_input_file"
+python3 src/scripts/csv2json.py "$csv_input_file" "$study_dir/input.json"
+
+echo "Generated input.json:"
+cat "$study_dir/input.json"
+
+echo "Copying study template files for study_type $study_type"
+if [[ $study_type == 1 ]]; then
+    cp src/client/study_templates/1/* "$study_dir/"
+elif [[ $study_type == 2 ]]; then
+    cp src/client/study_templates/2/* "$study_dir/"
+elif [[ $study_type == 3 ]]; then
+    cp src/client/study_templates/3/* "$study_dir/"
+elif [[ $study_type == 4 ]]; then
+    cp src/client/study_templates/4/* "$study_dir/"
+else
+    echo "Error: Invalid study_type. It should be between 1 and 4."
+    exit 1
+fi
+
+echo "Contents of $study_dir:"
+ls -l "$study_dir"
+
+echo "Contents of $study_dir/img/:"
+ls -l "$study_dir/img/"
+
+echo 
+echo "New study [ study_id = $study_id ] created successfully." 
+echo "Reference URL : http://0.0.0.0:7000?participant_id=emm5k38cym2kztw9&study_id=$study_id ]"
+

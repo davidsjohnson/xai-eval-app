@@ -1,0 +1,50 @@
+{
+    "INDEX": [
+        "1",
+        "2"
+    ],
+    "PATIENT_ID": [
+        "TN16GG530F",
+        "YPBZ4X4S1R"
+    ],
+    "X_RAY_IMAGE": [
+        "05.png",
+        "14.png"
+    ],
+    "TRUE_DIAG": [
+        "Healthy",
+        "OCDegen"
+    ],
+    "SUGGESTED_DIAG": [
+        "Healthy",
+        "Healthy"
+    ],
+    "Concept1": [
+        "06.png",
+        "10.png"
+    ],
+    "Concept1_Caption": [
+        "Strong Bend",
+        "Weak Bend"
+    ],
+    "Concept2": [
+        "18.png",
+        "06.png"
+    ],
+    "Concept2_Caption": [
+        "Strong Bend",
+        "Weak Bend"
+    ],
+    "Concept3": [
+        "03.png",
+        "14.png"
+    ],
+    "Concept3_Caption": [
+        "Strong Bend",
+        "Weak Bend"
+    ],
+    "X_RAY_LOCATION": [
+        "NYC",
+        "LA"
+    ]
+}

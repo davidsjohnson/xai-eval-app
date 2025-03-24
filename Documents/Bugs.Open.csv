@@ -1,0 +1,12 @@
+BUG LIST,BUG STATUS,DETAILS,COMMENT
+"Need text below warning in card 1 of the study page ( OCDegen Biomarkers
+ )",DONE,,
+Need to get some sample concept explanation from David,DONE,,
+Validate 24 character alpha numeric for - Participant ID ( JS ),DONE,,
+Change Next text to Submit at the end of the study,DONE,,
+Make provision in the database for total page number ( if total pagenumber = last updated page number ) then participant cannot resume or edit the feedback,DONE,,
+Under same port 7000 you should be able to run all 4 type of card application,DONE,,
+When radio button is not selected disable next button ( change color ) / an information would be great,"DONE ( Changing color gave issues, added an alert )",,
+Add how to access db and basic sqllite script in the document,DONE / Script Written,,
+Page Transision ( Image is flickering - Fix it ),Not fixed.,,
+Hide fields in the study page like xray location etc ( complete field ) if the information is not available in the input csv,"This will take time, need more html changes needed ( Dropped it for now )",,
