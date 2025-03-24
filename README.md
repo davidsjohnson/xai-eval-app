@@ -3,11 +3,10 @@
 ## Directory Structure
 
 ```
-- src/client/ui        # User interface source code (HTML, CSS, JavaScript)
+- src/client/         # User interface source code (HTML, CSS, JavaScript)
 - src/server          # Web server logic and source code (Node.js)
 - src/Dockerfile      # Docker instructions to create an image and run the web app
 - database/           # Database (created during Docker container execution)
-- app_live/           # Sandbox environment auto-generated during build process
 - docker.build.sh     # Script to build the application in Docker and generate an image
 - docker.start.sh     # Script to start the Docker container from the generated image
 - docker.stop.sh      # Script to stop the running Docker container
@@ -37,34 +36,37 @@ Before building the project, ensure the following input structure:
 
 Run the following command:
 ```bash
-./docker.build.sh <number_of_images> <input.csv>
+./docker.build.sh
 ```
-- This process creates a Docker image.
-- The Docker image uses the `web server` and `client (UI)` from the `app_live` directory.
-- The `database` directory is used to store the database.
+- This script creates a Docker image.
+- The Docker image uses the `web server` code from src/server directory.
 
 ## Running the Project
 
 To start the application, use (ubuntu users):
 ```bash
-./docker.start.ubuntu.sh
+./docker.start.sh
 ```
-To start the application, use (mac osx users):
-```bash
-./docker.start.mac.osx.sh
-```
+- This script run a Docker container based on the image created in the previous step.
+- the database/database.db contains the database tables ( participant_feedback and study )
+- src/client folder ( containing the client logic is shared with the docker container and the host )
+
+## Creating a new study 
+
+./db.create.new.study <study_id> <study_type> <input_csv_file> <study_image_dir>
+
 ## Accessing the Application
 
 Open a browser and navigate to:
 ```
-http://0.0.0.0:7000/index.html?participant_id=123&study_id=456
+http://0.0.0.0:7000/index.html?participant_id=<24 digit alpha numeric>&study_id=<study id>
 ```
 
 ## Exporting Participant Feedback
 
 After the feedback session, you can export data from the database using:
 ```
-http://0.0.0.0:7000/page.db.reader/index.html
+http://0.0.0.0:7000/db/index.html
 ```
 - Use the **Export to CSV** button to download the data.
 
@@ -93,13 +95,6 @@ To stop the running Docker container, execute (mac osx users):
 ---
 
 ## Notes
-- The `app_live` directory is auto-generated and contains the running code of the Docker-based app.
-- Users do not need to modify `app_live` manually.
+
 - The `database` folder will be created dynamically when the application runs.
-
-
-## Bugs
-
-- **1. Previous Page Issue:** The "Previous Page" functionality is not working correctly; it does not properly retrieve the participant's diagnosis.
-
 
