@@ -19,3 +19,4 @@ vendor/pkg/
 pyenv
 Vagrantfile
 *.db
+node_modules

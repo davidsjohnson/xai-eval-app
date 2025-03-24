@@ -1,3 +1,0 @@
-id,participant_id,study_id,xray_image,participant_diagnosis,page_nr
-1,9yw4v2un2d7zog5q12345633,22,http://0.0.0.0:7000/study_id_22/img/05.png,OCDegen,1
-2,9yw4v2un2d7zog5q12345633,22,http://0.0.0.0:7000/study_id_22/img/14.png,OCDegen,2
