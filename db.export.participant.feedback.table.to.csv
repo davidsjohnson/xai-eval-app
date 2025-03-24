@@ -1,0 +1,2 @@
+#!/bin/bash
+python3 db.export.participant.feedback.table.to.csv.py "$@"

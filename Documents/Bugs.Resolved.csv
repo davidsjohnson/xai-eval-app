@@ -1,5 +1,5 @@
 BUG LIST,BUG STATUS,DETAILS,COMMENT
-Remove Pop Up messages when participant click on next wihout selecting radio button,DONE,Just disable next button,
+Remove Pop Up messages when participant click on next wihout selecting radio button,RE ENABLED ( Because unable to identify Clicks ),Just disable next button,
 Prev button fix,DONE,,
 Add page number in database table,DONE,,
 Resume Function,DONE ( Able to resume from the latest page updated by user ),Check if a participant completed the study if yes -> Display a participant already completed page otherwise resume from the last updated page number,
