@@ -35,25 +35,39 @@ Before building the project, ensure the following input structure:
 ## Building the Project
 
 Run the following command:
+
 ```bash
 ./docker.build.sh
 ```
+
 - This script creates a Docker image.
-- The Docker image uses the `web server` code from src/server directory.
+- The Docker image uses the `web server` code from the **src/server** directory.
 
 ## Running the Project
 
-To start the application, use (ubuntu users):
+To start the application (for Ubuntu users), run:
+
 ```bash
 ./docker.start.sh
 ```
-- This script run a Docker container based on the image created in the previous step.
-- the database/database.db contains the database tables ( participant_feedback and study )
-- src/client folder ( containing the client logic is shared with the docker container and the host )
 
-## Creating a new study 
+- This script runs a Docker container based on the image created in the previous step.
+- The **database/database.db** file contains the database tables (**participant_feedback** and **study**).
+- The **src/client** folder (which contains the client logic) is shared between the Docker container and the host.
+- The web application runs under tcp port 7000
 
+## Creating a New Study
+
+Use the following command to create a new study:
+
+```bash
 ./db.create.new.study <study_id> <study_type> <input_csv_file> <study_image_dir>
+```
+
+- For each new study, the application code is stored under **src/client/study_id_[study_id]**.
+- A unified database (**database/database.db**) is used for all studies.
+- There is no need to rebuild the Docker image when creating a new study, as the web server dynamically updates in real time.
+
 
 ## Accessing the Application
 
@@ -81,16 +95,19 @@ To stop the running Docker container, execute (mac osx users):
 ./docker.stop.mac.osx.sh
 ```
 
+## Useful Scripts
+
+1. `db.show.study.table` - Show records in the study table.
+2. `db.show.participant_feedback.table` - Show records in the participant feedback table.
+
 ## Code Modification
 
-    1. Client-side code can be modified live, and the effects can be seen immediately.
-    2. When server-side code is modified, the Docker container needs to be rebuilt.
-
-
+1. Client-side code can be modified live, and the effects can be seen immediately.
+2. When server-side code is modified, the Docker container needs to be rebuilt.
 
 ## Tested OS
 
-    1. Ubuntu 24.04
+- Ubuntu 24.04
 
 ---
 
