@@ -7,7 +7,7 @@ from tabulate import tabulate
 
 def show_participant_feedback_table():
     conn = sqlite3.connect("database/database.db")
-    Cursor = conn.cursor()
+    cursor = conn.cursor()
     try:
         cursor.execute("SELECT * FROM participant_feedback")
         records = cursor.fetchall()

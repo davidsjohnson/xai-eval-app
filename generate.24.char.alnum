@@ -1,0 +1,2 @@
+#!/bin/bash
+python3 generate.24.char.alnum.py "$@"

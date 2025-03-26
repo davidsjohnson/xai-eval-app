@@ -1,3 +1,11 @@
+"""
+Description: Export study table to csv file
+
+Author: Vignesh Natarjan
+Contact: vnatarajan@uni-bielefeld.de
+"""
+
+
 import sqlite3
 import csv
 import sys
@@ -14,8 +22,8 @@ def export_to_csv(db_name, table_name, csv_file):
 
         with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
-            writer.writerow(column_names)  # Write header
-            writer.writerows(rows)  # Write data
+            writer.writerow(column_names)   # Write header
+            writer.writerows(rows)          # Write data
 
         print(f"Data exported successfully to {csv_file}")
 

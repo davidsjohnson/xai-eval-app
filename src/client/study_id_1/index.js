@@ -124,12 +124,16 @@ function get_params_from_url()
     };
 }
 
-function update_study_url(participant_id, study_id, page_nr)
+function update_study_url(participant_id, study_id, study_type, page_nr, total_pages)
 {
-    let new_url = "/study/index.html?";
+    let new_url = "/study_id_";
+    new_url += study_id + "/";
+    new_url += "index.html?";
     new_url += "participant_id=" +participant_id;
     new_url += "&study_id=" + study_id;
+    new_url += "&study_type=" + study_type;
     new_url += "&page_nr=" + page_nr;
+    new_url += "&total_pages=" + total_pages;
     window.location.href = new_url;
 }
 
@@ -197,6 +201,7 @@ async function db_update() {
 
 function db_update_success_action(participant_id, study_id, current_page_nr)
 {
+    up = get_params_from_url();
     //Last Page
     if(current_page_nr >= csv_json_get_total_page_count())
     {
@@ -209,14 +214,30 @@ function db_update_success_action(participant_id, study_id, current_page_nr)
 
     //increment page number
     page_nr = current_page_nr + 1;
-    update_study_url(participant_id, study_id, page_nr);
+    update_study_url(participant_id, study_id, up.study_type, page_nr, up.total_pages);
     clear_radio_buttons();
+
     csv_json_get_all_attributes_and_set_in_html_page(page_nr);
     db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
+    button_toggle_next_or_submit();
+}
+
+function button_toggle_next_or_submit()
+{
+    up = get_params_from_url();
+    total_pages = parseInt(up.total_pages, 10);
+    curr_page = parseInt(up.page_nr, 10);
+    if (curr_page === total_pages) {
+        //Change Button Next to Submit
+        button_next.textContent = "Submit";
+    }else{
+        button_next.textContent = "Next";
+    }
 }
 
 function db_update_duplicate_entry_action(participant_id, study_id, current_page_nr)
 {
+    up = get_params_from_url();
     //Last Page
     if(current_page_nr >= csv_json_get_total_page_count())
     {
@@ -226,7 +247,7 @@ function db_update_duplicate_entry_action(participant_id, study_id, current_page
 
     //increment page number
     page_nr = current_page_nr + 1;
-    update_study_url(participant_id, study_id, page_nr);
+    update_study_url(participant_id, study_id, up.study_type, page_nr, up.total_pages);
     clear_radio_buttons();
     csv_json_get_all_attributes_and_set_in_html_page(page_nr);
     db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
@@ -238,6 +259,7 @@ function next_button_action()
 {
     let ret = get_radio_button_status();
     if(ret == null ){
+        alert("Please select an option before proceeding to the next page.");
         return;
     }
 
@@ -245,6 +267,7 @@ function next_button_action()
 }
 
 async function db_get_and_set_participant_diagnosis_prev_button_click(participant_id, study_id, page_nr) {
+    up = get_params_from_url();
     console.log("db_get_and_set_participant_diagnosis_prev_button_click");
     try {
         const response = await fetch(`/read_db_prev?participant_id=${participant_id}&study_id=${study_id}&page_nr=${page_nr}`);
@@ -253,7 +276,7 @@ async function db_get_and_set_participant_diagnosis_prev_button_click(participan
         if (Array.isArray(data) && data.length > 0) {
             diagnosis = data[0].participant_diagnosis;
             //First URL Update
-            update_study_url(participant_id, study_id, page_nr);
+            update_study_url(participant_id, study_id, up.study_type, page_nr, up.total_pages);
             set_participant_diagnosis(diagnosis);
             //Set all attributes from csv_json info
             csv_json_get_all_attributes_and_set_in_html_page(page_nr);
@@ -275,8 +298,10 @@ async function db_get_and_set_participant_diagnosis(participant_id, study_id, pa
             set_participant_diagnosis(diagnosis);
             console.log(diagnosis);
         }
+        button_toggle_next_or_submit();
     } catch (error) {
         console.error('Error fetching data:', error);
+        button_toggle_next_or_submit();
     }
 }
 

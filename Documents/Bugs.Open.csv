@@ -1,6 +1,6 @@
 BUG LIST,BUG STATUS,DETAILS,COMMENT
-,,,
-,,,
+"When creating new study using script db.create.new.study, it fails due to write error",Fixed ( added an db.init.py script ),,
+./db.show.participant_feeeback.table not working,Fixed it ( typo in cursor ),,
 ,,,
 ,,,
 ,,,

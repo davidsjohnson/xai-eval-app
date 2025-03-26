@@ -1,3 +1,11 @@
+"""
+Description: Create a new record in study table and generate application code for the new study
+
+Author: Vignesh Natarjan
+Contact: vnatarajan@uni-bielefeld.de
+"""
+
+
 import sqlite3
 import sys
 import sys
