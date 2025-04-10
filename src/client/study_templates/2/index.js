@@ -1,8 +1,7 @@
 /**
  * Description: Client logic for study page with two images
  *
- * Author: Vignesh Natarjan
- * Contact: vnatarajan@uni-bielefeld.de
+ * Author: V Natarjan
  */
 
 

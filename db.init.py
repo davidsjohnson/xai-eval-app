@@ -1,8 +1,7 @@
 """
 Description: Initialize Database ( Create participant_feedback and study table if not exist )
 
-Author: Vignesh Natarjan
-Contact: vnatarajan@uni-bielefeld.de
+Author: V Natarjan
 """
 
 import sqlite3

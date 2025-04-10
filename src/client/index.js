@@ -1,8 +1,7 @@
 /**
  * Description: Client logic for login page
  *
- * Author: Vignesh Natarjan
- * Contact: vnatarajan@uni-bielefeld.de
+ * Author: V Natarjan
  */
 
 

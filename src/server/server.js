@@ -1,8 +1,7 @@
 /**
  * Description: Server logic for Evaluating Human-Centered XAI-Assisted Decision Making
  *
- * Author: Vignesh Natarjan
- * Contact: vnatarajan@uni-bielefeld.de
+ * Author: V Natarjan
  */
 
 const fs = require('fs');
