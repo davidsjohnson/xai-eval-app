@@ -4,17 +4,17 @@ This project aims to develop an interactive web-based interface for collecting h
 
 The goal is to explore and evaluate **human-AI collaboration** in high-stakes decision-making scenarios, using **explainability** and **trust** as key design components.
 
-## 📚 More Information on Blockies and OCDegen
+## More Information on Blockies and OCDegen
 
 This project builds on research that introduces Blockies and OCDegen as part of a study into human trust in AI.
 
-#### 📄 Reference:
+#### Reference:
 
-David S. Johnson  
-**"Higher Stakes, Healthier Trust? An Application-Grounded Approach to Assessing Healthy Trust in High-Stakes Human-AI Collaboration."**  
-*arXiv:2503.03529 (2025)*  
-DOI: [10.48550/arXiv.2503.03529](https://doi.org/10.48550/arXiv.2503.03529)  
-🔗 [View on arXiv](https://arxiv.org/abs/2503.03529)
+David S. Johnson
+**"Higher Stakes, Healthier Trust? An Application-Grounded Approach to Assessing Healthy Trust in High-Stakes Human-AI Collaboration."**
+*arXiv:2503.03529 (2025)*
+DOI: [10.48550/arXiv.2503.03529](https://doi.org/10.48550/arXiv.2503.03529) 
+[View on arXiv](https://arxiv.org/abs/2503.03529)
 
 
 ## Project Directory Structure
