@@ -17,6 +17,12 @@ DOI: [10.48550/arXiv.2503.03529](https://doi.org/10.48550/arXiv.2503.03529)
 [View on arXiv](https://arxiv.org/abs/2503.03529)
 
 
+## Sample Page
+
+This is a demo page showing the **Explainable Artificial Intelligence: Human vs AI Diagnosis Evaluation Application**.
+
+![Sample Page](img/sample_page.png)
+
 ## Project Directory Structure
 
 ```
