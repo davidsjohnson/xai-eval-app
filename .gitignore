@@ -21,3 +21,4 @@ Vagrantfile
 *.db
 node_modules
 img/
+src/client/study_id*
