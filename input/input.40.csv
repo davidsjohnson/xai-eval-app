@@ -39,11 +39,3 @@ INDEX,PATIENT_ID,X_RAY_IMAGE,TRUE_DIAG,SUGGESTED_DIAG,Concept1,Concept1_Caption,
 32,E9ZQI3IFR1,19.png,OCDegen,Healthy,12.png,Weak Bend,19.png,Weak Bend,03.png,Weak Bend,DAL
 38,G0YNQKT0D2,19.png,Healthy,Healthy,08.png,Weak Bend,11.png,Weak Bend,12.png,Weak Bend,LA
 39,MISFV02DG4,19.png,OCDegen,OCDegen,09.png,Strong Bend,20.png,Strong Bend,01.png,Strong Bend,CHI
-,,,,,, ,,,,,
-,,,,,, ,,,,,
-,,,,,, ,,,,,
-,,,,,, ,,,,,
-,,,,,, ,,,,,
-,,,,,, ,,,,,
-,,,,,,,,,,,
-,,,,,,,,,,,
