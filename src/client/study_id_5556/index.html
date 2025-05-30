@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xai.ui/latest</title>
+    <link rel="icon" href="data:image/x-icon;,">
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js" defer></script>
+</head>
+<body>
+    <div class="fixed-page-dimension">
+    <header>
+        <h1>Blockies OCDegen Diagnosis Support</h1>
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+            <div class="progress-text" id="progress-bar-text">Diagnosis 5/10</div>
+        </div>
+    </header>
+    <main>
+       <!-- COL 1 --> 
+        <div class="main-row1">
+            <!-- Card for OCDegen Biomarkers in Column 2 of main-row1 -->
+            <div class="card-row1-col1">
+                <h3 class="title">OCDegen Biomarkers</h3>
+                <ul class="biomarkers-list">
+                    <li>Strong Spine Bend</li>
+                    <li>Strong Bone Variation</li>
+                    <li>Tucked Head</li>
+                    <li>Main Bones Mutation</li>
+                </ul>
+                <h3 class="card-warning">Warning:</h3>
+                <p class="card-warning-text">
+                OCDegen can be fatal if not diagnosed and treated early. Treatment, however, is costly and highly invasive. Please verify all diagnoses before making your final decision. Furthermore, incorrect responses negatively affect your performance bonus.
+                </p>
+            </div>
+            <!-- COL 2-->
+            <div class="card-row1-col2-3-4-5">
+                <!-- First Row: Patient ID -->
+                <div class="title" id="patient-id-location2"></div>
+                <!-- Second Row: Image -->
+                <img id="patient-x-ray-image" src="" alt="Patient Image" class="image">
+                <!-- Third Row: Text Info -->
+                <div class="caption">
+                    <p><b>X-Ray Location:</b> <span id="x-ray-location"></span></p>
+                    <!-- <p><b>Suggested Diagnosis: </b><span id="suggested-diag-location2" class="unhealthy"></span></p>
+                    <p><b>True Diagnosis:</b> <span id="true-diag" class="healthy"></span></p> -->
+                </div>
+            </div>
+
+            <!-- COL 3 --> 
+            <div class="card-row1-col2-3-4-5">
+                <!-- First Row: Patient ID -->
+                <div id="concept-card-1-title" class="title"></div>
+                <!-- Second Row: Image -->
+                <img id="concept-card-1-image" src="" alt="Patient Image" class="image">
+                <!-- Third Row: Text Info -->
+                <div class="caption">
+                    <p><b id="concept-card-1-caption"></b></p>
+                </div>
+            </div>
+ 
+
+             <!-- COL 4 --> 
+            <div class="card-row1-col2-3-4-5">
+                <!-- First Row: Patient ID -->
+                <div id="concept-card-2-title" class="title"></div>
+                <!-- Second Row: Image -->
+                <img id="concept-card-2-image" src="" alt="Patient Image" class="image">
+                <!-- Third Row: Text Info -->
+                <div class="caption">
+                    <p><b id="concept-card-2-caption"></b></p>
+                </div>
+            </div>
+ 
+
+            <!-- COL 5 --> 
+            <div class="card-row1-col2-3-4-5">
+                <!-- First Row: Patient ID -->
+                <div id="concept-card-3-title" class="title"></div>
+                <!-- Second Row: Image -->
+                <img id="concept-card-3-image" src="" alt="Patient Image" class="image">
+                <!-- Third Row: Text Info -->
+                <div class="caption">
+                    <p><b id="concept-card-3-caption"></b></p>
+                </div>
+            </div>
+ 
+        </div>
+
+        <div class="main-row2">
+		    <div class="card-row2-col1">
+                <h3 class="title">Example-Based Explanations:</h3>
+                <p class="text">
+                Example-based explanations help explain a diagnosis by identifying the AI recommended diagnosis 
+                and the true diagnosis of similar examples from the training set. These examples are shown to help
+                you understand the AI's reasoning and how it arrived at its diagnosis. By comparing the AI's 
+                suggested diagnosis with the true diagnosis of similar examples, you can gain insight into the AI's
+                decision-making process and make a more informed diagnosis.
+                </p>
+		    </div><!-- <div class="card-row2-col1">  -->
+
+            <div class="card-row2-col2">
+                <h3 class="title">Blocky Diagnosis:</h3>
+            
+                <div class="card-content">
+                    <!-- Left: AI and ground truth diagnosis -->
+                    <div class="left-content">
+                        <p><b>Suggested Diagnosis:</b> <span id="suggested-diag-location2" class="unhealthy"></span></p>
+                        <p><b>True Diagnosis:</b> <span id="true-diag" class="healthy"></span></p>
+                    </div>
+            
+                    <!-- Right: user radio selection -->
+                    <div class="right-options">
+                        <h4>Your Diagnosis:</h4>
+                        <label class="healthy-label">
+                            <input id="radio-healthy" type="radio" name="health" value="healthy" /> Healthy
+                        </label>
+                        <label class="unhealthy-label">
+                            <input id="radio-unhealthy" type="radio" name="health" value="unhealthy" /> OCDegen
+                        </label>
+                    </div>
+                </div>
+            </div>
+	    </div> 		<!-- <div class="main-row2"> --> 
+
+
+    </main>
+    <footer>
+        <div class="nav-buttons">
+            <button id="button-prev">Previous</button>
+            <button id="button-next">Next</button>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

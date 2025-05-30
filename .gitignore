@@ -22,3 +22,7 @@ Vagrantfile
 node_modules
 img/
 src/client/study_id*
+study_data/
+
+# keep one study file for sharing new template
+!src/client/study_id_5556
