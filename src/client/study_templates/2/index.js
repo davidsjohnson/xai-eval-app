@@ -88,7 +88,7 @@ function clear_radio_buttons() {
 
 function set_progress(current_page_nr, total_page_count) {
     let progress_value = (current_page_nr / total_page_count) * 100; // Convert to percentage
-    let progress_bar = document.querySelector("footer .progress-bar");
+    let progress_bar = document.querySelector(".progress-bar");
     progress_bar.style.width = progress_value + "%";
 
     document.getElementById("progress-bar-text").textContent = "Diagnosis " + current_page_nr.toString() + "/" + total_page_count.toString();
@@ -133,7 +133,7 @@ function update_study_url(participant_id, study_id, study_type, page_nr, total_p
     new_url += "&study_type=" + study_type;
     new_url += "&page_nr=" + page_nr;
     new_url += "&total_pages=" + total_pages;
-    window.location.href = new_url;
+    history.pushState(null, '', new_url);
 }
 
 
@@ -398,9 +398,9 @@ function csv_json_get_additional_attributes(page_nr)
     index = page_nr - 1;
     l_patient_id = input.PATIENT_ID[index];
 
-    concept_card_1_title    = "Concept 1";
-    concept_card_1_image    = "img/"       + input.Concept1[index];
-    concept_card_1_caption  = "Concept:" + input.Concept1_Caption[index];
+    concept_card_1_title    = "SHAP:";
+    concept_card_1_image    = "img/"       + input.Shap[index];
+    concept_card_1_caption  = "Caption:" + input.Shap_Caption[index];
     attributes = [concept_card_1_title, concept_card_1_image, concept_card_1_caption];
     return attributes;
 }
@@ -454,6 +454,24 @@ button_next.addEventListener("click", function() {
 
 button_prev.addEventListener("click", function() {
     prev_button_action();
+});
+// ─── Add this at the very end of index.js ──────────────────────────────
+// Keeps the page in-sync when the user clicks the browser Back/Forward buttons
+window.addEventListener('popstate', () => {
+  const page_nr = get_page_nr_from_url();
+
+  // Refresh the main content for the new page number
+  csv_json_get_all_attributes_and_set_in_html_page(page_nr);
+
+  // Re-load any diagnosis already stored for that page
+  db_get_and_set_participant_diagnosis(
+    get_participant_id_from_url(),
+    get_study_id_from_url(),
+    page_nr
+  );
+
+  // Update the Next/Submit button label
+  button_toggle_next_or_submit();
 });
 
 

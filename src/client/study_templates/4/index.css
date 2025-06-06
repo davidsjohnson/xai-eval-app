@@ -2,16 +2,19 @@
     /*My Browser Inner Width and Height: 1484px  x  756px*/
     /*HD Screen Resolution : 1920px x 1080px*/
   --fixed-screen-width: 1420px; /* 1920px  */
-  --fixed-screen-height: 700px; /* 1080px */
+  --fixed-screen-height: 800px; /* 1080px */
   --app-width: calc(var(--fixed-screen-width)   *  (1 - 0.0)); /*reduce app-width */
   --app-height: calc(var(--fixed-screen-height) *  (1 - 0.0)); /*reduce app-height */
 
   --blue: #1e90ff;
   --white: #ffffff;
-  --orange: #FF5733;
-  --green: #4CAF50;
-  --bg-green: #4CAF50;
-  --bg-gray: #1d2327; 
+  --orange: #ee6c4d;
+  --blue: #98c1d9;
+  --green: #198754;
+  --bg-green: #198754;
+  --bg-blue: #3d5a80;
+  --bg-gray: #1d2327;
+  --bg-main: #f4f4f9;
   --border1: 2px solid black;
   --border2: 2px solid black;
   /*Disable Border*/
@@ -42,88 +45,131 @@
   --concept-based-explanation-text-y-placement: -80px; 
 }
 
-html,body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    /*overflow: hidden;*/ /* Prevents scrolling */
-    width: 100vw; /* 100% of viewport width */
-    height: 100vh; /* 100% of viewport height */
-    margin: 0;
-    justify-content: center;
-    align-items: center;
-    display: flex;
+html,
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  /*overflow: hidden;*/
+  /* Prevents scrolling */
+  width: 100vw;
+  /* 100% of viewport width */
+  height: 100vh;
+  /* 100% of viewport height */
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .fixed-page-dimension {
-    display: grid;
-    max-width: var(--app-width); /* Reduced width */
-    max-height: var(--app-height); /* Reduced height */
-    margin: 0 auto; /* Centers the content horizontally */
-    width: 100%; /* Ensures it scales on smaller screens */
-    grid-template-rows:var(--header-height) var(--body-height) var(--footer-height);
-    grid-template-columns: auto;
+  display: grid;
+  max-width: var(--app-width);
+  /* Reduced width */
+  max-height: var(--app-height);
+  /* Reduced height */
+  margin: 0 auto;
+  /* Centers the content horizontally */
+  width: 100%;
+  /* Ensures it scales on smaller screens */
+  grid-template-rows: var(--header-height) var(--body-height) var(--footer-height);
+  grid-template-columns: auto;
 }
 
 header {
-    position: relative;
-    background: var(--bg-green);
-    color: white;
-    padding: 1rem;
-    text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-blue);
+  color: white;
+  padding: 1rem;
 }
 
-header > h1{
-    align-items: center;
-    justify-content:left;
-    text-align: left;
-    margin-top:8px;
+header>h1 {
+  align-items: center;
+  justify-content: left;
+  text-align: left;
+  /* font-weight: normal; */
 }
 
-.header-info {
-    position: absolute;
-    top: 12px;
-    right: 60px;
-    background: #1d2327;
-    color: white;
-    padding: 5px 5px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+header .progress-bar-container {
+  display: flex;
+  flex-direction: column;
+  /* Adjusts the distance from the bottom of the footer */
+  transform: translateX(-2%);
+  /* Centers the bar horizontally */
+  width: 500px;
+  height: 30px;
+  background-color: white;
+  /* Background color of the progress bar */
+  border-radius: 5px;
+  /* Rounded corners for the container */
+  overflow: hidden;
+  /* Ensures text stays within the bar */
+
 }
 
-.header-info table {
-    border-collapse: collapse;
-    border: 1px solid #ccc;  /* Border for the entire table */
+header .progress-bar {
+
+  width: 50%;
+  /* Set the progress here */
+  height: 100%;
+  background-color: var(--bg-green);
+  /* Progress color */
+  border-radius: 1px;
+  /* Rounded corners for the progress bar */
+  align-items: center;
+  justify-content: center;
+  /* Center text horizontally */
+  overflow: hidden;
+  /* Prevents overflow of text */
+  white-space: nowrap;
+  /* Prevents text from wrapping */
+  text-align: center;
+  transition: width 0.3s ease-in-out;
 }
 
-.header-info td {
-    padding: 0px 2px;
-    text-align: left;
-    border: 1px solid #ccc;  /* Border for individual cells */
+header .progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-weight: bold;
+  font-size: 0.9rem;
+  pointer-events: none;
+  /* Makes the text unclickable */
 }
 
 .unhealthy {
-    color: var(--orange);  /* Red color for Unhealthy */
-    font-weight: bold;
+  color: var(--orange);
+  /* Red color for Unhealthy */
+  font-weight: bold;
 }
 
 .healthy {
-    color: var(--green);  /* Red color for Unhealthy */
-    font-weight: bold;
+  color: var(--green);
+  /* Red color for Unhealthy */
+  font-weight: bold;
 }
 
 main {
-    position: relative;
-    display: grid;
-    /* 60% 38%; */  /* Adjust the height of row1 and row2*/
-    grid-template-rows: calc(var(--body-height) * 0.6)   /* 10% of --app-height */
-                       calc(var(--body-height) * 0.3);  /* 10% of --app-height */
-    column-gap: 1px; /* 10px gap between columns */
-    row-gap: 1px;    /* 5px gap between rows */
-    padding: 0.1rem;
-    background: #f4f4f9;
-    overflow-y: hidden;
-    /*viki_comment: The following Disable : For the main columns to be full length*/
-    /*
+  position: relative;
+  display: grid;
+  /* 60% 38%; */
+  /* Adjust the height of row1 and row2*/
+  grid-template-rows: calc(var(--body-height) * 0.6)
+    /* 10% of --app-height */
+    calc(var(--body-height) * 0.3);
+  /* 10% of --app-height */
+  column-gap: 1px;
+  /* 10px gap between columns */
+  row-gap: 1px;
+  /* 5px gap between rows */
+  padding: 0.1rem;
+  background: var(--bg-main);
+  overflow-y: hidden;
+  /*viki_comment: The following Disable : For the main columns to be full length*/
+  /*
     align-items: center;
     justify-content: center;
     */
@@ -260,72 +306,42 @@ main {
 }
 
 footer {
-    position: relative;
-    background: var(--bg-gray);
-    color: white;
-    text-align: center;
-    padding: 1rem;
+  position: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  background: var(--bg-main);
+  color: white;
+  text-align: center;
+  padding-bottom: 1rem;
 }
 
 footer .nav-buttons {
-    position: absolute;
-    /*distance from bottom*/
-    bottom: 30px;
-    right: 10px;
-    display: flex;
-    gap: 0.5rem;
+  position: flex;
+  justify-content: center;
+  /* align-items: center; */
+  /*distance from bottom*/
+  /* bottom: 30px; */
+  /* right: 10px; */
+  display: flex;
+  gap: 0.5rem;
+  height: 3rem;
 }
 
 footer .nav-buttons button {
-    background: var(--green);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
+  background: var(--bg-blue);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 150px;
+  font-size: large;
 }
 
 footer .nav-buttons button:hover {
-    background: #45a049;
-}
-
-footer .progress-bar-container {
-    position: absolute;
-    bottom: 30px;  /* Adjusts the distance from the bottom of the footer */
-    left: 50%;
-    transform: translateX(-50%); /* Centers the bar horizontally */
-    width: 500px;
-    height: 30px;
-    background-color: #555; /* Background color of the progress bar */
-    border-radius: 5px; /* Rounded corners for the container */
-    overflow: hidden;  /* Ensures text stays within the bar */
-
-}
-
-footer .progress-bar {
-    position: absolute;
-    display: flex;
-    width: 50%; /* Set the progress here */
-    height: 100%;
-    background-color: var(--green); /* Progress color */
-    border-radius: 5px; /* Rounded corners for the progress bar */
-    align-items: center;
-    justify-content: center;   /* Center text horizontally */
-    overflow: hidden;           /* Prevents overflow of text */
-    white-space: nowrap;        /* Prevents text from wrapping */
-    text-align: center; 
-}
-
-footer .progress-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-weight: bold;
-    font-size: 0.9rem;
-    pointer-events: none;  /* Makes the text unclickable */
+  background: var(--bg-blue)
 }
 
 /* Text Card Styles */
@@ -412,8 +428,8 @@ footer .progress-text {
     font-size: 20px;
     margin: 0;
     font-weight: bold;
-    padding-left: 15px;
-    padding-top: 15px;
+    padding-left: 5px;
+    padding-top: 5px;
 }
 
 .card-row2-col1 .text {
@@ -423,6 +439,43 @@ footer .progress-text {
     padding-left: 15px;
     padding-top: 15px;
     margin-top: var(--concept-based-explanation-text-y-placement);
+}
+
+/* Card Title */
+.card-row2-col2 .title {
+  color: #555;
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  padding-left: 15px;
+}
+
+.left-content {
+  flex: 1;
+}
+
+.right-options {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.rectangle {
+  background-color: #f0f0f0;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
 }
 
 /* Basic styles for the radio button */

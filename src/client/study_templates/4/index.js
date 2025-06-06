@@ -10,10 +10,10 @@ let input = null;
 const button_next = document.getElementById("button-next");
 const button_prev = document.getElementById("button-prev");
 const radio_buttons = document.getElementsByName("health");
-const patient_id1 = document.getElementById("patient-id-location1");
+// const patient_id1 = document.getElementById("patient-id-location1");
 const patient_id2 = document.getElementById("patient-id-location2");
 const x_ray_location = document.getElementById("x-ray-location");
-const suggested_diag1 = document.getElementById("suggested-diag-location1");
+// const suggested_diag1 = document.getElementById("suggested-diag-location1");
 const suggested_diag2 = document.getElementById("suggested-diag-location2");
 const true_diag   = document.getElementById("true-diag");
 const x_ray_image = document.getElementById("patient-x-ray-image");
@@ -88,7 +88,7 @@ function clear_radio_buttons() {
 
 function set_progress(current_page_nr, total_page_count) {
     let progress_value = (current_page_nr / total_page_count) * 100; // Convert to percentage
-    let progress_bar = document.querySelector("footer .progress-bar");
+    let progress_bar = document.querySelector("header .progress-bar");
     progress_bar.style.width = progress_value + "%";
 
     document.getElementById("progress-bar-text").textContent = "Diagnosis " + current_page_nr.toString() + "/" + total_page_count.toString();
@@ -96,7 +96,7 @@ function set_progress(current_page_nr, total_page_count) {
 
 function set_patient_id(id)
 {
-    patient_id1.textContent = id.toString();
+    // patient_id1.textContent = id.toString();
     patient_id2.textContent = "Patient ID: " + id.toString();
 }
 
@@ -134,7 +134,10 @@ function update_study_url(participant_id, study_id, study_type, page_nr, total_p
     new_url += "&study_type=" + study_type;
     new_url += "&page_nr=" + page_nr;
     new_url += "&total_pages=" + total_pages;
-    window.location.href = new_url;
+    // window.location.href = new_url;
+
+    // Push new URL into history without reloading
+    window.history.pushState({}, '', new_url);
 }
 
 async function db_update_async()
@@ -321,17 +324,17 @@ async function prev_button_action()
 
 function set_suggested_diag(value)
 {
-    suggested_diag1.textContent = value;
+    // suggested_diag1.textContent = value;
     suggested_diag2.textContent = value;
     if(value == "OCDegen"){
-        suggested_diag1.className = "";
+        // suggested_diag1.className = "";
         suggested_diag2.className = "";
-        suggested_diag1.className = "unhealthy"
+        // suggested_diag1.className = "unhealthy"
         suggested_diag2.className = "unhealthy"
     }else{
-        suggested_diag1.className = "";
+        // suggested_diag1.className = "";
         suggested_diag2.className = "";
-        suggested_diag1.className = "healthy"
+        // suggested_diag1.className = "healthy"
         suggested_diag2.className = "healthy"
     }
 }
@@ -398,17 +401,17 @@ function csv_json_get_additional_attributes(page_nr)
     index = page_nr - 1;
     l_patient_id = input.PATIENT_ID[index];
 
-    concept_card_1_title    = "Concept 1";
-    concept_card_1_image    = "img/"        + input.Concept1[index];
-    concept_card_1_caption  = "Concept:"    + input.Concept1_Caption[index];
+    concept_card_1_title    = "Example 1";
+    concept_card_1_image    = "img/"        + input.Example1[index];
+    concept_card_1_caption  = ""    + input.Example1_Caption[index];
 
-    concept_card_2_title    = "Concept 2";
-    concept_card_2_image    = "img/"        + input.Concept2[index];
-    concept_card_2_caption  = "Concept:"    + input.Concept2_Caption[index];
+    concept_card_2_title    = "Example 2";
+    concept_card_2_image    = "img/"        + input.Example2[index];
+    concept_card_2_caption  = ""    + input.Example2_Caption[index];
 
-    concept_card_3_title    = "Concept 3";
-    concept_card_3_image    = "img/"        + input.Concept3[index];
-    concept_card_3_caption  = "Concept:"    + input.Concept3_Caption[index];
+    concept_card_3_title    = "Example 3";
+    concept_card_3_image    = "img/"        + input.Example3[index];
+    concept_card_3_caption  = ""    + input.Example3_Caption[index];
 
     attributes = [concept_card_1_title, concept_card_1_image, concept_card_1_caption,
                   concept_card_2_title, concept_card_2_image, concept_card_2_caption,
@@ -476,5 +479,12 @@ button_prev.addEventListener("click", function() {
     prev_button_action();
 });
 
+window.addEventListener('popstate', () => {
+    const page_nr = get_page_nr_from_url();
+    const participant_id = get_participant_id_from_url();
+    const study_id = get_study_id_from_url();
 
-
+    clear_radio_buttons();
+    csv_json_get_all_attributes_and_set_in_html_page(page_nr);
+    db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
+});
