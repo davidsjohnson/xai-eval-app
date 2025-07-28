@@ -2,16 +2,19 @@
     /*My Browser Inner Width and Height: 1484px  x  756px*/
     /*HD Screen Resolution : 1920px x 1080px*/
   --fixed-screen-width: 1420px; /* 1920px  */
-  --fixed-screen-height: 700px; /* 1080px */
+  --fixed-screen-height: 800px; /* 1080px */
   --app-width: calc(var(--fixed-screen-width)   *  (1 - 0.0)); /*reduce app-width */
   --app-height: calc(var(--fixed-screen-height) *  (1 - 0.0)); /*reduce app-height */
 
   --blue: #1e90ff;
   --white: #ffffff;
-  --orange: #FF5733;
-  --green: #4CAF50;
-  --bg-green: #4CAF50;
-  --bg-gray: #1d2327; 
+  --orange: #ee6c4d;
+  --blue: #98c1d9;
+  --green: #198754;
+  --bg-green: #198754;
+  --bg-blue: #3d5a80;
+  --bg-gray: #1d2327;
+  --bg-main: #f4f4f9;
   --border1: 2px solid black;
   --border2: 2px solid black;
   /*Disable Border*/
@@ -37,93 +40,136 @@
  
   --row1-card-height: calc(var(--row1-height) * 0.9);
   --row2-card-height: calc(var(--row2-height) * 0.9);
-  --warning-title-y-placement: 20px; 
+  --warning-title-y-placement: 6px; 
   --warning-text-y-placement: 5px; 
   --concept-based-explanation-text-y-placement: -80px; 
 }
 
-html,body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    /*overflow: hidden;*/ /* Prevents scrolling */
-    width: 100vw; /* 100% of viewport width */
-    height: 100vh; /* 100% of viewport height */
-    margin: 0;
-    justify-content: center;
-    align-items: center;
-    display: flex;
+html,
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  /*overflow: hidden;*/
+  /* Prevents scrolling */
+  width: 100vw;
+  /* 100% of viewport width */
+  height: 100vh;
+  /* 100% of viewport height */
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .fixed-page-dimension {
-    display: grid;
-    max-width: var(--app-width); /* Reduced width */
-    max-height: var(--app-height); /* Reduced height */
-    margin: 0 auto; /* Centers the content horizontally */
-    width: 100%; /* Ensures it scales on smaller screens */
-    grid-template-rows:var(--header-height) var(--body-height) var(--footer-height);
-    grid-template-columns: auto;
+  display: grid;
+  max-width: var(--app-width);
+  /* Reduced width */
+  max-height: var(--app-height);
+  /* Reduced height */
+  margin: 0 auto;
+  /* Centers the content horizontally */
+  width: 100%;
+  /* Ensures it scales on smaller screens */
+  grid-template-rows: var(--header-height) var(--body-height) var(--footer-height);
+  grid-template-columns: auto;
 }
 
 header {
-    position: relative;
-    background: var(--bg-green);
-    color: white;
-    padding: 1rem;
-    text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-blue);
+  color: white;
+  padding: 1rem;
 }
 
-header > h1{
-    align-items: center;
-    justify-content:left;
-    text-align: left;
-    margin-top:8px;
+header>h1 {
+  align-items: center;
+  justify-content: left;
+  text-align: left;
+  /* font-weight: normal; */
 }
 
-.header-info {
-    position: absolute;
-    top: 12px;
-    right: 60px;
-    background: #1d2327;
-    color: white;
-    padding: 5px 5px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+header .progress-bar-container {
+  display: flex;
+  flex-direction: column;
+  /* Adjusts the distance from the bottom of the footer */
+  transform: translateX(-2%);
+  /* Centers the bar horizontally */
+  width: 500px;
+  height: 30px;
+  background-color: white;
+  /* Background color of the progress bar */
+  border-radius: 5px;
+  /* Rounded corners for the container */
+  overflow: hidden;
+  /* Ensures text stays within the bar */
+
 }
 
-.header-info table {
-    border-collapse: collapse;
-    border: 1px solid #ccc;  /* Border for the entire table */
+header .progress-bar {
+
+  width: 50%;
+  /* Set the progress here */
+  height: 100%;
+  background-color: var(--bg-green);
+  /* Progress color */
+  border-radius: 1px;
+  /* Rounded corners for the progress bar */
+  align-items: center;
+  justify-content: center;
+  /* Center text horizontally */
+  overflow: hidden;
+  /* Prevents overflow of text */
+  white-space: nowrap;
+  /* Prevents text from wrapping */
+  text-align: center;
+  transition: width 0.3s ease-in-out;
 }
 
-.header-info td {
-    padding: 0px 2px;
-    text-align: left;
-    border: 1px solid #ccc;  /* Border for individual cells */
+header .progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-weight: bold;
+  font-size: 0.9rem;
+  pointer-events: none;
+  /* Makes the text unclickable */
 }
 
 .unhealthy {
-    color: var(--orange);  /* Red color for Unhealthy */
-    font-weight: bold;
+  color: var(--orange);
+  /* Red color for Unhealthy */
+  font-weight: bold;
 }
 
 .healthy {
-    color: var(--green);  /* Red color for Unhealthy */
-    font-weight: bold;
+  color: var(--green);
+  /* Red color for Unhealthy */
+  font-weight: bold;
 }
 
 main {
-    position: relative;
-    display: grid;
-    /* 60% 38%; */  /* Adjust the height of row1 and row2*/
-    grid-template-rows: calc(var(--body-height) * 0.6)   /* 10% of --app-height */
-                       calc(var(--body-height) * 0.3);  /* 10% of --app-height */
-    column-gap: 1px; /* 10px gap between columns */
-    row-gap: 1px;    /* 5px gap between rows */
-    padding: 0.1rem;
-    background: #f4f4f9;
-    overflow-y: hidden;
-    /*viki_comment: The following Disable : For the main columns to be full length*/
-    /*
+  position: relative;
+  display: grid;
+  /* 60% 38%; */
+  /* Adjust the height of row1 and row2*/
+  grid-template-rows: calc(var(--body-height) * 0.6)
+    /* 10% of --app-height */
+    calc(var(--body-height) * 0.3);
+  /* 10% of --app-height */
+  column-gap: 1px;
+  /* 10px gap between columns */
+  row-gap: 1px;
+  /* 5px gap between rows */
+  padding: 0.1rem;
+  background: var(--bg-main);
+  overflow-y: hidden;
+  /*viki_comment: The following Disable : For the main columns to be full length*/
+  /*
     align-items: center;
     justify-content: center;
     */
@@ -167,7 +213,7 @@ main {
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    grid-template-rows: 10% 60% 30%;  /* Row heights as specified */
+    grid-template-rows: 8% 73% 19%;  /* Row heights as specified */
     border: 1px solid #ccc;   /* Border around the entire card */
     overflow: hidden;
 }
@@ -259,73 +305,45 @@ main {
     color: white;
 }
 
+
+
 footer {
-    position: relative;
-    background: var(--bg-gray);
-    color: white;
-    text-align: center;
-    padding: 1rem;
+  position: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  background: var(--bg-main);
+  color: white;
+  text-align: center;
+  padding-bottom: 1rem;
 }
 
 footer .nav-buttons {
-    position: absolute;
-    /*distance from bottom*/
-    bottom: 30px;
-    right: 10px;
-    display: flex;
-    gap: 0.5rem;
+  position: flex;
+  justify-content: center;
+  /* align-items: center; */
+  /*distance from bottom*/
+  /* bottom: 30px; */
+  /* right: 10px; */
+  display: flex;
+  gap: 0.5rem;
+  height: 3rem;
 }
 
 footer .nav-buttons button {
-    background: var(--green);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
+  background: var(--bg-blue);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 150px;
+  font-size: large;
 }
 
 footer .nav-buttons button:hover {
-    background: #45a049;
-}
-
-footer .progress-bar-container {
-    position: absolute;
-    bottom: 30px;  /* Adjusts the distance from the bottom of the footer */
-    left: 50%;
-    transform: translateX(-50%); /* Centers the bar horizontally */
-    width: 500px;
-    height: 30px;
-    background-color: #555; /* Background color of the progress bar */
-    border-radius: 5px; /* Rounded corners for the container */
-    overflow: hidden;  /* Ensures text stays within the bar */
-
-}
-
-footer .progress-bar {
-    position: absolute;
-    display: flex;
-    width: 50%; /* Set the progress here */
-    height: 100%;
-    background-color: var(--green); /* Progress color */
-    border-radius: 5px; /* Rounded corners for the progress bar */
-    align-items: center;
-    justify-content: center;   /* Center text horizontally */
-    overflow: hidden;           /* Prevents overflow of text */
-    white-space: nowrap;        /* Prevents text from wrapping */
-    text-align: center; 
-}
-
-footer .progress-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-weight: bold;
-    font-size: 0.9rem;
-    pointer-events: none;  /* Makes the text unclickable */
+  background: var(--bg-blue)
 }
 
 /* Text Card Styles */
@@ -355,6 +373,7 @@ footer .progress-text {
     overflow: hidden;
     border: 1px solid #ccc;   /* Border around the entire card */
     margin-left:10px;
+    font-size: 15px ;
 }
 
 .card-row2-col2 {
@@ -412,17 +431,54 @@ footer .progress-text {
     font-size: 20px;
     margin: 0;
     font-weight: bold;
-    padding-left: 15px;
-    padding-top: 15px;
+    padding-left: 5px;
+    padding-top: 5px;
 }
 
 .card-row2-col1 .text {
-    font-size: 13px;
+    font-size: 14.5px;
     color: #555;
     line-height: 1.5;
     padding-left: 15px;
-    padding-top: 15px;
+    padding-top: 30px;
     margin-top: var(--concept-based-explanation-text-y-placement);
+}
+
+/* Card Title */
+.card-row2-col2 .title {
+  color: #555;
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  padding-left: 15px;
+}
+
+.left-content {
+  flex: 1;
+}
+
+.right-options {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.rectangle {
+  background-color: #f0f0f0;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
 }
 
 /* Basic styles for the radio button */
@@ -435,8 +491,8 @@ input[type="radio"] {
     border: none;
     outline: none;
     border-radius: 50%;  /* Ensure the button is round */
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     background-color: #fff; /* White background when not selected */
     cursor: pointer;
     position: relative;
@@ -463,3 +519,105 @@ input[type="radio"]:checked::after {
     transform: translate(-50%, -50%); /* Center the inner circle perfectly */
 }
 
+/* ─── Style “Your Diagnosis” pills (right-options) ─────────── */
+.card-row2-col2 .right-options {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 0.5rem;         /* a little breathing room under the heading */
+}
+
+.card-row2-col2 .right-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 5px;        /* pill shape */
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.card-row2-col2 .right-options .healthy-label {
+  background-color: var(--green);
+  color: white;
+}
+
+.card-row2-col2 .right-options .unhealthy-label {
+  background-color: var(--orange);
+  color: white;
+}
+
+
+.card-row2-col2 .right-options {
+  margin: -15px 0 0 20px; /* top | right | bottom | left */
+}
+
+/* ─── Tweak “Your Diagnosis” pills & dot ─────────────── */
+
+/* 1. Make pills shorter by cutting their left/right padding */
+.card-row2-col2 .right-options label {
+  padding: 0.3rem 0.4rem !important;
+}
+
+/* 2. Ensure the radio circle is visible again */
+.card-row2-col2 .right-options input[type="radio"] {
+  /* small white ring */
+  width: 14px;
+  height: 14px;
+  margin: 0 0.4rem 0 0 !important;
+  background: transparent !important;
+  border: 2px solid white !important;
+  position: relative;
+}
+
+/* draw the inner dot only when checked */
+.card-row2-col2 .right-options input[type="radio"]::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+
+/* ── MAKE the radio dot fully opaque ────────────────────── */
+.card-row2-col2 .right-options input[type="radio"] {
+  background-color: white !important;   /* white background */
+}
+
+.card-row2-col2 .right-options input[type="radio"]:checked::after {
+  background-color: var(--bg-blue) !important; /* contrasting inner dot */
+}
+
+/* ─── Reduce space between “Your Diagnosis” and the pills ───────── */
+.card-row2-col2 .right-options {
+  gap: 0.3rem !important;          /* was 1rem */
+}
+
+.card-row2-col2 .right-options h4 {
+  margin-bottom: 0.2rem !important; /* was 0.6rem */
+}
+
+/* ─── FINAL: make the “Your Diagnosis” pills even shorter ───────── */
+.card-row2-col2 .right-options label {
+  /* top/bottom | left/right */
+  padding: 0.3rem 0.5rem !important;   /* reduce the second value to shrink width */
+  width: 10rem !important;             /* ensure they size to content+padding */
+}
+
+/* Enlarge only the Patient X-ray card’s image */
+.main-row1 > .card-row1-col2-3-4-5:nth-child(2) {
+  /* two rows: 10% for the title, 90% for the image */
+  grid-template-rows: 10% 80% !important;
+}
+
+/* (Optional) collapse the hidden caption row entirely */
+/* in case you still have three rows defined elsewhere */
+.main-row1 > .card-row1-col2-3-4-5:nth-child(2) .caption {
+  display: none;
+}

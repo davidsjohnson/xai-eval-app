@@ -18,6 +18,24 @@ const suggested_diag2 = document.getElementById("suggested-diag-location2");
 const true_diag   = document.getElementById("true-diag");
 const x_ray_image = document.getElementById("patient-x-ray-image");
 
+function redirectIfFinished() {
+    const pid = get_participant_id_from_url();
+    const sid = get_study_id_from_url();
+    if (sessionStorage.getItem(`study_done_${pid}_${sid}`) === 'true') {
+        window.location.replace(`/feedback/index.html?participant_id=${pid}&study_id=${sid}`);
+    }
+}
+
+/* run on normal page load */
+redirectIfFinished();
+
+/* run again if the page is restored from bfcache */
+window.addEventListener('pageshow', (evt) => {
+    if (evt.persisted) redirectIfFinished();
+});
+
+
+
 let diagnosis = null;
 
 function get_page_nr_from_url()
@@ -201,15 +219,15 @@ async function db_update() {
 
 function db_update_success_action(participant_id, study_id, current_page_nr)
 {
-    //Last Page
-    if(current_page_nr >= csv_json_get_total_page_count())
-    {
-        let feedback_url = "/feedback/index.html?";
-        feedback_url += "participant_id=" +participant_id;
-        feedback_url += "&study_id=" + study_id;
-        window.location.href = feedback_url; // Redirect to test.html
-        return;
-    }
+    if (current_page_nr >= csv_json_get_total_page_count()) {
+    const feedback_url = `/feedback/index.html?participant_id=${participant_id}&study_id=${study_id}`;
+
+    /* NEW — remember that this study is done in this tab */
+    sessionStorage.setItem(`study_done_${participant_id}_${study_id}`, 'true');
+
+    window.location.replace(feedback_url);
+    return;
+}
 
     //increment page number
     page_nr = current_page_nr + 1;
@@ -221,27 +239,49 @@ function db_update_success_action(participant_id, study_id, current_page_nr)
     button_toggle_next_or_submit();
 }
 
-function button_toggle_next_or_submit()
-{
-    up = get_params_from_url();
-    total_pages = parseInt(up.total_pages, 10);
-    curr_page = parseInt(up.page_nr, 10);
-    if (curr_page === total_pages) {
-        //Change Button Next to Submit
-        button_next.textContent = "Submit";
-    }else{
-        button_next.textContent = "Next";
+function button_toggle_next_or_submit() {
+    const up          = get_params_from_url();
+    let   total_pages = parseInt(up.total_pages, 10);
+    let   curr_page   = parseInt(up.page_nr,   10);
+
+    // If page_nr is missing or not a number, treat it as page 1
+    if (isNaN(curr_page) || curr_page < 1) { curr_page = 1; }
+    if (isNaN(total_pages) || total_pages < 1) { total_pages = 1; }
+
+    /* ---- default state: show both buttons in normal style ---- */
+    button_prev.style.display = 'inline-block';
+    button_next.style.display = 'inline-block';
+    button_next.textContent   = 'Next';
+    button_next.classList.remove('submit-bottom-right');
+
+    /* ---- first page: hide Prev ---- */
+    if (curr_page === 1) {
+        button_prev.style.display = 'none';
+        return;
     }
+
+    /* ---- last page: show Prev + floating Submit ---- */
+    if (curr_page === total_pages) {
+        button_next.textContent = 'Submit';
+        button_next.classList.add('submit-bottom-right');
+        return;
+    }
+
+    /* ---- middle pages: both visible, already labelled “Next” ---- */
 }
+
+
+
+
 
 function db_update_duplicate_entry_action(participant_id, study_id, current_page_nr)
 {
-    //Last Page
-    if(current_page_nr >= csv_json_get_total_page_count())
-    {
-        window.location.href = "/feedback/index.html"; // Redirect to test.html
-        return;
-    }
+    if (current_page_nr >= csv_json_get_total_page_count()) {
+    sessionStorage.setItem(`study_done_${participant_id}_${study_id}`, 'true');
+    window.location.replace(`/feedback/index.html?participant_id=${participant_id}&study_id=${study_id}`);
+    return;
+}
+
 
     //increment page number
     page_nr = current_page_nr + 1;
@@ -281,6 +321,7 @@ async function db_get_and_set_participant_diagnosis_prev_button_click(participan
             csv_json_get_all_attributes_and_set_in_html_page(page_nr);
             console.log(diagnosis);
         }
+        button_toggle_next_or_submit();
     } catch (error) {
         console.error('Error fetching data:', error);
     }
@@ -400,7 +441,7 @@ function csv_json_get_additional_attributes(page_nr)
 
     concept_card_1_title    = "SHAP:";
     concept_card_1_image    = "img/"       + input.Shap[index];
-    concept_card_1_caption  = "Caption:" + input.Shap_Caption[index];
+    concept_card_1_caption  =  input.Shap_Caption[index];
     attributes = [concept_card_1_title, concept_card_1_image, concept_card_1_caption];
     return attributes;
 }
@@ -455,9 +496,16 @@ button_next.addEventListener("click", function() {
 button_prev.addEventListener("click", function() {
     prev_button_action();
 });
-// ─── Add this at the very end of index.js ──────────────────────────────
+
 // Keeps the page in-sync when the user clicks the browser Back/Forward buttons
 window.addEventListener('popstate', () => {
+    const pid = get_participant_id_from_url();
+  const sid = get_study_id_from_url();
+  if (sessionStorage.getItem(`study_done_${pid}_${sid}`) === 'true') {
+      window.location.replace(`/feedback/index.html?participant_id=${pid}&study_id=${sid}`);
+      return;               // nothing else in the handler runs
+  }
+
   const page_nr = get_page_nr_from_url();
 
   // Refresh the main content for the new page number

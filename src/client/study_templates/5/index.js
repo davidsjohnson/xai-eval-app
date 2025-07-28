@@ -27,10 +27,10 @@ function redirectIfFinished() {
     }
 }
 
-/* run on normal page load */
+/* ➊ run on normal page load */
 redirectIfFinished();
 
-/* run again if the page is restored from bfcache */
+/* ➋ run again if the page is restored from bfcache */
 window.addEventListener('pageshow', (evt) => {
     if (evt.persisted) redirectIfFinished();
 });
@@ -262,7 +262,7 @@ function button_toggle_next_or_submit() {
     button_next.textContent   = 'Next';
     button_next.classList.remove('submit-bottom-right');
 
-    /* ---- first page: hide Prev ---- */
+    /* first page: hide Prev */
     if (curr_page === 1) {
         button_prev.style.display = 'none';
         return;
@@ -275,6 +275,7 @@ function button_toggle_next_or_submit() {
         return;
     }
 }
+
 
 function db_update_duplicate_entry_action(participant_id, study_id, current_page_nr)
 {
@@ -444,17 +445,17 @@ function csv_json_get_additional_attributes(page_nr)
     l_patient_id = input.PATIENT_ID[index];
     // X_RAY_Trait = input.X_RAY_TRAIT[index];
 
-    concept_card_1_title    = "Example 1";
-    concept_card_1_image    = "img/" + input.Example1[index];
-    concept_card_1_caption  = input.Example1_Caption[index];
+    concept_card_1_title    = "Concept 1";
+    concept_card_1_image    = "img/" + input.Concept1[index];
+    concept_card_1_caption  = input.Concept1_Caption[index];
 
-    concept_card_2_title    = "Example 2";
-    concept_card_2_image    = "img/" + input.Example2[index];
-    concept_card_2_caption  = input.Example2_Caption[index];
+    concept_card_2_title    = "Concept 2";
+    concept_card_2_image    = "img/" + input.Concept2[index];
+    concept_card_2_caption  = input.Concept2_Caption[index];
 
-    concept_card_3_title    = "Example 3";
-    concept_card_3_image    = "img/" + input.Example3[index];
-    concept_card_3_caption  = input.Example3_Caption[index];
+    concept_card_3_title    = "Concept 3";
+    concept_card_3_image    = "img/" + input.Concept3[index];
+    concept_card_3_caption  = input.Concept3_Caption[index];
 
     attributes = [concept_card_1_title, concept_card_1_image, concept_card_1_caption,
                   concept_card_2_title, concept_card_2_image, concept_card_2_caption,

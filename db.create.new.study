@@ -27,8 +27,8 @@ if [[ ! -d $study_image_dir ]]; then
     exit 1
 fi
 
-if [[ "$study_type" -lt 1 ]] || [[ "$study_type" -gt 4 ]]; then
-    echo "Error: study_type must be between 1 and 4."
+if [[ "$study_type" -lt 1 ]] || [[ "$study_type" -gt 5 ]]; then
+    echo "Error: study_type must be between 1 and 5."
     exit 1
 fi
 
@@ -64,8 +64,10 @@ elif [[ $study_type == 3 ]]; then
     cp src/client/study_templates/3/* "$study_dir/"
 elif [[ $study_type == 4 ]]; then
     cp src/client/study_templates/4/* "$study_dir/"
+elif [[ $study_type == 5 ]]; then
+    cp src/client/study_templates/5/* "$study_dir/"
 else
-    echo "Error: Invalid study_type. It should be between 1 and 4."
+    echo "Error: Invalid study_type. It should be between 1 and 5."
     exit 1
 fi
 

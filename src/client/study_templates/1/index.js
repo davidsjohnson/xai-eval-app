@@ -18,6 +18,23 @@ const suggested_diag2 = document.getElementById("suggested-diag-location2");
 const true_diag   = document.getElementById("true-diag");
 const x_ray_image = document.getElementById("patient-x-ray-image");
 
+function redirectIfFinished() {
+    const pid = get_participant_id_from_url();
+    const sid = get_study_id_from_url();
+    if (sessionStorage.getItem(`study_done_${pid}_${sid}`) === 'true') {
+        window.location.replace(`/feedback/index.html?participant_id=${pid}&study_id=${sid}`);
+    }
+}
+
+/* run on normal page load */
+redirectIfFinished();
+
+/* run again if the page is restored from bfcache */
+window.addEventListener('pageshow', (evt) => {
+    if (evt.persisted) redirectIfFinished();
+});
+
+
 let diagnosis = null;
 
 function get_page_nr_from_url()
@@ -88,10 +105,11 @@ function clear_radio_buttons() {
 
 function set_progress(current_page_nr, total_page_count) {
     let progress_value = (current_page_nr / total_page_count) * 100; // Convert to percentage
-    let progress_bar = document.querySelector("footer .progress-bar");
+    let progress_bar = document.querySelector("header .progress-bar");
     progress_bar.style.width = progress_value + "%";
 
-    document.getElementById("progress-bar-text").textContent = "Diagnosis " + current_page_nr.toString() + "/" + total_page_count.toString();
+    // document.getElementById("progress-bar-text").textContent = "Diagnosis " + current_page_nr.toString() + "/" + total_page_count.toString();
+    document.getElementById("progress-bar-text").textContent =  `Diagnosis ${current_page_nr}/${total_page_count}`;
 }
 
 function set_patient_id(id)
@@ -123,17 +141,21 @@ function get_params_from_url()
     };
 }
 
-function update_study_url(participant_id, study_id, study_type, page_nr, total_pages)
-{
-    let new_url = "/study_id_";
-    new_url += study_id + "/";
-    new_url += "index.html?";
-    new_url += "participant_id=" +participant_id;
-    new_url += "&study_id=" + study_id;
-    new_url += "&study_type=" + study_type;
-    new_url += "&page_nr=" + page_nr;
-    new_url += "&total_pages=" + total_pages;
-    window.location.href = new_url;
+
+function update_study_url(participant_id, study_id, study_type, page_nr, total_pages){
+  const new_url =
+    `/study_id_${study_id}/index.html?` +
+    `participant_id=${participant_id}&study_id=${study_id}` +
+    `&study_type=${study_type}&page_nr=${page_nr}&total_pages=${total_pages}`;
+
+  /* swap the URL only */
+  history.pushState(null, '', new_url);   // no reload
+
+  /* refresh just the dynamic bits already in memory */
+  clear_radio_buttons();
+  csv_json_get_all_attributes_and_set_in_html_page(page_nr);
+  db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
+  button_toggle_next_or_submit();
 }
 
 async function db_update_async()
@@ -200,59 +222,74 @@ async function db_update() {
 
 function db_update_success_action(participant_id, study_id, current_page_nr)
 {
-    up = get_params_from_url();
-    //Last Page
-    if(current_page_nr >= csv_json_get_total_page_count())
-    {
-        let feedback_url = "/feedback/index.html?";
-        feedback_url += "participant_id=" +participant_id;
-        feedback_url += "&study_id=" + study_id;
-        window.location.href = feedback_url; // Redirect to test.html
-        return;
-    }
+    if (current_page_nr >= csv_json_get_total_page_count()) {
+    const feedback_url = `/feedback/index.html?participant_id=${participant_id}&study_id=${study_id}`;
+
+    /* NEW — remember that this study is done in this tab */
+    sessionStorage.setItem(`study_done_${participant_id}_${study_id}`, 'true');
+
+    window.location.replace(feedback_url);
+    return;
+}
 
     //increment page number
     page_nr = current_page_nr + 1;
+    up = get_params_from_url();
     update_study_url(participant_id, study_id, up.study_type, page_nr, up.total_pages);
     clear_radio_buttons();
-
     csv_json_get_all_attributes_and_set_in_html_page(page_nr);
     db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
     button_toggle_next_or_submit();
 }
 
-function button_toggle_next_or_submit()
-{
-    up = get_params_from_url();
-    total_pages = parseInt(up.total_pages, 10);
-    curr_page = parseInt(up.page_nr, 10);
-    if (curr_page === total_pages) {
-        //Change Button Next to Submit
-        button_next.textContent = "Submit";
-    }else{
-        button_next.textContent = "Next";
+function button_toggle_next_or_submit() {
+    const up          = get_params_from_url();
+    let   total_pages = parseInt(up.total_pages, 10);
+    let   curr_page   = parseInt(up.page_nr,   10);
+
+    // If page_nr is missing or not a number, treat it as page 1
+    if (isNaN(curr_page) || curr_page < 1) { curr_page = 1; }
+    if (isNaN(total_pages) || total_pages < 1) { total_pages = 1; }
+
+    /* default state: show both buttons in normal style */
+    button_prev.style.display = 'inline-block';
+    button_next.style.display = 'inline-block';
+    button_next.textContent   = 'Next';
+    button_next.classList.remove('submit-bottom-right');
+
+    /* first page: hide Prev */
+    if (curr_page === 1) {
+        button_prev.style.display = 'none';
+        return;
     }
+
+    /* last page: show Prev + floating Submit */
+    if (curr_page === total_pages) {
+        button_next.textContent = 'Submit';
+        button_next.classList.add('submit-bottom-right');
+        return;
+    }
+
+    /* middle pages: both visible, already labelled “Next” */
 }
 
 function db_update_duplicate_entry_action(participant_id, study_id, current_page_nr)
 {
-    up = get_params_from_url();
-    //Last Page
-    if(current_page_nr >= csv_json_get_total_page_count())
-    {
-        window.location.href = "/feedback/index.html"; // Redirect to test.html
-        return;
-    }
+    if (current_page_nr >= csv_json_get_total_page_count()) {
+    sessionStorage.setItem(`study_done_${participant_id}_${study_id}`, 'true');
+    window.location.replace(`/feedback/index.html?participant_id=${participant_id}&study_id=${study_id}`);
+    return;
+}
+
 
     //increment page number
     page_nr = current_page_nr + 1;
+    up = get_params_from_url();
     update_study_url(participant_id, study_id, up.study_type, page_nr, up.total_pages);
     clear_radio_buttons();
     csv_json_get_all_attributes_and_set_in_html_page(page_nr);
     db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
 }
-
-
 
 function next_button_action()
 {
@@ -266,7 +303,6 @@ function next_button_action()
 }
 
 async function db_get_and_set_participant_diagnosis_prev_button_click(participant_id, study_id, page_nr) {
-    up = get_params_from_url();
     console.log("db_get_and_set_participant_diagnosis_prev_button_click");
     try {
         const response = await fetch(`/read_db_prev?participant_id=${participant_id}&study_id=${study_id}&page_nr=${page_nr}`);
@@ -275,16 +311,19 @@ async function db_get_and_set_participant_diagnosis_prev_button_click(participan
         if (Array.isArray(data) && data.length > 0) {
             diagnosis = data[0].participant_diagnosis;
             //First URL Update
+            up = get_params_from_url();
             update_study_url(participant_id, study_id, up.study_type, page_nr, up.total_pages);
             set_participant_diagnosis(diagnosis);
             //Set all attributes from csv_json info
             csv_json_get_all_attributes_and_set_in_html_page(page_nr);
             console.log(diagnosis);
         }
+        button_toggle_next_or_submit();
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
+
 
 async function db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr) {
     console.log("db_get_participant_diagnosis");
@@ -432,5 +471,28 @@ button_prev.addEventListener("click", function() {
     prev_button_action();
 });
 
+// Keeps the page in-sync when the user clicks the browser Back/Forward buttons
+window.addEventListener('popstate', () => {
+    const pid = get_participant_id_from_url();
+  const sid = get_study_id_from_url();
+  if (sessionStorage.getItem(`study_done_${pid}_${sid}`) === 'true') {
+      window.location.replace(`/feedback/index.html?participant_id=${pid}&study_id=${sid}`);
+      return;               // nothing else in the handler runs
+  }
 
+  const page_nr = get_page_nr_from_url();
+
+  // Refresh the main content for the new page number
+  csv_json_get_all_attributes_and_set_in_html_page(page_nr);
+
+  // Re-load any diagnosis already stored for that page
+  db_get_and_set_participant_diagnosis(
+    get_participant_id_from_url(),
+    get_study_id_from_url(),
+    page_nr
+  );
+
+  // Update the Next/Submit button label
+  button_toggle_next_or_submit();
+});
 

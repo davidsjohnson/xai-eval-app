@@ -20,7 +20,7 @@ def create_study_table():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS study (
             study_id INTEGER PRIMARY KEY,
-            study_type INTEGER CHECK(study_type IN (1, 2, 3, 4)),
+            study_type INTEGER CHECK(study_type IN (1, 2, 3, 4, 5)),
             total_pages INTEGER
         )
     ''')

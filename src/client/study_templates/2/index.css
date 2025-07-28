@@ -23,7 +23,7 @@
  
   /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
   --grid-row1-ncolumns: 3; /* viki_comment: only change this value to increase or decrease columns in first row */
-  --grid-template-row1-columns: 1.1fr 1fr 1fr;
+  --grid-template-row1-columns: 0.8fr 1.1fr 1.1fr;
  /* Use var() inside repeat() */
 
   --grid-row2-ncolumns: 2; 
@@ -198,7 +198,7 @@ main {
     background: none;
     border-radius: 8px;
     grid-template-columns: var(--grid-template-row2-columns); /*60% 39%*/
-    height: var(--row2-height);              /* Fixed height */
+    height: var(--row2-height);              
     border: var(--border2);
     overflow: hidden;
     column-gap: 1px;
@@ -216,7 +216,26 @@ main {
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    grid-template-rows: 8% 70% 22%;  /* Row heights as specified */
+    grid-template-rows: 10% 85%;  /* Row heights as specified */
+
+
+.card-row2-col2            { display: flex;  flex-direction: column; }
+.card-row2-col2 .card-content {
+  /* two equal-height columns, centred vertically in the card */
+  display: grid;
+  grid-template-columns: 1fr auto;   /* left text | right radios */
+  align-items: center;               /* vertical centring */
+  column-gap: 2.5rem;
+  padding: 1.2rem 1.5rem;
+}
+
+/* left column text stays left-aligned */
+.card-row2-col2 .left-content p { margin: 0.4rem 0; }
+
+/* right column: tighten up spacing */
+.card-row2-col2 .right-options h4 { margin: 0 0 0.6rem 0; }
+.card-row2-col2 .right-options label { margin-bottom: 0.4rem; }
+
     border: 1px solid #ccc;   /* Border around the entire card */
     overflow: hidden;
 }
@@ -262,8 +281,7 @@ main {
   margin: 8px 0;
 }
 
-
-
+f
 .main-row2 .user-diagnosis {
     color: #555;
     text-align: center;
@@ -308,7 +326,7 @@ main {
 }
 
 footer {
-  position: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   height: 3rem;
@@ -319,15 +337,12 @@ footer {
 }
 
 footer .nav-buttons {
-  position: flex;
-  justify-content: center;
-  /* align-items: center; */
-  /*distance from bottom*/
-  /* bottom: 30px; */
-  /* right: 10px; */
   display: flex;
+  justify-content: center;              
   gap: 0.5rem;
   height: 3rem;
+  position: relative;   
+  padding: 0 2rem;/* reference for Submit */
 }
 
 footer .nav-buttons button {
@@ -417,7 +432,7 @@ footer .nav-buttons button:hover {
 /* Warning Text */
 .card-row1-col1 .card-warning-text {
     color: #555;
-    font-size: 12px;
+    font-size: 14.5px;
     margin: 0;
     color: #555;
     line-height: 1.5;
@@ -435,7 +450,7 @@ footer .nav-buttons button:hover {
 }
 
 .card-row2-col1 .text {
-    font-size: 13px;
+    font-size: 16px;
     color: #555;
     line-height: 1.5;
     padding-left: 15px;
@@ -490,8 +505,8 @@ input[type="radio"] {
     border: none;
     outline: none;
     border-radius: 50%;  /* Ensure the button is round */
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     background-color: #fff; /* White background when not selected */
     cursor: pointer;
     position: relative;
@@ -518,3 +533,96 @@ input[type="radio"]:checked::after {
     transform: translate(-50%, -50%); /* Center the inner circle perfectly */
 }
 
+/* Style “Your Diagnosis” pills (right-options)*/
+.card-row2-col2 .right-options {
+  display: flex;
+  gap: 0.3rem !important;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin: -15px 0 0 20px;         /* a little breathing room under the heading */
+}
+
+.card-row2-col2 .right-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 5px;        /* pill shape */
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0.3rem 0.5rem !important;   /* reduce the second value to shrink width */
+  width: 10rem !important; 
+}
+
+.card-row2-col2 .right-options .healthy-label {
+  background-color: var(--green);
+  color: white;
+}
+
+.card-row2-col2 .right-options .unhealthy-label {
+  background-color: var(--orange);
+  color: white;
+}
+
+
+/* Ensure the radio circle is visible again */
+.card-row2-col2 .right-options input[type="radio"] {
+  /* small white ring */
+  width: 14px;
+  height: 14px;
+  margin: 0 0.4rem 0 0 !important;
+  background: transparent !important;
+  border: 2px solid white !important;
+  position: relative;
+  background-color: white !important;
+}
+
+/* draw the inner dot only when checked */
+.card-row2-col2 .right-options input[type="radio"]::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.card-row2-col2 .right-options input[type="radio"]:checked::after {
+  background-color: var(--bg-blue) !important; /* contrasting inner dot */
+}
+
+.card-row2-col2 .right-options h4 {
+  margin-bottom: 0.2rem !important; /* was 0.6rem */
+}
+  
+.submit-bottom-right {
+  position: absolute;                   /* takes it out of the flex flow */
+  right: 0; bottom: 0;                  /* flush to footer’s right edge */
+  background: #198754 !important;       /* green, matches theme */
+  color: #ffffff !important;
+
+  border: none;
+  border-radius: 0.4rem;
+  width: 150px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  right: 2rem;              /* same inset as the footer padding */
+  bottom: 0.5rem;
+}
+
+/* keep colour + size frozen in every state */
+.submit-bottom-right:hover,
+.submit-bottom-right:focus,
+.submit-bottom-right:active {
+  background: #198754 !important;       /* stay green */
+  color: #ffffff !important;
+  transform: none !important;           /* no grow / shrink */
+}
+
+footer .nav-buttons button:hover {
+  background: var(--bg-blue);           
+}

@@ -2,29 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-store"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>xai.ui/latest</title>
   <link rel="icon" href="data:image/x-icon;,">
   <link rel="stylesheet" href="index.css" />
   <script src="index.js" defer></script>
 </head>
+
 <body>
   <div class="fixed-page-dimension">
+    
+    <!-- HEADER  -->
     <header>
       <h1>Blockies OCDegen Diagnosis Support</h1>
+
       <div class="progress-bar-container">
         <div class="progress-bar"></div>
         <div class="progress-text" id="progress-bar-text">Diagnosis 5/10</div>
       </div>
-      <!-- Put this inside <header> (or anywhere) -->
+
+      <!-- hidden placeholders the JS still updates -->
       <span id="patient-id-location1" style="display:none"></span>
       <span id="suggested-diag-location1" style="display:none"></span>
     </header>
 
+    <!-- MAIN -->
     <main>
-      <!-- ROW 1: 1 text card + 2 image cards -->
+      <!-- ROW 1 :  text card + 2 image cards -->
       <div class="main-row1">
-        <!-- Text Card -->
+        <!-- (1) Text card -->
         <div class="card-row1-col1">
           <h3 class="title">OCDegen Biomarkers</h3>
           <ul class="biomarkers-list">
@@ -33,61 +40,100 @@
             <li>Tucked Head</li>
             <li>Main Bones Mutation</li>
           </ul>
+
           <h3 class="card-warning">Warning:</h3>
           <p class="card-warning-text">
-            OCDegen can be fatal if not diagnosed and treated early. Treatment, however, is costly and highly invasive. Please verify all diagnoses before making your final decision. Furthermore, incorrect responses negatively affect your performance bonus.
+            OCDegen can be fatal if not diagnosed and treated early. Treatment, however, is costly
+            and highly invasive. Please verify all diagnoses before making your final decision.
+            Furthermore, incorrect responses negatively affect your performance bonus.
           </p>
         </div>
 
-        <!-- Image Card 1 -->
+        <!-- Patient image card -->
         <div class="card-row1-col2-3-4-5">
           <div class="title" id="patient-id-location2"></div>
-          <img id="patient-x-ray-image" src="" alt="Patient Image" class="image"/>
-          <div class="caption">
-            <p><b>X-Ray Location:</b> <span id="x-ray-location"></span></p>
+
+          <img id="patient-x-ray-image"
+               class="image"
+               src=""
+               alt="Patient Image" />
+
+          <!-- Hidden placeholder so existing JS call is safe -->
+          <div class="caption" style="display:none">
+            <span id="x-ray-location"></span>
           </div>
         </div>
 
-        <!-- Image Card 2 -->
+        <!-- SHAP image card -->
         <div class="card-row1-col2-3-4-5">
           <div id="concept-card-1-title" class="title"></div>
-          <img id="concept-card-1-image" src="" alt="Patient Image" class="image"/>
-          <div class="caption">
-            <p><b id="concept-card-1-caption"></b></p>
-          </div>
-        </div>
-      </div>
 
-      <!-- ROW 2: Explanation + Interaction -->
+          <img id="concept-card-1-image"
+               class="image"
+               src=""
+               alt="SHAP Image" />
+
+          <!-- caption removed on purpose -->
+          <div class="caption" style="display:none"></div>
+        </div>
+      </div> <!-- /main-row1 -->
+
+
+      <!-- ROW 2 : explanation + interaction -->
       <div class="main-row2">
+        <!-- explanation -->
         <div class="card-row2-col1">
           <h3 class="title">SHAP-Based Explanations:</h3>
           <p class="text">
-            This visualization highlights the most important parts of the image that influenced the model's decision. Red areas support the prediction, while blue areas oppose it – helping you understand why the model classified the Blockie as Healthy or OCDegen.
+            This visualization highlights the most important parts of the image that influenced
+            the model's decision. Red areas support the prediction, while blue areas oppose it –
+            helping you understand why the model classified the Blockie as Healthy or OCDegen.
           </p>
         </div>
 
+        <!-- interaction -->
         <div class="card-row2-col2">
           <h3 class="title">Blocky Diagnosis:</h3>
+
           <div class="card-content">
+            <!-- left column -->
             <div class="left-content">
-              <p><b>Suggested Diagnosis:</b> <span id="suggested-diag-location2" class="unhealthy"></span></p>
-              <p><b>True Diagnosis:</b> <span id="true-diag" class="healthy"></span></p>
+              <p><b>Suggested Diagnosis:</b>
+                 <span id="suggested-diag-location2" class="unhealthy"></span></p>
+
+              <p><b>True Diagnosis:</b>
+                 <span id="true-diag" class="healthy"></span></p>
+
+              <!-- caption comes here, same font-weight, no colour -->
+              <p><b>Caption:</b> <span id="concept-card-1-caption"></span></p>
             </div>
+
+            <!-- right column -->
             <div class="right-options">
               <h4>Your Diagnosis:</h4>
+
               <label class="healthy-label">
-                <input id="radio-healthy" type="radio" name="health" value="healthy" /> Healthy
+                <input id="radio-healthy"
+                       type="radio"
+                       name="health"
+                       value="healthy" />
+                Healthy
               </label>
+
               <label class="unhealthy-label">
-                <input id="radio-unhealthy" type="radio" name="health" value="unhealthy" /> OCDegen
+                <input id="radio-unhealthy"
+                       type="radio"
+                       name="health"
+                       value="unhealthy" />
+                OCDegen
               </label>
             </div>
-          </div>
+          </div> <!-- /card-content -->
         </div>
-      </div>
+      </div> <!-- /main-row2 -->
     </main>
 
+    <!-- FOOTER -->
     <footer>
       <div class="nav-buttons">
         <button id="button-prev">Previous</button>
@@ -97,5 +143,4 @@
   </div>
 </body>
 </html>
-
 

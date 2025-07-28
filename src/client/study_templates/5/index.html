@@ -20,20 +20,6 @@
     <main>
        <!-- COL 1 --> 
         <div class="main-row1">
-            <!-- Card for OCDegen Biomarkers in Column 2 of main-row1 -->
-            <div class="card-row1-col1">
-                <h3 class="title">OCDegen Biomarkers</h3>
-                <ul class="biomarkers-list">
-                    <li>Strong Spine Bend</li>
-                    <li>Strong Bone Variation</li>
-                    <li>Tucked Head</li>
-                    <li>Main Bones Mutation</li>
-                </ul>
-                <h3 class="card-warning">Warning:</h3>
-                <p class="card-warning-text">
-                OCDegen can be fatal if not diagnosed and treated early. Treatment, however, is costly and highly invasive. Please verify all diagnoses before making your final decision. Furthermore, incorrect responses negatively affect your performance bonus.
-                </p>
-            </div>
             <!-- COL 2-->
             <div class="card-row1-col2-3-4-5">
                 <!-- First Row: Patient ID -->
@@ -74,19 +60,42 @@
                 </div>
             </div>
  
+
+            <!-- COL 5 --> 
+            <div class="card-row1-col2-3-4-5">
+                <!-- First Row: Patient ID -->
+                <div id="concept-card-3-title" class="title"></div>
+                <!-- Second Row: Image -->
+                <img id="concept-card-3-image" src="" alt="Patient Image" class="image">
+                <!-- Third Row: Text Info -->
+                <div class="caption">
+                    <p><b id="concept-card-3-caption"></b></p>
+                </div>
+            </div>
  
         </div>
 
         <div class="main-row2">
-		    <div class="card-row2-col1">
-                <h3 class="title">Example-Based Explanations:</h3>
-                <p class="text">
-                Example-based explanations help explain a diagnosis by identifying the AI recommended diagnosis 
-                and the true diagnosis of similar examples from the training set. These examples are shown to help
-                you understand the AI's reasoning and how it arrived at its diagnosis. By comparing the AI's 
-                suggested diagnosis with the true diagnosis of similar examples, you can gain insight into the AI's
-                decision-making process and make a more informed diagnosis.
+
+            <!-- Card for OCDegen Biomarkers in Column 2 of main-row1 -->
+            <div class="card-row1-col1">
+                <h3 class="title">OCDegen Biomarkers</h3>
+                <ul class="biomarkers-list">
+                    <li>Strong Spine Bend</li>
+                    <li>Strong Bone Variation</li>
+                    <li>Tucked Head</li>
+                    <li>Main Bones Mutation</li>
+                </ul>
+                <h3 class="card-warning">Warning:</h3>
+                <p class="card-warning-text">
+                OCDegen can be fatal if not diagnosed and treated early. Treatment, however, is costly and highly invasive. Please verify all diagnoses before making your final decision. Furthermore, incorrect responses negatively affect your performance bonus.
                 </p>
+            </div>
+
+		    <div class="card-row2-col1">
+                <h3 class="title">Concept-Based Explanations:</h3>
+                <p class="text">
+                Concept-based explanations highlight specific concepts the AI used when making its decision. These concepts, like "furry texture" or "round shape," are mapped to human-recognizable features rather than raw input data. By showing which concepts influenced the outcome, you can better understand the AI’s reasoning and evaluate its reliability.                </p>
 		    </div><!-- <div class="card-row2-col1">  -->
 
             <div class="card-row2-col2">
