@@ -211,6 +211,7 @@ function get_study_details(study_id) {
                 return reject({ study_type: -1, total_pages: -1 }); // Handle DB error
             }
             if (!row) {
+                console.error(`Study table not created or record not available: ${row}`);
                 return reject({ study_type: -2, total_pages: -2 }); // Handle missing record
             }
             resolve({ study_type: parseInt(row.study_type), total_pages: parseInt(row.total_pages) });
@@ -225,6 +226,7 @@ async function cb_event_db_validation_participant_id_and_study_id(req, res) {
 
     try {
         const { study_type, total_pages } = await get_study_details(parseInt(study_id));
+        console.log(`Study Details: study_type=${study_type}, total_pages=${total_pages}`);
 
         if (study_type === -1) {
             return res.status(500).json({ error: "DB Error or study table does not exist" });
