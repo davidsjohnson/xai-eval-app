@@ -11,6 +11,11 @@
   --orange: #ee6c4d;
   --blue: #98c1d9;
   --green: #198754;
+
+  /* new versions for alpha control */
+  --orange-rgb: 238, 108, 77; /* #ee6c4d */
+  --green-rgb: 25, 135, 84;   /* #198754 */
+
   --bg-green: #198754;
   --bg-blue: #3d5a80;
   --bg-gray: #1d2327;
@@ -187,20 +192,19 @@ main {
     padding: 0.5rem;
     align-items: center;
     justify-content: center;
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+    /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.20); */
 }
 
 .main-row2 {
     display: grid;
     background: none;
     border-radius: 8px;
-    grid-template-columns: 1.5fr 1.5fr 2.5fr; /*60% 39%*/
+    grid-template-columns: 1.5fr 2.5fr 1.5fr; /*60% 39%*/
     height: var(--row2-height);              /* Fixed height */
-    border: var(--border2);
     overflow: hidden;
     column-gap: 0.25rem;
     padding: 0.5rem;
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+    /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.20); */
 }
 
 /* Card Styles */
@@ -211,17 +215,16 @@ main {
     
     height: var(--row1-card-height);              /* Fixed height */
     background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.20);
     border-radius: 8px;
     grid-template-rows: 8% 73% 19%;  /* Row heights as specified */
-    border: 1px solid #ccc;   /* Border around the entire card */
+
     overflow: hidden;
 }
 
 /* First Row - Patient ID */
 .card-row1-col2-3-4-5 .title {
     color: #555;
-    background: white;
     display: flex;
     text-align: left;
     margin-left: 5px;
@@ -242,11 +245,12 @@ main {
     border-bottom: none;
     justify-content: center;
     align-items: center;
+    border-radius: 8px;
 }
 
 /* Third Row - Text */
 .card-row1-col2-3-4-5 .caption {
-    padding-left: 8px;
+    padding-left: 20px;
     background: none;
     padding-top: 0px;
     overflow-y: auto;
@@ -255,12 +259,21 @@ main {
     align-items: center;
     justify-content: center;
 }
+
 .card-row1-col2-3-4-5 .caption p {
 	  /*vertical horizantal*/
   margin: 8px 0;
 }
 
+.main-row1>.card-row1-col2-3-4-5:first-child.healthy {
+  box-shadow: 0px 0px 18px rgba(var(--green-rgb), 0.4);
+  /* soft blue shadow */
+}
 
+.main-row1>.card-row1-col2-3-4-5:first-child.unhealthy {
+  box-shadow: 0px 0px 18px rgba(var(--orange-rgb), 0.4);
+  /* soft blue shadow */
+}
 
 .main-row2 .user-diagnosis {
     color: #555;
@@ -349,15 +362,14 @@ footer .nav-buttons button:hover {
     display: flex;
     width: 100%;
     gap: 1px;
-    padding-left: 15px;
-    padding-top: 15px;
+    padding-left: 10px;
+    padding-top: 5px;
     height: var(--row2-card-height); /* FIX: Unifies the height with the other cards */
     box-sizing: border-box;
     background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     flex-direction: column;
-    border: 1px solid #ccc;
     overflow-y: auto;
 }
 .card-row2-col1 {
@@ -366,10 +378,9 @@ footer .nav-buttons button:hover {
     width: 100%;                 /* Ensure card width matches the width of column 2 */
     height: var(--row2-card-height);              /* Fixed height */
     background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #ccc;   /* Border around the entire card */
     margin-left:0;
     font-size: 15px ;
 }
@@ -380,9 +391,8 @@ footer .nav-buttons button:hover {
     width: 100%;                 /* Ensure card width matches the width of column 2 */
     height: var(--row2-card-height);              /* Fixed height */
     background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    border: 1px solid #ccc;   /* Border around the entire card */
     overflow: hidden;
     margin-left:0;
 }
@@ -397,31 +407,34 @@ footer .nav-buttons button:hover {
 }
 
 /* Numbered Biomarkers List */
-.card-row1-col1 .biomarkers-list {
+.card-row2-col1 .biomarkers-list {
     color: #555;
     list-style-type: decimal;  /* Changes to numbered list */
+    list-style-position: inside;
     padding-left: 20px;
-    margin: 0;
     font-size: 16px;
+    margin: 0;
 }
 
 /* Warning Title */
-.card-row1-col1 .card-warning {
+.card-row2-col1 .card-warning {
     font-size: 20px;
     margin: 0;
     font-weight: bold;
     color: var(--orange);
     margin-top: var(--warning-title-y-placement);
+    padding-left: 10px;
 }
 
 /* Warning Text */
-.card-row1-col1 .card-warning-text {
+.card-row2-col1 .card-warning-text {
     color: #555;
-    font-size: 12px;
+    font-size: 15px;
     margin: 0;
     color: #555;
     line-height: 1.5;
-    margin-top: var(--warning-text-y-placement);
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 /* Card Title */
@@ -453,25 +466,66 @@ footer .nav-buttons button:hover {
   padding-top: 5px;
 }
 
+/* 1) Lock the two columns + top align */
 .card-content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  /* left grows, right fixed */
+  column-gap: 1.75rem;
+  align-items: start;
+  /* top-align both columns */
+  padding: 8px 15px 0 15px;
+  /* avoid margin-collapsing wiggle */
+}
+
+/* 2) Make right column stick to the top, fixed width */
+.card-row2-col2 .right-options {
+  align-self: start;
+  /* top within its grid cell */
+  width: 14rem;
+  /* match the grid column */
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
-  padding-left: 15px;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.3rem 0.4rem;
 }
 
+.card-row2-col2 .right-options p {
+  margin: 0;
+  /* kill default top/bottom margins */
+  padding: 0;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* 3) Stabilize spacing on the left so line wrapping doesn’t shift the top */
 .left-content {
-  flex: 1;
+  display: grid;
+  align-content: start;
+  row-gap: 0.35rem;
 }
 
-.right-options {
+.left-content p {
+  margin: 0;
+  line-height: 1.7em;
+}
+
+/* 4) (Optional) Reserve up to 3 lines for Present Biomarkers to prevent vertical jump */
+.left-content p:nth-of-type(3) {
+  min-height: calc(1.7em * 3);
+}
+
+/* .right-options {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   justify-content: flex-start;
-}
+  align-items: flex-start;
+  margin: 0;
+  padding: 0.3rem 0.4rem;
+} */
 
 .rectangle {
   background-color: #f0f0f0;
@@ -594,9 +648,9 @@ input[type="radio"]:checked::after {
 }
 
 /* Enlarge only the Patient X-ray card’s image */
-.main-row1 > .card-row1-col2-3-4-5:nth-child(2) {
+/* .main-row1 > .card-row1-col2-3-4-5:nth-child(2) {
   grid-template-rows: 10% 70% 20% !important;
-}
+} */
 
 /* Submit button – inside footer, right-aligned */
 .submit-bottom-right {
@@ -625,4 +679,8 @@ input[type="radio"]:checked::after {
 
 .main-row1 > .card-row1-col2-3-4-5:first-child {
     grid-template-rows: 8% 85% 0%;
+}
+
+.hidden{
+  display: none;
 }
