@@ -79,5 +79,5 @@ ls -l "$study_dir/img/"
 
 echo 
 echo "New study [ study_id = $study_id ] created successfully." 
-echo "Reference URL : http://0.0.0.0:7000?participant_id=emm5k38cym2kztw9&study_id=$study_id ]"
+echo "Reference URL : http://0.0.0.0:7001?participant_id=123456123456123456123456&study_id=$study_id ]"
 
