@@ -17,6 +17,7 @@ const suggested_diag1 = document.getElementById("suggested-diag-location1");
 const suggested_diag2 = document.getElementById("suggested-diag-location2");
 const true_diag   = document.getElementById("true-diag");
 const x_ray_image = document.getElementById("patient-x-ray-image");
+const x_ray_trait_span = document.getElementById("X_RAY_Trait");
 
 function redirectIfFinished() {
     const pid = get_participant_id_from_url();
@@ -115,7 +116,7 @@ function set_progress(current_page_nr, total_page_count) {
 function set_patient_id(id)
 {
     patient_id1.textContent = id.toString();
-    patient_id2.textContent = "Patient ID: " + id.toString();
+    patient_id2.textContent = "X-Ray ID: " + id.toString();
 }
 
 function set_x_ray_image(src)
@@ -126,6 +127,10 @@ function set_x_ray_image(src)
 function get_x_ray_image()
 {
     return x_ray_image.src;
+}
+
+function set_x_ray_trait(val) {
+    x_ray_trait_span.textContent = val;
 }
 
 function get_params_from_url()
@@ -362,16 +367,23 @@ function set_suggested_diag(value)
 {
     suggested_diag1.textContent = value;
     suggested_diag2.textContent = value;
-    if(value == "OCDegen"){
-        suggested_diag1.className = "";
+
+    p_card = document.getElementById("patient-card");
+
+    if (value == "OCDegen") {
+        // suggested_diag1.className = "";
         suggested_diag2.className = "";
-        suggested_diag1.className = "unhealthy"
+        // suggested_diag1.className = "unhealthy"
         suggested_diag2.className = "unhealthy"
-    }else{
-        suggested_diag1.className = "";
+        p_card.classList.remove('healthy')
+        p_card.classList.add('unhealthy')
+    } else {
+        // suggested_diag1.className = "";
         suggested_diag2.className = "";
-        suggested_diag1.className = "healthy"
+        // suggested_diag1.className = "healthy"
         suggested_diag2.className = "healthy"
+        p_card.classList.remove('unhealthy')
+        p_card.classList.add('healthy')
     }
 }
 
@@ -408,7 +420,8 @@ function csv_json_get_main_attributes(page_nr)
     l_true_diag = input.TRUE_DIAG[index];
     l_suggested_diag = input.SUGGESTED_DIAG[index];
     l_image = "img/" + input.X_RAY_IMAGE[index];
-    attributes = [l_patient_id, l_image, l_x_ray_loc, l_true_diag, l_suggested_diag]
+    l_trait = input.X_RAY_TRAIT[index];
+    attributes = [l_patient_id, l_image, l_x_ray_loc, l_true_diag, l_suggested_diag, l_trait]
     return attributes;
 }
 
@@ -418,6 +431,7 @@ function set_main_attributes_in_html_page(page_nr, attr)
     set_patient_id(attr[0]);
     set_x_ray_image(attr[1]);
     set_x_ray_location(attr[2]);
+    set_x_ray_trait(attr[5]);
     set_true_diag(attr[3]);
     set_suggested_diag(attr[4])
     set_progress(page_nr, csv_json_get_total_page_count());

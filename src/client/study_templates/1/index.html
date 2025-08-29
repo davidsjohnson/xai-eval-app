@@ -29,26 +29,9 @@
     <main>
       <!-- ROW 1 :  text card + 2 image cards -->
       <div class="main-row1">
-        <!-- (1) Text card -->
-        <div class="card-row1-col1">
-          <h3 class="title">OCDegen Biomarkers</h3>
-          <ul class="biomarkers-list">
-            <li>Strong Spine Bend</li>
-            <li>Strong Bone Variation</li>
-            <li>Tucked Head</li>
-            <li>Main Bones Mutation</li>
-          </ul>
-
-          <h3 class="card-warning">Warning:</h3>
-          <p class="card-warning-text">
-            OCDegen can be fatal if not diagnosed and treated early. Treatment, however, is costly
-            and highly invasive. Please verify all diagnoses before making your final decision.
-            Furthermore, incorrect responses negatively affect your performance bonus.
-          </p>
-        </div>
 
         <!-- (2) Patient image card -->
-        <div class="card-row1-col2-3-4-5">
+        <div class="card-row1-col2-3-4-5" id="patient-card">
           <div class="title" id="patient-id-location2"></div>
 
           <img id="patient-x-ray-image"
@@ -66,59 +49,56 @@
 
       <!-- ROW 2 : explanation + interaction -->
       <div class="main-row2">
-        <!-- (1) explanation -->
-        <!-- <div class="card-row2-col1">
-          <h3 class="title">SHAP-Based Explanations:</h3>
-          <p class="text">
-            This visualization highlights the most important parts of the image that influenced
-            the model's decision. Red areas support the prediction, while blue areas oppose it –
-            helping you understand why the model classified the Blockie as Healthy or OCDegen.
-          </p>
-        </div> -->
-
-        <!-- (2) interaction -->
-        <div class="card-row2-col2">
-          <h3 class="title">Blocky Diagnosis:</h3>
-
-          <div class="card-content">
-            <!-- left column -->
-            <div class="left-content">
-              <p><b>Suggested Diagnosis:</b>
-                 <span id="suggested-diag-location2" class="unhealthy"></span></p>
-
-              <p><b>True Diagnosis:</b>
-                 <span id="true-diag" class="healthy"></span></p>
-
-              <!-- NEW: caption comes here, same font-weight, no colour -->
-              <!-- <p><b>Caption:</b> <span id="concept-card-1-caption"></span></p> -->
-
-
-            </div>
-
-            <!-- right column -->
-            <div class="right-options">
-            
-              <h4>Your Diagnosis:</h4>
-
-              <label class="healthy-label">
-                <input id="radio-healthy"
-                       type="radio"
-                       name="health"
-                       value="healthy" />
-                Healthy
-              </label>
-
-              <label class="unhealthy-label">
-                <input id="radio-unhealthy"
-                       type="radio"
-                       name="health"
-                       value="unhealthy" />
-                OCDegen
-              </label>
-            </div>
-          </div> <!-- /card-content -->
+      
+        <!-- Card for OCDegen Biomarkers in Column 2 of main-row1 -->
+        <div class="card-row2-col1">
+          <h3 class="title">OCDegen Biomarkers</h3>
+          <ul class="biomarkers-list">
+            <li>Strong Spine Bend</li>
+            <li>Strong Bone Variation</li>
+            <li>Tucked Head</li>
+            <li>Main Bones Mutation</li>
+          </ul>
         </div>
-      </div> <!-- /main-row2 -->
+      
+        <div class="card-row2-col2">
+          <h3 class="title">Blocky Diagnosis</h3>
+      
+          <div class="card-content">
+            <!-- Left: AI and ground truth diagnosis -->
+            <div class="left-content">
+              <p><b>Suggested Diagnosis:</b> <span id="suggested-diag-location2" class="unhealthy"></span>
+              </p>
+              <p><b>True Diagnosis:</b> <span id="true-diag" class="healthy"></span></p>
+              <p><b>Present Biomarkers:</b> <span id="X_RAY_Trait"></span></p>
+            </div>
+      
+            <!-- Right: user radio selection -->
+            <div class="right-options">
+              <p><b>Your Diagnosis:</b></p>
+              <label class="healthy-label">
+                <input id="radio-healthy" type="radio" name="health" value="healthy" /> Healthy
+              </label>
+              <label class="unhealthy-label">
+                <input id="radio-unhealthy" type="radio" name="health" value="unhealthy" /> OCDegen
+              </label>
+            </div>
+          </div>
+        </div>
+      
+        <div class="card-row2-col1">
+          <h3 class="card-warning">Warning</h3>
+          <p class="card-warning-text">
+            OCDegen can be fatal if not diagnosed and treated early. Treatment, however, is costly and
+            highly invasive.
+            Please
+            verify all diagnoses before making your final decision. Furthermore, incorrect responses
+            negatively affect your
+            performance bonus.
+          </p>
+        </div><!-- <div class="card-row2-col1">  -->
+      
+      </div> <!-- <div class="main-row2"> -->
     </main>
 
     <!--FOOTER -->
