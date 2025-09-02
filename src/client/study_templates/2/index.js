@@ -17,6 +17,8 @@ const suggested_diag1 = document.getElementById("suggested-diag-location1");
 const suggested_diag2 = document.getElementById("suggested-diag-location2");
 const true_diag   = document.getElementById("true-diag");
 const x_ray_image = document.getElementById("patient-x-ray-image");
+const x_ray_trait_span = document.getElementById("X_RAY_Trait");
+
 
 function redirectIfFinished() {
     const pid = get_participant_id_from_url();
@@ -360,20 +362,26 @@ async function prev_button_action()
     db_get_and_set_participant_diagnosis_prev_button_click(participant_id, study_id, prev_page_nr);
 }
 
-function set_suggested_diag(value)
-{
+function set_suggested_diag(value) {
     suggested_diag1.textContent = value;
     suggested_diag2.textContent = value;
-    if(value == "OCDegen"){
-        suggested_diag1.className = "";
+
+    p_card = document.getElementById("patient-card");
+
+    if (value == "OCDegen") {
+        // suggested_diag1.className = "";
         suggested_diag2.className = "";
-        suggested_diag1.className = "unhealthy"
+        // suggested_diag1.className = "unhealthy"
         suggested_diag2.className = "unhealthy"
-    }else{
-        suggested_diag1.className = "";
+        p_card.classList.remove('healthy')
+        p_card.classList.add('unhealthy')
+    } else {
+        // suggested_diag1.className = "";
         suggested_diag2.className = "";
-        suggested_diag1.className = "healthy"
+        // suggested_diag1.className = "healthy"
         suggested_diag2.className = "healthy"
+        p_card.classList.remove('unhealthy')
+        p_card.classList.add('healthy')
     }
 }
 
@@ -439,7 +447,7 @@ function csv_json_get_additional_attributes(page_nr)
     index = page_nr - 1;
     l_patient_id = input.PATIENT_ID[index];
 
-    concept_card_1_title    = "SHAP:";
+    concept_card_1_title    = "Important Features";
     concept_card_1_image    = "img/"       + input.Shap[index];
     concept_card_1_caption  =  input.Shap_Caption[index];
     attributes = [concept_card_1_title, concept_card_1_image, concept_card_1_caption];
