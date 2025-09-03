@@ -117,7 +117,7 @@ function set_progress(current_page_nr, total_page_count) {
 function set_patient_id(id)
 {
     patient_id1.textContent = id.toString();
-    patient_id2.textContent = "Patient ID: " + id.toString();
+    patient_id2.textContent = "X-Ray ID: " + id.toString();
 }
 
 function set_x_ray_image(src)
