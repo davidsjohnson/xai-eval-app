@@ -53,13 +53,54 @@ function db_table_init()
     // Create table if it doesn't exist
     db.serialize(() => {
         db.run(`CREATE TABLE IF NOT EXISTS participant_feedback (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        participant_id TEXT NOT NULL,
-        study_id INTEGER NOT NULL,
-        xray_image TEXT NOT NULL,
-        participant_diagnosis TEXT NOT NULL,
-        page_nr INTEGER NOT NULL
-    )`);
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    participant_id TEXT NOT NULL,
+                    study_id INTEGER NOT NULL,
+                    xray_image TEXT NOT NULL,
+                    participant_diagnosis TEXT NOT NULL,
+                    page_nr INTEGER NOT NULL, 
+                    created_at INTEGER DEFAULT (strftime('%s', 'now')), 
+                    updated_at INTEGER DEFAULT (strftime('%s', 'now'))
+                )`
+            );
+    });
+    // add trigger
+    db.serialize(() => {
+        db.run(`CREATE TRIGGER set_timestamp1
+                AFTER UPDATE ON participant_feedback
+                FOR EACH ROW
+                BEGIN
+                    UPDATE participant_feedback
+                    SET updated_at = (strftime('%s', 'now'))
+                    WHERE id = OLD.id;
+                END;`
+            );
+    });
+
+    // Create table if it doesn't exist
+    db.serialize(() => {
+        db.run(`CREATE TABLE IF NOT EXISTS access_times (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    participant_id TEXT NOT NULL,
+                    study_id INTEGER NOT NULL,
+                    page_nr INTEGER NOT NULL,
+                    last_access_ms INTEGER NOT NULL,
+                    last_update_ms INTEGER NOT NULL, 
+                    created_at INTEGER DEFAULT (strftime('%s', 'now')),
+                    updated_at INTEGER DEFAULT (strftime('%s', 'now'))
+                )`);
+    });
+    // add trigger
+    db.serialize(() => {
+        db.run(`CREATE TRIGGER set_timestamp2
+                AFTER UPDATE ON access_times
+                FOR EACH ROW
+                BEGIN
+                    UPDATE access_times
+                    SET updated_at = (strftime('%s', 'now'))
+                    WHERE id = OLD.id;
+                END;`
+        );
     });
 }
 
@@ -117,11 +158,18 @@ function cb_event_write_db(req, res) {
         [study_id, participant_id, page_nr],
         (err, row) => {
             if (err) {
+                console.error(err.message);
                 return res.status(500).send('Database error');
             }
 
             if (row) {
                 // If entry exists, update it
+                const oldDiagnosis = row.participant_diagnosis;
+                if (oldDiagnosis === p_diagnosis) {
+                    console.log("Diagnosis unchanged, skipping update.");
+                    return res.json({ message: "Diagnosis unchanged, no update needed." });
+                }
+
                 db.run(
                     `UPDATE participant_feedback
                      SET participant_diagnosis = ?, xray_image = ?
@@ -129,9 +177,24 @@ function cb_event_write_db(req, res) {
                     [p_diagnosis, xray_image, study_id, participant_id, page_nr],
                     (updateErr) => {
                         if (updateErr) {
+                            console.error(updateErr.message);
                             return res.status(500).send('Error updating data');
                         }
-                        res.json({ message: "Data updated successfully!" });
+
+                        // update access_times, then send ONE response
+                        db.run(
+                            `UPDATE access_times
+                             SET last_update_ms = CAST(strftime('%s','now') AS INTEGER)*1000
+                             WHERE study_id = ? AND participant_id = ? AND page_nr = ?`,
+                            [study_id, participant_id, page_nr],
+                            (err2) => {
+                                if (err2) {
+                                    console.error(err2.message);
+                                    return res.status(500).send('Error updating access time');
+                                }
+                                return res.json({ message: "Data updated successfully!" });
+                            }
+                        );
                     }
                 );
             } else {
@@ -142,15 +205,56 @@ function cb_event_write_db(req, res) {
                     [participant_id, study_id, xray_image, p_diagnosis, page_nr],
                     (insertErr) => {
                         if (insertErr) {
+                            console.error(insertErr.message);
                             return res.status(500).send('Error saving data');
                         }
-                        res.json({ message: "Data stored successfully!" });
+
+                        // update access_times, then send ONE response
+                        db.run(
+                            `UPDATE access_times
+                             SET last_update_ms = CAST(strftime('%s','now') AS INTEGER)*1000
+                             WHERE study_id = ? AND participant_id = ? AND page_nr = ?`,
+                            [study_id, participant_id, page_nr],
+                            (err2) => {
+                                if (err2) {
+                                    console.error(err2.message);
+                                    return res.status(500).send('Error updating access time');
+                                }
+                                return res.json({ message: "Data stored successfully!" });
+                            }
+                        );
                     }
                 );
             }
         }
     );
 }
+
+function cb_event_log_visit(req, res) {
+    const { participant_id, study_id, page_nr } = req.body;
+
+    console.log(`Logging page visit: participant_id=${participant_id}, study_id=${study_id}, page_nr=${page_nr}`);
+
+    // Basic validation + single response path
+    if (!participant_id || !study_id || page_nr == null) {
+        return res.status(400).json({ error: 'missing fields' });
+    }
+
+    db.run(
+        `INSERT INTO access_times
+            (participant_id, study_id, page_nr, last_access_ms, last_update_ms)
+            VALUES (?, ?, ?, CAST(strftime('%s','now') AS INTEGER)*1000, CAST(strftime('%s','now') AS INTEGER)*1000)`,
+        [participant_id, study_id, page_nr],
+        function (err) {
+            if (err) {
+                console.error(err.message);
+                return res.status(500).json({ error: 'db insert failed' });
+            }
+            return res.json({ success: true, id: this.lastID });
+        }
+    );
+};
+
 
 
 function cb_event_read_db(req, res) {
@@ -290,6 +394,7 @@ function cb_event_get_study_details(req, res) {
 init();
 register_post_event("/db_validation_participant_id_and_study_id", cb_event_db_validation_participant_id_and_study_id);
 register_post_event("/write_db", cb_event_write_db);
+register_post_event("/log_visit", cb_event_log_visit);
 register_get_event("/read_db", cb_event_read_db);
 register_get_event("/read_db_prev", cb_event_read_db_prev);
 //register_get_event("/read_db_get_last_updated_page_nr", cb_event_get_last_updated_page_nr);
