@@ -232,7 +232,7 @@ main {
   background: white;
   box-shadow: 0 0px 8px rgba(0, 0, 0, 0.20);
   border-radius: 8px;
-  grid-template-rows: 8% 73% 19%;
+  grid-template-rows: 8% 85% 0%;
   /* Row heights as specified */
 
   overflow: hidden;
@@ -737,10 +737,6 @@ input[type="radio"]:checked::after {
   color: #ffffff !important;
   transform: none !important;
   /* no grow / shrink */
-}
-
-.main-row1>.card-row1-col2-3-4-5:first-child {
-  grid-template-rows: 8% 85% 0%;
 }
 
 .hidden {
