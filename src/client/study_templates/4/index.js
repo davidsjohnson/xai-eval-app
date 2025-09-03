@@ -36,7 +36,6 @@ window.addEventListener('pageshow', (evt) => {
 });
 
 
-
 let diagnosis = null;
 
 function get_page_nr_from_url() {
@@ -153,6 +152,26 @@ function update_study_url(participant_id, study_id, study_type, page_nr, total_p
     window.history.pushState({}, '', new_url);
 }
 
+async function log_page_visit(participant_id, study_id, page_nr) {
+    console.log('logging visit:', participant_id, study_id, page_nr);
+
+    try {
+        const response = await fetch('/log_visit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ participant_id, study_id, page_nr })
+        });
+
+        const response_data = await response.json(); // Read JSON response
+
+        if (!response.ok) {
+            console.error('Failed to log visit:', response_data);
+        }
+    } catch (error) {
+        console.error('Error logging visit:', error);
+    }
+}
+
 async function db_update_async() {
     console.log("Updating database...");
     const participant_diagnosis = get_radio_button_status();
@@ -234,6 +253,7 @@ function db_update_success_action(participant_id, study_id, current_page_nr) {
     csv_json_get_all_attributes_and_set_in_html_page(page_nr);
     db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
     button_toggle_next_or_submit();
+    log_page_visit(participant_id, study_id, page_nr);
 }
 
 function button_toggle_next_or_submit() {
@@ -247,13 +267,16 @@ function button_toggle_next_or_submit() {
 
     /* default state: show both buttons in normal style */
     button_prev.style.display = 'inline-block';
+    button_prev.disabled = false;
     button_next.style.display = 'inline-block';
+    button_next.disabled = get_radio_button_status() === null;
     button_next.textContent = 'Next';
     button_next.classList.remove('submit-bottom-right');
 
     /* ---- first page: hide Prev ---- */
     if (curr_page === 1) {
-        button_prev.style.display = 'none';
+        // button_prev.style.display = 'none';
+        button_prev.disabled = true;
         return;
     }
 
@@ -280,6 +303,7 @@ function db_update_duplicate_entry_action(participant_id, study_id, current_page
     clear_radio_buttons();
     csv_json_get_all_attributes_and_set_in_html_page(page_nr);
     db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
+    log_page_visit(participant_id, study_id, page_nr);
 }
 
 
@@ -308,6 +332,7 @@ async function db_get_and_set_participant_diagnosis_prev_button_click(participan
             set_participant_diagnosis(diagnosis);
             //Set all attributes from csv_json info
             csv_json_get_all_attributes_and_set_in_html_page(page_nr);
+            log_page_visit(participant_id, study_id, page_nr);
             console.log(diagnosis);
         }
         button_toggle_next_or_submit();
@@ -498,6 +523,7 @@ async function init_page() {
     let page_nr = get_page_nr_from_url();
     db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
     csv_json_get_all_attributes_and_set_in_html_page(page_nr);
+    log_page_visit(participant_id, study_id, page_nr);
 }
 
 async function load_json_data() {
@@ -526,6 +552,16 @@ button_next.addEventListener("click", function () {
 button_prev.addEventListener("click", function () {
     prev_button_action();
 });
+
+
+radio_buttons.forEach((radio) => {
+    radio.addEventListener("change", (event) => {
+        if (event.target.checked) {
+            button_next.disabled = false;
+        }
+    });
+});
+
 
 // Keeps the page in-sync when the user clicks the browser Back/Forward buttons
 window.addEventListener('popstate', () => {

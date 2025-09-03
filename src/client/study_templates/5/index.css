@@ -684,3 +684,19 @@ input[type="radio"]:checked::after {
 .hidden{
   display: none;
 }
+
+button:disabled,
+button[disabled],
+button:disabled:hover,
+button[disabled]:hover {
+  background-color: #ccc;
+  /* light gray */
+  color: #666;
+  /* dim text */
+  border: 1px solid #aaa;
+  cursor: not-allowed;
+  /* force "not-allowed" cursor */
+  pointer-events: none;
+  /* ensures no interaction */
+  opacity: 0.6;
+}
