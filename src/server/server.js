@@ -66,6 +66,7 @@ function db_table_init()
     });
     // add trigger
     db.serialize(() => {
+        db.run(`DROP TRIGGER IF EXISTS set_timestamp1;`);
         db.run(`CREATE TRIGGER set_timestamp1
                 AFTER UPDATE ON participant_feedback
                 FOR EACH ROW
@@ -92,6 +93,7 @@ function db_table_init()
     });
     // add trigger
     db.serialize(() => {
+        db.run(`DROP TRIGGER IF EXISTS set_timestamp2;`);
         db.run(`CREATE TRIGGER set_timestamp2
                 AFTER UPDATE ON access_times
                 FOR EACH ROW

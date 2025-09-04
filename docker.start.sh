@@ -4,9 +4,9 @@ PORT=7000
 sudo fuser -k "$PORT"/tcp
 ./docker.stop.sh
 
-# echo "Initializing Database ( Creating study and participant_feedback table if not exist )"
-# echo "Init DB"
-# python3 db.init.py
+echo "Initializing Database ( Creating study and participant_feedback table if not exist )"
+echo "Init DB"
+python3 db.init.py
 
 start_docker(){
     docker run -d -p 7000:7000 -v $(pwd)/database:/app/database -v $(pwd)/src/client:/app/client --name mycontainer myimage
