@@ -33,7 +33,7 @@
   --border2: none;
 
   /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
-  --grid-row1-ncolumns: 1;
+  --grid-row1-ncolumns: 5;
   /* viki_comment: only change this value to increase or decrease columns in first row */
   --grid-template-row1-columns: repeat(var(--grid-row1-ncolumns), 1fr);
   /* Use var() inside repeat() */

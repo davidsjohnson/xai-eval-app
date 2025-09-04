@@ -1,465 +1,780 @@
 :root {
-    /*My Browser Inner Width and Height: 1484px  x  756px*/
-    /*HD Screen Resolution : 1920px x 1080px*/
-  --fixed-screen-width: 1420px; /* 1920px  */
-  --fixed-screen-height: 700px; /* 1080px */
-  --app-width: calc(var(--fixed-screen-width)   *  (1 - 0.0)); /*reduce app-width */
-  --app-height: calc(var(--fixed-screen-height) *  (1 - 0.0)); /*reduce app-height */
+  /*My Browser Inner Width and Height: 1484px  x  756px*/
+  /*HD Screen Resolution : 1920px x 1080px*/
+  --fixed-screen-width: 1420px;
+  /* 1920px  */
+  --fixed-screen-height: 800px;
+  /* 1080px */
+  --app-width: calc(var(--fixed-screen-width) * (1 - 0.0));
+  /*reduce app-width */
+  --app-height: calc(var(--fixed-screen-height) * (1 - 0.0));
+  /*reduce app-height */
 
   --blue: #1e90ff;
   --white: #ffffff;
-  --orange: #FF5733;
-  --green: #4CAF50;
-  --bg-green: #4CAF50;
-  --bg-gray: #1d2327; 
+  --orange: #ee6c4d;
+  --blue: #98c1d9;
+  --green: #198754;
+
+  /* new versions for alpha control */
+  --orange-rgb: 238, 108, 77;
+  /* #ee6c4d */
+  --green-rgb: 25, 135, 84;
+  /* #198754 */
+
+  --bg-green: #198754;
+  --bg-blue: #3d5a80;
+  --bg-gray: #1d2327;
+  --bg-main: #f4f4f9;
   --border1: 2px solid black;
   --border2: 2px solid black;
   /*Disable Border*/
   --border1: none;
   --border2: none;
- 
-  /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
-  --grid-row1-ncolumns: 3; /* viki_comment: only change this value to increase or decrease columns in first row */
-  --grid-template-row1-columns: repeat(var(--grid-row1-ncolumns), 1fr); /* Use var() inside repeat() */
 
-  --grid-row2-ncolumns: 2; 
-  --grid-template-row2-columns: repeat(var(--grid-row2-ncolumns), 1fr); /* Use var() inside repeat() */
+  /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
+  --grid-row1-ncolumns: 2;
+  /* viki_comment: only change this value to increase or decrease columns in first row */
+  --grid-template-row1-columns: repeat(var(--grid-row1-ncolumns), 1fr);
+  /* Use var() inside repeat() */
+
+  --grid-row2-ncolumns: 3;
+  --grid-template-row2-columns: repeat(var(--grid-row2-ncolumns), 1fr);
+  /* Use var() inside repeat() */
   /* --grid-template-row2-columns: calc(var(--app-width) * 0.6) calc(var(--app-width) * 0.39);  */
-  
-  
-    /* Calculate the reduced values */
+
+
+  /* Calculate the reduced values */
   --header-height: calc(var(--app-height) * 0.1);
   --body-height: calc(var(--app-height) * 0.75);
-  --footer-height: calc(var(--app-height) * 0.1); 
- 
+  --footer-height: calc(var(--app-height) * 0.1);
+
   --row1-height: calc(var(--body-height) * 0.59);
   --row2-height: calc(var(--body-height) * 0.39);
- 
+
   --row1-card-height: calc(var(--row1-height) * 0.9);
   --row2-card-height: calc(var(--row2-height) * 0.9);
-  --warning-title-y-placement: 30px; 
-  --warning-text-y-placement: 5px; 
-  --concept-based-explanation-text-y-placement: -80px; 
+  --warning-title-y-placement: 6px;
+  --warning-text-y-placement: 5px;
+  --concept-based-explanation-text-y-placement: 0px;
 }
 
-html,body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    /*overflow: hidden;*/ /* Prevents scrolling */
-    width: 100vw; /* 100% of viewport width */
-    height: 100vh; /* 100% of viewport height */
-    margin: 0;
-    justify-content: center;
-    align-items: center;
-    display: flex;
+html,
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  /*overflow: hidden;*/
+  /* Prevents scrolling */
+  width: 100vw;
+  /* 100% of viewport width */
+  height: 100vh;
+  /* 100% of viewport height */
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .fixed-page-dimension {
-    display: grid;
-    max-width: var(--app-width); /* Reduced width */
-    max-height: var(--app-height); /* Reduced height */
-    margin: 0 auto; /* Centers the content horizontally */
-    width: 100%; /* Ensures it scales on smaller screens */
-    grid-template-rows:var(--header-height) var(--body-height) var(--footer-height);
-    grid-template-columns: auto;
+  display: grid;
+  max-width: var(--app-width);
+  /* Reduced width */
+  max-height: var(--app-height);
+  /* Reduced height */
+  margin: 0 auto;
+  /* Centers the content horizontally */
+  width: 100%;
+  /* Ensures it scales on smaller screens */
+  grid-template-rows: var(--header-height) var(--body-height) var(--footer-height);
+  grid-template-columns: auto;
 }
 
 header {
-    position: relative;
-    background: var(--bg-green);
-    color: white;
-    padding: 1rem;
-    text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to top, var(--bg-blue), #4a6e9e);
+  color: white;
+  padding: 1rem;
 }
 
-header > h1{
-    align-items: center;
-    justify-content:left;
-    text-align: left;
-    margin-top:8px;
+header>h1 {
+  align-items: center;
+  justify-content: left;
+  text-align: left;
+  /* font-weight: normal; */
 }
 
-.header-info {
-    position: absolute;
-    top: 12px;
-    right: 60px;
-    background: #1d2327;
-    color: white;
-    padding: 5px 5px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+header .progress-bar-container {
+  display: flex;
+  flex-direction: column;
+  /* Adjusts the distance from the bottom of the footer */
+  transform: translateX(-2%);
+  /* Centers the bar horizontally */
+  width: 500px;
+  height: 30px;
+  background-color: white;
+  /* Background color of the progress bar */
+  border-radius: 5px;
+  /* Rounded corners for the container */
+  overflow: hidden;
+  /* Ensures text stays within the bar */
+
 }
 
-.header-info table {
-    border-collapse: collapse;
-    border: 1px solid #ccc;  /* Border for the entire table */
+header .progress-bar {
+
+  width: 50%;
+  /* Set the progress here */
+  height: 100%;
+  background-color: var(--bg-green);
+  /* Progress color */
+  border-radius: 1px;
+  /* Rounded corners for the progress bar */
+  align-items: center;
+  justify-content: center;
+  /* Center text horizontally */
+  overflow: hidden;
+  /* Prevents overflow of text */
+  white-space: nowrap;
+  /* Prevents text from wrapping */
+  text-align: center;
+  transition: width 0.3s ease-in-out;
 }
 
-.header-info td {
-    padding: 0px 2px;
-    text-align: left;
-    border: 1px solid #ccc;  /* Border for individual cells */
+header .progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-weight: bold;
+  font-size: 0.9rem;
+  pointer-events: none;
+  /* Makes the text unclickable */
 }
 
 .unhealthy {
-    color: var(--orange);  /* Red color for Unhealthy */
-    font-weight: bold;
+  color: var(--orange);
+  font-weight: bold;
 }
 
 .healthy {
-    color: var(--green);  /* Red color for Unhealthy */
-    font-weight: bold;
+  color: var(--green);
+  font-weight: bold;
 }
 
 main {
-    position: relative;
-    display: grid;
-    /* 60% 38%; */  /* Adjust the height of row1 and row2*/
-    grid-template-rows: calc(var(--body-height) * 0.6)   /* 10% of --app-height */
-                       calc(var(--body-height) * 0.3);  /* 10% of --app-height */
-    column-gap: 1px; /* 10px gap between columns */
-    row-gap: 1px;    /* 5px gap between rows */
-    padding: 0.1rem;
-    background: #f4f4f9;
-    overflow-y: hidden;
-    /*viki_comment: The following Disable : For the main columns to be full length*/
-    /*
+  position: relative;
+  display: grid;
+  /* 60% 38%; */
+  /* Adjust the height of row1 and row2*/
+  grid-template-rows: calc(var(--body-height) * 0.6)
+    /* 10% of --app-height */
+    calc(var(--body-height) * 0.3);
+  /* 10% of --app-height */
+  column-gap: 1px;
+  /* 10px gap between columns */
+  row-gap: 0px;
+  /* 5px gap between rows */
+  padding: 0.1rem;
+  background: var(--bg-main);
+  overflow-y: hidden;
+  /*viki_comment: The following Disable : For the main columns to be full length*/
+  /*
     align-items: center;
     justify-content: center;
     */
 }
 
 .main-row1 {
-    display: grid;
-    background: none;
-    border-radius: 8px;
-    grid-template-columns: var(--grid-template-row1-columns);  
-    height: var(--row1-height);              /* Fixed height */
-    border: var(--border1);
-    overflow: hidden;
-    column-gap: 5px;
-    padding: 1rem;
-    align-items: center;
-    justify-content: center;
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+  display: grid;
+  background: none;
+  border-radius: 8px;
+  grid-template-columns: var(--grid-template-row1-columns);
+  height: var(--row1-height);
+  /* Fixed height */
+  border: var(--border1);
+  overflow: hidden;
+  column-gap: 5px;
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.20); */
 }
 
 .main-row2 {
-    display: grid;
-    background: none;
-    border-radius: 8px;
-    grid-template-columns: var(--grid-template-row2-columns); /*60% 39%*/
-    height: var(--row2-height);              /* Fixed height */
-    border: var(--border2);
-    overflow: hidden;
-    column-gap: 1px;
-    padding-left: 5px;
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+  display: grid;
+  background: none;
+  border-radius: 8px;
+  grid-template-columns: 1.5fr 2.5fr 1.5fr;
+  /*60% 39%*/
+  height: var(--row2-height);
+  /* Fixed height */
+  overflow: hidden;
+  column-gap: 0.25rem;
+  padding: 0.5rem;
+  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.20); */
 }
 
 /* Card Styles */
 .card-row1-col2-3-4-5 {
-    display: grid;
-    width: 100%;                /* Matches the width of the column */
-    gap: 1px;                    /* 5px gap between elements */
-    
-    height: var(--row1-card-height);              /* Fixed height */
-    background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    grid-template-rows: 10% 60% 30%;  /* Row heights as specified */
-    border: 1px solid #ccc;   /* Border around the entire card */
-    overflow: hidden;
+  display: grid;
+  width: 100%;
+  /* Matches the width of the column */
+  gap: 1px;
+  /* 5px gap between elements */
+
+  height: var(--row1-card-height);
+  /* Fixed height */
+  background: white;
+  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.20);
+  border-radius: 8px;
+  grid-template-rows: 8% 73% 19%;
+  /* Row heights as specified */
+
+  overflow: hidden;
 }
 
 /* First Row - Patient ID */
 .card-row1-col2-3-4-5 .title {
-    color: #555;
-    background: white;
-    display: flex;
-    text-align: left;
-    margin-left: 5px;
-    justify-content: left;
-    padding-left: 8px;
-    align-items: center;
-    font-weight: bold;
-    font-size: 1.2rem;
+  color: #555;
+  display: flex;
+  text-align: left;
+  margin-left: 5px;
+  justify-content: left;
+  padding-left: 8px;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 /* Second Row - Image */
 .card-row1-col2-3-4-5 .image {
-    width: 100%;
-    height: 100%;
-    background: none;
-    object-fit: contain;
-    display: block;
-    border-bottom: none;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 100%;
+  background: none;
+  object-fit: contain;
+  display: block;
+  border-bottom: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
 }
 
 /* Third Row - Text */
 .card-row1-col2-3-4-5 .caption {
-    padding-left: 8px;
-    background: none;
-    padding-top: 0px;
-    overflow-y: auto;
-    font-size: 0.9rem;
-    color: #555;
-    align-items: center;
-    justify-content: center;
+  padding-left: 20px;
+  background: none;
+  padding-top: 0px;
+  overflow-y: auto;
+  font-size: 0.9rem;
+  color: #555;
+  align-items: center;
+  justify-content: center;
 }
+
 .card-row1-col2-3-4-5 .caption p {
-	  /*vertical horizantal*/
+  /*vertical horizantal*/
   margin: 8px 0;
 }
 
-
-
-.main-row2 .user-diagnosis {
-    color: #555;
-    text-align: center;
-    align-items: center;
-    justify-content:center;
-    margin-top: 60px; /*Move radio button up / down*/
+.main-row1>.card-row1-col2-3-4-5:first-child.healthy {
+  box-shadow: 0px 0px 18px rgba(var(--green-rgb), 0.4);
+  /* soft blue shadow */
 }
 
-.main-row2 .user-diagnosis .title{
-    text-align: center;
-    font-size: 1.2rem;  /* Larger text size */
-    font-weight: bold;  /* Make it bold */
-    margin-bottom: 10px;  /* Space between the text and radio buttons */
+.main-row1>.card-row1-col2-3-4-5:first-child.unhealthy {
+  box-shadow: 0px 0px 18px rgba(var(--orange-rgb), 0.4);
+  /* soft blue shadow */
+}
+
+.main-row2 .user-diagnosis {
+  color: #555;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+  /*Move radio button up / down*/
+}
+
+.main-row2 .user-diagnosis .title {
+  text-align: center;
+  font-size: 1.2rem;
+  /* Larger text size */
+  font-weight: bold;
+  /* Make it bold */
+  margin-bottom: 10px;
+  /* Space between the text and radio buttons */
 }
 
 .main-row2 .user-diagnosis .rectangle {
-    display: flex;
-    gap: 0.5rem; /* Small gap between radio buttons */
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  /* Small gap between radio buttons */
+  justify-content: center;
+  align-items: center;
 }
 
 .main-row2 .user-diagnosis .rectangle label {
-    display: inline-block;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.main-row2 .user-diagnosis .rectangle  input[type="radio"] {
-    margin-right: 5px; /* Space between radio button and label text */
+.main-row2 .user-diagnosis .rectangle input[type="radio"] {
+  margin-right: 5px;
+  /* Space between radio button and label text */
 }
 
 .main-row2 .user-diagnosis .rectangle .healthy-label {
-    background-color: var(--green);  /* Green background for Healthy */
-    color: white;
+  background-color: var(--green);
+  /* Green background for Healthy */
+  color: white;
 }
 
 .main-row2 .user-diagnosis .rectangle .unhealthy-label {
-    background-color: var(--orange);  /* Orange background for Unhealthy */
-    color: white;
+  background-color: var(--orange);
+  /* Orange background for Unhealthy */
+  color: white;
 }
 
+
+
 footer {
-    position: relative;
-    background: var(--bg-gray);
-    color: white;
-    text-align: center;
-    padding: 1rem;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  background: var(--bg-main);
+  color: white;
+  text-align: center;
+  padding-bottom: 1rem;
 }
 
 footer .nav-buttons {
-    position: absolute;
-    /*distance from bottom*/
-    bottom: 30px;
-    right: 10px;
-    display: flex;
-    gap: 0.5rem;
+  display: flex;
+  justify-content: center;
+  /* keeps Prev / Next centred */
+  gap: 0.5rem;
+  height: 3rem;
+  position: relative;
+  padding: 0 2rem;
+  /* reference for Submit */
 }
 
+
 footer .nav-buttons button {
-    background: var(--green);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
+  /* background: var(--bg-blue); */
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 150px;
+  font-size: large;
+  font-weight: bold;
+  background: linear-gradient(to top, var(--bg-blue), #4a6e9e);
+  box-shadow: 0 2px 5px rgba(1, 1, 1, .2);
+  transition: box-shadow 0.2s, transform 0.2s;
 }
 
 footer .nav-buttons button:hover {
-    background: #45a049;
+  box-shadow: 0 4px 5px rgba(1, 1, 1, .25);
+  transition: box-shadow 0.2s;
 }
 
-footer .progress-bar-container {
-    position: absolute;
-    bottom: 30px;  /* Adjusts the distance from the bottom of the footer */
-    left: 50%;
-    transform: translateX(-50%); /* Centers the bar horizontally */
-    width: 500px;
-    height: 30px;
-    background-color: #555; /* Background color of the progress bar */
-    border-radius: 5px; /* Rounded corners for the container */
-    overflow: hidden;  /* Ensures text stays within the bar */
 
+footer .nav-buttons button:active {
+  box-shadow: 0 2px 5px rgba(1, 1, 1, .20);
+  transition: box-shadow 0.2s, transform 0.2s;
+  background-color: 0.5s;
+  background-color: #ccc;
+  opacity: 0.25;
+  border: 1px solid #ccc;
 }
 
-footer .progress-bar {
-    position: absolute;
-    display: flex;
-    width: 50%; /* Set the progress here */
-    height: 100%;
-    background-color: var(--green); /* Progress color */
-    border-radius: 5px; /* Rounded corners for the progress bar */
-    align-items: center;
-    justify-content: center;   /* Center text horizontally */
-    overflow: hidden;           /* Prevents overflow of text */
-    white-space: nowrap;        /* Prevents text from wrapping */
-    text-align: center; 
+button:disabled,
+button[disabled],
+button:disabled:hover,
+button[disabled]:hover {
+  background-color: #ccc;
+  /* light gray */
+  color: #666;
+  /* dim text */
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+  /* force "not-allowed" cursor */
+  pointer-events: none;
+  /* ensures no interaction */
+  opacity: 0.25;
 }
 
-footer .progress-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-weight: bold;
-    font-size: 0.9rem;
-    pointer-events: none;  /* Makes the text unclickable */
+/* Submit button – inside footer, right-aligned */
+.submit-bottom-right {
+  position: absolute;
+  /* takes it out of the flex flow */
+  background: linear-gradient(to top, var(--bg-green), #229b62) !important;
+  /* green, matches theme */
+  color: #ffffff !important;
+  border: none;
+  border-radius: 0.4rem;
+  width: 150px;
+  height: 3rem;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  right: 12.5rem;
+  /* same inset as the footer padding */
+}
+
+/*  keep colour + size frozen in every state */
+.submit-bottom-right:hover,
+.submit-bottom-right:focus,
+.submit-bottom-right:active {
+  background: #198754 !important;
+  /* stay green */
+  color: #ffffff !important;
+  transform: none !important;
+  /* no grow / shrink */
 }
 
 /* Text Card Styles */
 .card-row1-col1 {
-    display: flex;
-    width: 100%;                 /* Ensure card width matches the width of column 2 */
-    gap: 1px;                    /* 5px gap between elements */
-    padding-left: 15px;
-    padding-top: 15px;
-    height: var(--row1-card-height);              /* Fixed height */
-    box-sizing: border-box;      /* Ensures padding and border are included in width */
-    background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    flex-direction: column;
-    border: 1px solid #ccc;
-    overflow:hidden;
+  display: flex;
+  width: 100%;
+  gap: 1px;
+  padding-left: 10px;
+  padding-top: 5px;
+  height: var(--row2-card-height);
+  /* FIX: Unifies the height with the other cards */
+  box-sizing: border-box;
+  background: white;
+  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  flex-direction: column;
+  overflow-y: auto;
 }
+
 .card-row2-col1 {
-    display: grid;
-    gap: 1px;                    /* 5px gap between elements */
-    width: 97.5%;                 /* Ensure card width matches the width of column 2 */
-    height: var(--row2-card-height);              /* Fixed height */
-    background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #ccc;   /* Border around the entire card */
-    margin-left:10px;
+  display: grid;
+  gap: 1px;
+  /* 5px gap between elements */
+  width: 100%;
+  /* Ensure card width matches the width of column 2 */
+  height: var(--row2-card-height);
+  /* Fixed height */
+  background: white;
+  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-left: 0;
+  font-size: 15px;
 }
 
 .card-row2-col2 {
-    display: grid;
-    gap: 1px;                    /* 5px gap between elements */
-    width: 97.5%;                 /* Ensure card width matches the width of column 2 */
-    height: var(--row2-card-height);              /* Fixed height */
-    background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    border: 1px solid #ccc;   /* Border around the entire card */
-    overflow: hidden;
+  display: grid;
+  gap: 1px;
+  /* 5px gap between elements */
+  width: 100%;
+  /* Ensure card width matches the width of column 2 */
+  height: var(--row2-card-height);
+  /* Fixed height */
+  background: white;
+  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-left: 0;
 }
 
 /* Card Title */
 .card-row1-col1 .title {
-    color: #555;
-    font-size: 20px;
-    margin: 0;
-    font-weight: bold;
-    margin-bottom: 20px;
+  color: #555;
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 /* Numbered Biomarkers List */
-.card-row1-col1 .biomarkers-list {
-    color: #555;
-    list-style-type: decimal;  /* Changes to numbered list */
-    padding-left: 20px;
-    margin: 0;
-    font-size: 16px;
+.card-row2-col1 .biomarkers-list {
+  color: #555;
+  list-style-type: decimal;
+  /* Changes to numbered list */
+  list-style-position: inside;
+  padding-left: 20px;
+  font-size: 16px;
+  margin: 0;
 }
 
 /* Warning Title */
-.card-row1-col1 .card-warning {
-    font-size: 20px;
-    margin: 0;
-    font-weight: bold;
-    color: var(--orange);
-    margin-top: var(--warning-title-y-placement);
+.card-row2-col1 .card-warning {
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+  color: var(--orange);
+  margin-top: var(--warning-title-y-placement);
+  padding-left: 10px;
 }
 
 /* Warning Text */
-.card-row1-col1 .card-warning-text {
-    color: #555;
-    font-size: 12px;
-    margin: 0;
-    color: #555;
-    line-height: 1.5;
-    margin-top: var(--warning-text-y-placement);
+.card-row2-col1 .card-warning-text {
+  color: #555;
+  font-size: 15px;
+  margin: 0;
+  color: #555;
+  line-height: 1.5;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 /* Card Title */
 .card-row2-col1 .title {
-    color: #555;
-    font-size: 20px;
-    margin: 0;
-    font-weight: bold;
-    padding-left: 15px;
-    padding-top: 15px;
+  color: #555;
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+  padding-left: 5px;
+  padding-top: 5px;
 }
 
 .card-row2-col1 .text {
-    font-size: 13px;
-    color: #555;
-    line-height: 1.5;
-    padding-left: 15px;
-    padding-top: 15px;
-    margin-top: var(--concept-based-explanation-text-y-placement);
+  font-size: 14.5px;
+  color: #555;
+  line-height: 1.5;
+  padding-left: 15px;
+  padding-top: 20px;
+  margin-top: var(--concept-based-explanation-text-y-placement);
+}
+
+/* Card Title */
+.card-row2-col2 .title {
+  color: #555;
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+/* 1) Lock the two columns + top align */
+.card-content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  /* left grows, right fixed */
+  column-gap: 1.75rem;
+  align-items: start;
+  /* top-align both columns */
+  padding: 8px 15px 0 15px;
+  /* avoid margin-collapsing wiggle */
+}
+
+/* 2) Make right column stick to the top, fixed width */
+.card-row2-col2 .right-options {
+  align-self: start;
+  /* top within its grid cell */
+  width: 14rem;
+  /* match the grid column */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.3rem 0.4rem;
+}
+
+.card-row2-col2 .right-options p {
+  margin: 0;
+  /* kill default top/bottom margins */
+  padding: 0;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* 3) Stabilize spacing on the left so line wrapping doesn’t shift the top */
+.left-content {
+  display: grid;
+  align-content: start;
+  row-gap: 0.35rem;
+}
+
+.left-content p {
+  margin: 0;
+  line-height: 1.7em;
+}
+
+/* 4) (Optional) Reserve up to 3 lines for Present Biomarkers to prevent vertical jump */
+.left-content p:nth-of-type(3) {
+  min-height: calc(1.7em * 3);
+}
+
+/* .right-options {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0.3rem 0.4rem;
+} */
+
+.rectangle {
+  background-color: #f0f0f0;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
 }
 
 /* Basic styles for the radio button */
 input[type="radio"] {
-    -moz-appearance: none; /* Firefox */
-    -webkit-appearance: none; /* Chrome/Safari */
-    appearance: none; /* Standardize across browsers */
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none;
-    border-radius: 50%;  /* Ensure the button is round */
-    width: 15px;
-    height: 15px;
-    background-color: #fff; /* White background when not selected */
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-    border: 2px solid #888;  /* Default border color */
+  -moz-appearance: none;
+  /* Firefox */
+  -webkit-appearance: none;
+  /* Chrome/Safari */
+  appearance: none;
+  /* Standardize across browsers */
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  /* Ensure the button is round */
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  /* White background when not selected */
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  border: 2px solid #888;
+  /* Default border color */
 }
 
 /* when radio button is selected */
 input[type="radio"]:checked {
-    background-color: #fff;  /* Keep background white */
-    border-color: #2196F3;   /* Blue border when selected */
+  background-color: #fff;
+  /* Keep background white */
+  border-color: #2196F3;
+  /* Blue border when selected */
 }
 
 /* Inner blue circle when radio button is selected */
 input[type="radio"]:checked::after {
-    content: '';
-    position: absolute;
-    top: 50%;     /* Center vertically */
-    left: 50%;    /* Center horizontally */
-    width: 8px;  /* Size of the inner blue circle */
-    height: 8px; /* Size of the inner blue circle */
-    background-color: #2196F3;  /* Blue inner circle */
-    border-radius: 50%;
-    transform: translate(-50%, -50%); /* Center the inner circle perfectly */
+  content: '';
+  position: absolute;
+  top: 50%;
+  /* Center vertically */
+  left: 50%;
+  /* Center horizontally */
+  width: 8px;
+  /* Size of the inner blue circle */
+  height: 8px;
+  /* Size of the inner blue circle */
+  background-color: #2196F3;
+  /* Blue inner circle */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  /* Center the inner circle perfectly */
 }
 
+/* Style “Your Diagnosis” pills (right-options) */
+.card-row2-col2 .right-options {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin: -15px 0 0 20px;
+  padding: 0.3rem 0.4rem !important;
+  /* a little breathing room under the heading */
+}
+
+.card-row2-col2 .right-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.5rem !important;
+  border-radius: 5px;
+  /* pill shape */
+  cursor: pointer;
+  font-weight: bold;
+  width: 10rem !important;
+}
+
+
+.card-row2-col2 .right-options .healthy-label {
+  /* background-color: var(--green); */
+  background: linear-gradient(to top, var(--green), #229b62);
+  /* consistent with your green button */
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.card-row2-col2 .right-options .unhealthy-label {
+  background: linear-gradient(to top, var(--orange), #f07d5f);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 2. Ensure the radio circle is visible again */
+.card-row2-col2 .right-options input[type="radio"] {
+  /* small white ring */
+  width: 14px;
+  height: 14px;
+  margin: 0 0.4rem 0 0 !important;
+  background: transparent !important;
+  border: 2px solid white !important;
+  position: relative;
+}
+
+/* draw the inner dot only when checked */
+.card-row2-col2 .right-options input[type="radio"]::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+/* MAKE the radio dot fully opaque */
+.card-row2-col2 .right-options input[type="radio"] {
+  background-color: white !important;
+  /* white background */
+}
+
+.card-row2-col2 .right-options input[type="radio"]:checked::after {
+  background-color: var(--bg-blue) !important;
+  /* contrasting inner dot */
+}
+
+/* Reduce space between “Your Diagnosis” and the pills */
+.card-row2-col2 .right-options {
+  gap: 0.3rem !important;
+  /* was 1rem */
+}
+
+.card-row2-col2 .right-options h4 {
+  margin-bottom: 0.2rem !important;
+  /* was 0.6rem */
+}
+
+/* Enlarge only the Patient X-ray card’s image */
+/* .main-row1 > .card-row1-col2-3-4-5:nth-child(2) {
+  grid-template-rows: 10% 70% 20% !important;
+} */
+
+.main-row1>.card-row1-col2-3-4-5:first-child {
+  grid-template-rows: 8% 85% 0%;
+}
+
+.hidden {
+  display: none;
+}

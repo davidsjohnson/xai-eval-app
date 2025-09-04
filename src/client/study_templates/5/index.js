@@ -37,6 +37,7 @@ window.addEventListener('pageshow', (evt) => {
 });
 
 
+
 let diagnosis = null;
 
 function get_page_nr_from_url() {
@@ -372,7 +373,7 @@ async function prev_button_action() {
     db_get_and_set_participant_diagnosis_prev_button_click(participant_id, study_id, prev_page_nr);
 }
 
-async function radio_button_changed(){
+async function radio_button_changed() {
     let ret = get_radio_button_status();
     let curr_page_nr = get_page_nr_from_url();
     const up = get_params_from_url();
@@ -474,21 +475,36 @@ function csv_json_get_additional_attributes(page_nr) {
     l_patient_id = input.PATIENT_ID[index];
     // X_RAY_Trait = input.X_RAY_TRAIT[index];
 
-    concept_card_1_title = "Similar Example 1";
+    let concept1_caption_parts = input.Example1_Caption[index].split('<br>');
+    let concept2_caption_parts = input.Example2_Caption[index].split('<br>');
+    let concept3_caption_parts = input.Example3_Caption[index].split('<br>');
+    let concept4_caption_parts = input.Example4_Caption[index].split('<br>');
+
+    concept1_caption_parts[0] = concept1_caption_parts[0].replace(/&/g, '<br>');
+    concept2_caption_parts[0] = concept2_caption_parts[0].replace(/&/g, '<br>');
+    concept3_caption_parts[0] = concept3_caption_parts[0].replace(/&/g, '<br>');
+    concept4_caption_parts[0] = concept4_caption_parts[0].replace(/&/g, '<br>');
+
+    concept_card_1_title = concept1_caption_parts[1];
     concept_card_1_image = "img/" + input.Example1[index];
-    concept_card_1_caption = input.Example1_Caption[index];
+    concept_card_1_caption = concept1_caption_parts[0];
 
-    concept_card_2_title = "Similar Example 2";
+    concept_card_2_title = concept2_caption_parts[1];
     concept_card_2_image = "img/" + input.Example2[index];
-    concept_card_2_caption = input.Example2_Caption[index];
+    concept_card_2_caption = concept2_caption_parts[0];
 
-    concept_card_3_title = "Similar Example 3";
+    concept_card_3_title = concept3_caption_parts[1];
     concept_card_3_image = "img/" + input.Example3[index];
-    concept_card_3_caption = input.Example3_Caption[index];
+    concept_card_3_caption = concept3_caption_parts[0];
+
+    concept_card_4_title = concept4_caption_parts[1];
+    concept_card_4_image = "img/" + input.Example4[index];
+    concept_card_4_caption = concept4_caption_parts[0];
 
     attributes = [concept_card_1_title, concept_card_1_image, concept_card_1_caption,
         concept_card_2_title, concept_card_2_image, concept_card_2_caption,
-        concept_card_3_title, concept_card_3_image, concept_card_3_caption];
+        concept_card_3_title, concept_card_3_image, concept_card_3_caption,
+        concept_card_4_title, concept_card_4_image, concept_card_4_caption];
 
     return attributes;
 }
@@ -529,6 +545,12 @@ function set_additional_attributes_in_html_page(page_nr, attr) {
     document.getElementById("concept-card-3-image").src = attr[7];
     document.getElementById("concept-card-3-caption").innerHTML =
         wrap(attr[8]);
+
+    // Example 4
+    document.getElementById("concept-card-4-title").textContent = attr[9];
+    document.getElementById("concept-card-4-image").src = attr[10];
+    document.getElementById("concept-card-4-caption").innerHTML =
+        wrap(attr[11]);
 }
 
 async function init_page() {
