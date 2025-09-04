@@ -93,7 +93,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg-blue);
+  background: linear-gradient(to top, var(--bg-blue), #4a6e9e);
   color: white;
   padding: 1rem;
 }
@@ -156,13 +156,11 @@ header .progress-text {
 
 .unhealthy {
   color: var(--orange);
-  /* Red color for Unhealthy */
   font-weight: bold;
 }
 
 .healthy {
   color: var(--green);
-  /* Red color for Unhealthy */
   font-weight: bold;
 }
 
@@ -232,7 +230,7 @@ main {
   background: white;
   box-shadow: 0 0px 8px rgba(0, 0, 0, 0.20);
   border-radius: 8px;
-  grid-template-rows: 8% 85% 0%;
+  grid-template-rows: 8% 73% 19%;
   /* Row heights as specified */
 
   overflow: hidden;
@@ -368,19 +366,79 @@ footer .nav-buttons {
 
 
 footer .nav-buttons button {
-  background: var(--bg-blue);
+  /* background: var(--bg-blue); */
   color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 16px;
   cursor: pointer;
   transition: background 0.3s;
   width: 150px;
   font-size: large;
+  font-weight: bold;
+  background: linear-gradient(to top, var(--bg-blue), #4a6e9e);
+  box-shadow: 0 2px 5px rgba(1, 1, 1, .2);
+  transition: box-shadow 0.2s, transform 0.2s;
 }
 
 footer .nav-buttons button:hover {
-  background: var(--bg-blue)
+  box-shadow: 0 4px 5px rgba(1, 1, 1, .25);
+  transition: box-shadow 0.2s;
+}
+
+
+footer .nav-buttons button:active {
+  box-shadow: 0 2px 5px rgba(1, 1, 1, .20);
+  transition: box-shadow 0.2s, transform 0.2s;
+  background-color: 0.5s;
+  background-color: #ccc;
+  opacity: 0.25;
+  border: 1px solid #ccc;
+}
+
+button:disabled,
+button[disabled],
+button:disabled:hover,
+button[disabled]:hover {
+  background-color: #ccc;
+  /* light gray */
+  color: #666;
+  /* dim text */
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+  /* force "not-allowed" cursor */
+  pointer-events: none;
+  /* ensures no interaction */
+  opacity: 0.25;
+}
+
+/* Submit button – inside footer, right-aligned */
+.submit-bottom-right {
+  position: absolute;
+  /* takes it out of the flex flow */
+  background: linear-gradient(to top, var(--bg-green), #229b62) !important;
+  /* green, matches theme */
+  color: #ffffff !important;
+  border: none;
+  border-radius: 0.4rem;
+  width: 150px;
+  height: 3rem;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  right: 12.5rem;
+  /* same inset as the footer padding */
+}
+
+/*  keep colour + size frozen in every state */
+.submit-bottom-right:hover,
+.submit-bottom-right:focus,
+.submit-bottom-right:active {
+  background: #198754 !important;
+  /* stay green */
+  color: #ffffff !important;
+  transform: none !important;
+  /* no grow / shrink */
 }
 
 /* Text Card Styles */
@@ -646,13 +704,19 @@ input[type="radio"]:checked::after {
 
 
 .card-row2-col2 .right-options .healthy-label {
-  background-color: var(--green);
+  /* background-color: var(--green); */
+  background: linear-gradient(to top, var(--green), #229b62);
+  /* consistent with your green button */
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .card-row2-col2 .right-options .unhealthy-label {
-  background-color: var(--orange);
+  background: linear-gradient(to top, var(--orange), #f07d5f);
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* 2. Ensure the radio circle is visible again */
@@ -707,50 +771,10 @@ input[type="radio"]:checked::after {
   grid-template-rows: 10% 70% 20% !important;
 } */
 
-/* Submit button – inside footer, right-aligned */
-.submit-bottom-right {
-  position: absolute;
-  /* takes it out of the flex flow */
-  right: 0;
-  bottom: 0;
-  /* flush to footer’s right edge */
-  background: #198754 !important;
-  /* green, matches theme */
-  color: #ffffff !important;
-  border: none;
-  border-radius: 0.4rem;
-  width: 150px;
-  padding: 0.6rem 1rem;
-  font-size: 1rem;
-  font-weight: bold;
-  right: 2rem;
-  /* same inset as the footer padding */
-  bottom: 0.5rem;
-}
-
-/*  keep colour + size frozen in every state */
-.submit-bottom-right:hover,
-.submit-bottom-right:focus,
-.submit-bottom-right:active {
-  background: #198754 !important;
-  /* stay green */
-  color: #ffffff !important;
-  transform: none !important;
-  /* no grow / shrink */
+.main-row1>.card-row1-col2-3-4-5:first-child {
+  grid-template-rows: 8% 85% 0%;
 }
 
 .hidden {
   display: none;
-}
-
-button:disabled,
-button[disabled],
-button:disabled:hover,
-button[disabled]:hover {
-  background-color: #ccc;/* light gray */
-  color: #666; /* dim text */
-  border: 1px solid #aaa;
-  cursor: not-allowed; /* force "not-allowed" cursor */
-  pointer-events: none; /* ensures no interaction */
-  opacity: 0.6;
 }

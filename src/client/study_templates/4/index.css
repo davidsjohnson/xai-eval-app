@@ -1,10 +1,14 @@
 :root {
-    /*My Browser Inner Width and Height: 1484px  x  756px*/
-    /*HD Screen Resolution : 1920px x 1080px*/
-  --fixed-screen-width: 1420px; /* 1920px  */
-  --fixed-screen-height: 800px; /* 1080px */
-  --app-width: calc(var(--fixed-screen-width)   *  (1 - 0.0)); /*reduce app-width */
-  --app-height: calc(var(--fixed-screen-height) *  (1 - 0.0)); /*reduce app-height */
+  /*My Browser Inner Width and Height: 1484px  x  756px*/
+  /*HD Screen Resolution : 1920px x 1080px*/
+  --fixed-screen-width: 1420px;
+  /* 1920px  */
+  --fixed-screen-height: 800px;
+  /* 1080px */
+  --app-width: calc(var(--fixed-screen-width) * (1 - 0.0));
+  /*reduce app-width */
+  --app-height: calc(var(--fixed-screen-height) * (1 - 0.0));
+  /*reduce app-height */
 
   --blue: #1e90ff;
   --white: #ffffff;
@@ -13,8 +17,10 @@
   --green: #198754;
 
   /* new versions for alpha control */
-  --orange-rgb: 238, 108, 77; /* #ee6c4d */
-  --green-rgb: 25, 135, 84;   /* #198754 */
+  --orange-rgb: 238, 108, 77;
+  /* #ee6c4d */
+  --green-rgb: 25, 135, 84;
+  /* #198754 */
 
   --bg-green: #198754;
   --bg-blue: #3d5a80;
@@ -25,29 +31,32 @@
   /*Disable Border*/
   --border1: none;
   --border2: none;
- 
-  /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
-  --grid-row1-ncolumns: 4; /* viki_comment: only change this value to increase or decrease columns in first row */
-  --grid-template-row1-columns: repeat(var(--grid-row1-ncolumns), 1fr); /* Use var() inside repeat() */
 
-  --grid-row2-ncolumns: 3; 
-  --grid-template-row2-columns: repeat(var(--grid-row2-ncolumns), 1fr); /* Use var() inside repeat() */
+  /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
+  --grid-row1-ncolumns: 4;
+  /* viki_comment: only change this value to increase or decrease columns in first row */
+  --grid-template-row1-columns: repeat(var(--grid-row1-ncolumns), 1fr);
+  /* Use var() inside repeat() */
+
+  --grid-row2-ncolumns: 3;
+  --grid-template-row2-columns: repeat(var(--grid-row2-ncolumns), 1fr);
+  /* Use var() inside repeat() */
   /* --grid-template-row2-columns: calc(var(--app-width) * 0.6) calc(var(--app-width) * 0.39);  */
-  
-  
-    /* Calculate the reduced values */
+
+
+  /* Calculate the reduced values */
   --header-height: calc(var(--app-height) * 0.1);
   --body-height: calc(var(--app-height) * 0.75);
-  --footer-height: calc(var(--app-height) * 0.1); 
- 
+  --footer-height: calc(var(--app-height) * 0.1);
+
   --row1-height: calc(var(--body-height) * 0.59);
   --row2-height: calc(var(--body-height) * 0.39);
- 
+
   --row1-card-height: calc(var(--row1-height) * 0.9);
   --row2-card-height: calc(var(--row2-height) * 0.9);
-  --warning-title-y-placement: 6px; 
-  --warning-text-y-placement: 5px; 
-  --concept-based-explanation-text-y-placement: 0px; 
+  --warning-title-y-placement: 6px;
+  --warning-text-y-placement: 5px;
+  --concept-based-explanation-text-y-placement: 0px;
 }
 
 html,
@@ -84,7 +93,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg-blue);
+  background: linear-gradient(to top, var(--bg-blue), #4a6e9e);
   color: white;
   padding: 1rem;
 }
@@ -147,13 +156,11 @@ header .progress-text {
 
 .unhealthy {
   color: var(--orange);
-  /* Red color for Unhealthy */
   font-weight: bold;
 }
 
 .healthy {
   color: var(--green);
-  /* Red color for Unhealthy */
   font-weight: bold;
 }
 
@@ -181,87 +188,94 @@ main {
 }
 
 .main-row1 {
-    display: grid;
-    background: none;
-    border-radius: 8px;
-    grid-template-columns: var(--grid-template-row1-columns);  
-    height: var(--row1-height);              /* Fixed height */
-    border: var(--border1);
-    overflow: hidden;
-    column-gap: 5px;
-    padding: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.20); */
+  display: grid;
+  background: none;
+  border-radius: 8px;
+  grid-template-columns: var(--grid-template-row1-columns);
+  height: var(--row1-height);
+  /* Fixed height */
+  border: var(--border1);
+  overflow: hidden;
+  column-gap: 5px;
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.20); */
 }
 
 .main-row2 {
-    display: grid;
-    background: none;
-    border-radius: 8px;
-    grid-template-columns: 1.5fr 2.5fr 1.5fr; /*60% 39%*/
-    height: var(--row2-height);              /* Fixed height */
-    overflow: hidden;
-    column-gap: 0.25rem;
-    padding: 0.5rem;
-    /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.20); */
+  display: grid;
+  background: none;
+  border-radius: 8px;
+  grid-template-columns: 1.5fr 2.5fr 1.5fr;
+  /*60% 39%*/
+  height: var(--row2-height);
+  /* Fixed height */
+  overflow: hidden;
+  column-gap: 0.25rem;
+  padding: 0.5rem;
+  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.20); */
 }
 
 /* Card Styles */
 .card-row1-col2-3-4-5 {
-    display: grid;
-    width: 100%;                /* Matches the width of the column */
-    gap: 1px;                    /* 5px gap between elements */
-    
-    height: var(--row1-card-height);              /* Fixed height */
-    background: white;
-    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.20);
-    border-radius: 8px;
-    grid-template-rows: 8% 73% 19%;  /* Row heights as specified */
+  display: grid;
+  width: 100%;
+  /* Matches the width of the column */
+  gap: 1px;
+  /* 5px gap between elements */
 
-    overflow: hidden;
+  height: var(--row1-card-height);
+  /* Fixed height */
+  background: white;
+  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.20);
+  border-radius: 8px;
+  grid-template-rows: 8% 73% 19%;
+  /* Row heights as specified */
+
+  overflow: hidden;
 }
 
 /* First Row - Patient ID */
 .card-row1-col2-3-4-5 .title {
-    color: #555;
-    display: flex;
-    text-align: left;
-    margin-left: 5px;
-    justify-content: left;
-    padding-left: 8px;
-    align-items: center;
-    font-weight: bold;
-    font-size: 1.2rem;
+  color: #555;
+  display: flex;
+  text-align: left;
+  margin-left: 5px;
+  justify-content: left;
+  padding-left: 8px;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 /* Second Row - Image */
 .card-row1-col2-3-4-5 .image {
-    width: 100%;
-    height: 100%;
-    background: none;
-    object-fit: contain;
-    display: block;
-    border-bottom: none;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  background: none;
+  object-fit: contain;
+  display: block;
+  border-bottom: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
 }
 
 /* Third Row - Text */
 .card-row1-col2-3-4-5 .caption {
-    padding-left: 20px;
-    background: none;
-    padding-top: 0px;
-    overflow-y: auto;
-    font-size: 0.9rem;
-    color: #555;
-    align-items: center;
-    justify-content: center;
+  padding-left: 20px;
+  background: none;
+  padding-top: 0px;
+  overflow-y: auto;
+  font-size: 0.9rem;
+  color: #555;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-row1-col2-3-4-5 .caption p {
-	  /*vertical horizantal*/
+  /*vertical horizantal*/
   margin: 8px 0;
 }
 
@@ -276,46 +290,54 @@ main {
 }
 
 .main-row2 .user-diagnosis {
-    color: #555;
-    text-align: center;
-    align-items: center;
-    justify-content:center;
-    margin-top: 60px; /*Move radio button up / down*/
+  color: #555;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+  /*Move radio button up / down*/
 }
 
-.main-row2 .user-diagnosis .title{
-    text-align: center;
-    font-size: 1.2rem;  /* Larger text size */
-    font-weight: bold;  /* Make it bold */
-    margin-bottom: 10px;  /* Space between the text and radio buttons */
+.main-row2 .user-diagnosis .title {
+  text-align: center;
+  font-size: 1.2rem;
+  /* Larger text size */
+  font-weight: bold;
+  /* Make it bold */
+  margin-bottom: 10px;
+  /* Space between the text and radio buttons */
 }
 
 .main-row2 .user-diagnosis .rectangle {
-    display: flex;
-    gap: 0.5rem; /* Small gap between radio buttons */
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  /* Small gap between radio buttons */
+  justify-content: center;
+  align-items: center;
 }
 
 .main-row2 .user-diagnosis .rectangle label {
-    display: inline-block;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.main-row2 .user-diagnosis .rectangle  input[type="radio"] {
-    margin-right: 5px; /* Space between radio button and label text */
+.main-row2 .user-diagnosis .rectangle input[type="radio"] {
+  margin-right: 5px;
+  /* Space between radio button and label text */
 }
 
 .main-row2 .user-diagnosis .rectangle .healthy-label {
-    background-color: var(--green);  /* Green background for Healthy */
-    color: white;
+  background-color: var(--green);
+  /* Green background for Healthy */
+  color: white;
 }
 
 .main-row2 .user-diagnosis .rectangle .unhealthy-label {
-    background-color: var(--orange);  /* Orange background for Unhealthy */
-    color: white;
+  background-color: var(--orange);
+  /* Orange background for Unhealthy */
+  color: white;
 }
 
 
@@ -333,127 +355,198 @@ footer {
 
 footer .nav-buttons {
   display: flex;
-  justify-content: center;              /* keeps Prev / Next centred */
+  justify-content: center;
+  /* keeps Prev / Next centred */
   gap: 0.5rem;
   height: 3rem;
-  position: relative;   
-  padding: 0 2rem;/* reference for Submit */
+  position: relative;
+  padding: 0 2rem;
+  /* reference for Submit */
 }
 
 
 footer .nav-buttons button {
-  background: var(--bg-blue);
+  /* background: var(--bg-blue); */
   color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 16px;
   cursor: pointer;
   transition: background 0.3s;
   width: 150px;
   font-size: large;
+  font-weight: bold;
+  background: linear-gradient(to top, var(--bg-blue), #4a6e9e);
+  box-shadow: 0 2px 5px rgba(1, 1, 1, .2);
+  transition: box-shadow 0.2s, transform 0.2s;
 }
 
 footer .nav-buttons button:hover {
-  background: var(--bg-blue)
+  box-shadow: 0 4px 5px rgba(1, 1, 1, .25);
+  transition: box-shadow 0.2s;
+}
+
+
+footer .nav-buttons button:active {
+  box-shadow: 0 2px 5px rgba(1, 1, 1, .20);
+  transition: box-shadow 0.2s, transform 0.2s;
+  background-color: 0.5s;
+  background-color: #ccc;
+  opacity: 0.25;
+  border: 1px solid #ccc;
+}
+
+button:disabled,
+button[disabled],
+button:disabled:hover,
+button[disabled]:hover {
+  background-color: #ccc;
+  /* light gray */
+  color: #666;
+  /* dim text */
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+  /* force "not-allowed" cursor */
+  pointer-events: none;
+  /* ensures no interaction */
+  opacity: 0.25;
+}
+
+/* Submit button – inside footer, right-aligned */
+.submit-bottom-right {
+  position: absolute;
+  /* takes it out of the flex flow */
+  background: linear-gradient(to top, var(--bg-green), #229b62) !important;
+  /* green, matches theme */
+  color: #ffffff !important;
+  border: none;
+  border-radius: 0.4rem;
+  width: 150px;
+  height: 3rem;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  right: 12.5rem;
+  /* same inset as the footer padding */
+}
+
+/*  keep colour + size frozen in every state */
+.submit-bottom-right:hover,
+.submit-bottom-right:focus,
+.submit-bottom-right:active {
+  background: #198754 !important;
+  /* stay green */
+  color: #ffffff !important;
+  transform: none !important;
+  /* no grow / shrink */
 }
 
 /* Text Card Styles */
 .card-row1-col1 {
-    display: flex;
-    width: 100%;
-    gap: 1px;
-    padding-left: 10px;
-    padding-top: 5px;
-    height: var(--row2-card-height); /* FIX: Unifies the height with the other cards */
-    box-sizing: border-box;
-    background: white;
-    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    flex-direction: column;
-    overflow-y: auto;
+  display: flex;
+  width: 100%;
+  gap: 1px;
+  padding-left: 10px;
+  padding-top: 5px;
+  height: var(--row2-card-height);
+  /* FIX: Unifies the height with the other cards */
+  box-sizing: border-box;
+  background: white;
+  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  flex-direction: column;
+  overflow-y: auto;
 }
+
 .card-row2-col1 {
-    display: grid;
-    gap: 1px;                    /* 5px gap between elements */
-    width: 100%;                 /* Ensure card width matches the width of column 2 */
-    height: var(--row2-card-height);              /* Fixed height */
-    background: white;
-    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-left:0;
-    font-size: 15px ;
+  display: grid;
+  gap: 1px;
+  /* 5px gap between elements */
+  width: 100%;
+  /* Ensure card width matches the width of column 2 */
+  height: var(--row2-card-height);
+  /* Fixed height */
+  background: white;
+  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-left: 0;
+  font-size: 15px;
 }
 
 .card-row2-col2 {
-    display: grid;
-    gap: 1px;                    /* 5px gap between elements */
-    width: 100%;                 /* Ensure card width matches the width of column 2 */
-    height: var(--row2-card-height);              /* Fixed height */
-    background: white;
-    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-left:0;
+  display: grid;
+  gap: 1px;
+  /* 5px gap between elements */
+  width: 100%;
+  /* Ensure card width matches the width of column 2 */
+  height: var(--row2-card-height);
+  /* Fixed height */
+  background: white;
+  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-left: 0;
 }
 
 /* Card Title */
 .card-row1-col1 .title {
-    color: #555;
-    font-size: 20px;
-    margin: 0;
-    font-weight: bold;
-    margin-bottom: 20px;
+  color: #555;
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 /* Numbered Biomarkers List */
 .card-row2-col1 .biomarkers-list {
-    color: #555;
-    list-style-type: decimal;  /* Changes to numbered list */
-    list-style-position: inside;
-    padding-left: 20px;
-    font-size: 16px;
-    margin: 0;
+  color: #555;
+  list-style-type: decimal;
+  /* Changes to numbered list */
+  list-style-position: inside;
+  padding-left: 20px;
+  font-size: 16px;
+  margin: 0;
 }
 
 /* Warning Title */
 .card-row2-col1 .card-warning {
-    font-size: 20px;
-    margin: 0;
-    font-weight: bold;
-    color: var(--orange);
-    margin-top: var(--warning-title-y-placement);
-    padding-left: 10px;
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+  color: var(--orange);
+  margin-top: var(--warning-title-y-placement);
+  padding-left: 10px;
 }
 
 /* Warning Text */
 .card-row2-col1 .card-warning-text {
-    color: #555;
-    font-size: 15px;
-    margin: 0;
-    color: #555;
-    line-height: 1.5;
-    padding-left: 10px;
-    padding-right: 10px;
+  color: #555;
+  font-size: 15px;
+  margin: 0;
+  color: #555;
+  line-height: 1.5;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 /* Card Title */
 .card-row2-col1 .title {
-    color: #555;
-    font-size: 20px;
-    margin: 0;
-    font-weight: bold;
-    padding-left: 5px;
-    padding-top: 5px;
+  color: #555;
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+  padding-left: 5px;
+  padding-top: 5px;
 }
 
 .card-row2-col1 .text {
-    font-size: 14.5px;
-    color: #555;
-    line-height: 1.5;
-    padding-left: 15px;
-    padding-top: 20px;
-    margin-top: var(--concept-based-explanation-text-y-placement);
+  font-size: 14.5px;
+  color: #555;
+  line-height: 1.5;
+  padding-left: 15px;
+  padding-top: 20px;
+  margin-top: var(--concept-based-explanation-text-y-placement);
 }
 
 /* Card Title */
@@ -536,40 +629,54 @@ footer .nav-buttons button:hover {
 
 /* Basic styles for the radio button */
 input[type="radio"] {
-    -moz-appearance: none; /* Firefox */
-    -webkit-appearance: none; /* Chrome/Safari */
-    appearance: none; /* Standardize across browsers */
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none;
-    border-radius: 50%;  /* Ensure the button is round */
-    width: 20px;
-    height: 20px;
-    background-color: #fff; /* White background when not selected */
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-    border: 2px solid #888;  /* Default border color */
+  -moz-appearance: none;
+  /* Firefox */
+  -webkit-appearance: none;
+  /* Chrome/Safari */
+  appearance: none;
+  /* Standardize across browsers */
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  /* Ensure the button is round */
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  /* White background when not selected */
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  border: 2px solid #888;
+  /* Default border color */
 }
 
 /* when radio button is selected */
 input[type="radio"]:checked {
-    background-color: #fff;  /* Keep background white */
-    border-color: #2196F3;   /* Blue border when selected */
+  background-color: #fff;
+  /* Keep background white */
+  border-color: #2196F3;
+  /* Blue border when selected */
 }
 
 /* Inner blue circle when radio button is selected */
 input[type="radio"]:checked::after {
-    content: '';
-    position: absolute;
-    top: 50%;     /* Center vertically */
-    left: 50%;    /* Center horizontally */
-    width: 8px;  /* Size of the inner blue circle */
-    height: 8px; /* Size of the inner blue circle */
-    background-color: #2196F3;  /* Blue inner circle */
-    border-radius: 50%;
-    transform: translate(-50%, -50%); /* Center the inner circle perfectly */
+  content: '';
+  position: absolute;
+  top: 50%;
+  /* Center vertically */
+  left: 50%;
+  /* Center horizontally */
+  width: 8px;
+  /* Size of the inner blue circle */
+  height: 8px;
+  /* Size of the inner blue circle */
+  background-color: #2196F3;
+  /* Blue inner circle */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  /* Center the inner circle perfectly */
 }
 
 /* Style “Your Diagnosis” pills (right-options) */
@@ -577,9 +684,10 @@ input[type="radio"]:checked::after {
   display: flex;
   gap: 1rem;
   justify-content: center;
-  margin-top: 0.5rem;   
+  margin-top: 0.5rem;
   margin: -15px 0 0 20px;
-  padding: 0.3rem 0.4rem !important;    /* a little breathing room under the heading */
+  padding: 0.3rem 0.4rem !important;
+  /* a little breathing room under the heading */
 }
 
 .card-row2-col2 .right-options label {
@@ -587,7 +695,8 @@ input[type="radio"]:checked::after {
   align-items: center;
   gap: 0.4rem;
   padding: 0.3rem 0.5rem !important;
-  border-radius: 5px;        /* pill shape */
+  border-radius: 5px;
+  /* pill shape */
   cursor: pointer;
   font-weight: bold;
   width: 10rem !important;
@@ -595,13 +704,19 @@ input[type="radio"]:checked::after {
 
 
 .card-row2-col2 .right-options .healthy-label {
-  background-color: var(--green);
+  /* background-color: var(--green); */
+  background: linear-gradient(to top, var(--green), #229b62);
+  /* consistent with your green button */
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .card-row2-col2 .right-options .unhealthy-label {
-  background-color: var(--orange);
+  background: linear-gradient(to top, var(--orange), #f07d5f);
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* 2. Ensure the radio circle is visible again */
@@ -631,20 +746,24 @@ input[type="radio"]:checked::after {
 
 /* MAKE the radio dot fully opaque */
 .card-row2-col2 .right-options input[type="radio"] {
-  background-color: white !important;   /* white background */
+  background-color: white !important;
+  /* white background */
 }
 
 .card-row2-col2 .right-options input[type="radio"]:checked::after {
-  background-color: var(--bg-blue) !important; /* contrasting inner dot */
+  background-color: var(--bg-blue) !important;
+  /* contrasting inner dot */
 }
 
 /* Reduce space between “Your Diagnosis” and the pills */
 .card-row2-col2 .right-options {
-  gap: 0.3rem !important;          /* was 1rem */
+  gap: 0.3rem !important;
+  /* was 1rem */
 }
 
 .card-row2-col2 .right-options h4 {
-  margin-bottom: 0.2rem !important; /* was 0.6rem */
+  margin-bottom: 0.2rem !important;
+  /* was 0.6rem */
 }
 
 /* Enlarge only the Patient X-ray card’s image */
@@ -652,47 +771,10 @@ input[type="radio"]:checked::after {
   grid-template-rows: 10% 70% 20% !important;
 } */
 
-/* Submit button – inside footer, right-aligned */
-.submit-bottom-right {
-  position: absolute;                   /* takes it out of the flex flow */
-  right: 0; bottom: 0;                  /* flush to footer’s right edge */
-  background: #198754 !important;       /* green, matches theme */
-  color: #ffffff !important;
-  border: none;
-  border-radius: 0.4rem;
-  width: 150px;
-  padding: 0.6rem 1rem;
-  font-size: 1rem;
-  font-weight: bold;
-  right: 2rem;              /* same inset as the footer padding */
-  bottom: 0.5rem;
+.main-row1>.card-row1-col2-3-4-5:first-child {
+  grid-template-rows: 8% 85% 0%;
 }
 
-/*  keep colour + size frozen in every state */
-.submit-bottom-right:hover,
-.submit-bottom-right:focus,
-.submit-bottom-right:active {
-  background: #198754 !important;       /* stay green */
-  color: #ffffff !important;
-  transform: none !important;           /* no grow / shrink */
-}
-
-.main-row1 > .card-row1-col2-3-4-5:first-child {
-    grid-template-rows: 8% 85% 0%;
-}
-
-.hidden{
+.hidden {
   display: none;
-}
-
-button:disabled,
-button[disabled],
-button:disabled:hover,
-button[disabled]:hover {
-  background-color: #ccc;/* light gray */
-  color: #666; /* dim text */
-  border: 1px solid #aaa;
-  cursor: not-allowed; /* force "not-allowed" cursor */
-  pointer-events: none; /* ensures no interaction */
-  opacity: 0.6;
 }

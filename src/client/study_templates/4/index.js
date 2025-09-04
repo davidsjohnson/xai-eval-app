@@ -9,6 +9,7 @@ let input = null;
 
 const button_next = document.getElementById("button-next");
 const button_prev = document.getElementById("button-prev");
+const button_submit = document.getElementById("button-submit");
 const radio_buttons = document.getElementsByName("health");
 // const patient_id1 = document.getElementById("patient-id-location1");
 const patient_id2 = document.getElementById("patient-id-location2");
@@ -270,8 +271,7 @@ function button_toggle_next_or_submit() {
     button_prev.disabled = false;
     button_next.style.display = 'inline-block';
     button_next.disabled = get_radio_button_status() === null;
-    button_next.textContent = 'Next';
-    button_next.classList.remove('submit-bottom-right');
+    button_submit.disabled = true;
 
     /* ---- first page: hide Prev ---- */
     if (curr_page === 1) {
@@ -282,8 +282,7 @@ function button_toggle_next_or_submit() {
 
     /* last page: show Prev + floating Submit */
     if (curr_page === total_pages) {
-        button_next.textContent = 'Submit';
-        button_next.classList.add('submit-bottom-right');
+        button_next.disabled = true;
         return;
     }
 }
@@ -371,6 +370,27 @@ async function prev_button_action() {
 
     prev_page_nr = curr_page_nr - 1;
     db_get_and_set_participant_diagnosis_prev_button_click(participant_id, study_id, prev_page_nr);
+}
+
+async function radio_button_changed(){
+    let ret = get_radio_button_status();
+    let curr_page_nr = get_page_nr_from_url();
+    const up = get_params_from_url();
+    let total_pages = parseInt(up.total_pages, 10);
+
+    if (ret == null) {
+        button_next.disabled = true;
+        button_submit.disabled = true;
+        return;
+    }
+
+    if (curr_page_nr == total_pages) {
+        button_next.disabled = true;
+        button_submit.disabled = false;
+    } else {
+        button_next.disabled = false;
+        button_submit.disabled = true;
+    }
 }
 
 function set_suggested_diag(value) {
@@ -549,16 +569,18 @@ button_next.addEventListener("click", function () {
     next_button_action();
 });
 
+button_submit.addEventListener("click", function () {
+    next_button_action();
+});
+
 button_prev.addEventListener("click", function () {
     prev_button_action();
 });
 
 
 radio_buttons.forEach((radio) => {
-    radio.addEventListener("change", (event) => {
-        if (event.target.checked) {
-            button_next.disabled = false;
-        }
+    radio.addEventListener("change", function () {
+        radio_button_changed();
     });
 });
 
