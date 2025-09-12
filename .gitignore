@@ -27,6 +27,10 @@ src/client/study_id*
 !src/client/study_id_10
 !src/client/study_id_11
 
+# keep studies for XAI Phase Tutorial and Baseline with Concept-Based XAI
+!src/client/study_id_50
+!src/client/study_id_51
+
 # ignore XAI image files
 */img/
 
