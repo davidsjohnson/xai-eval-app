@@ -22,6 +22,15 @@ Vagrantfile
 node_modules
 img/
 src/client/study_id*
+
+# keep studies for No-XAI Phase Tutorial and Baseline
+!src/client/study_id_10
+!src/client/study_id_11
+
+# ignore XAI image files
+*/img/
+
+# ignore XAI images
 study_data/
 
 # keep one study file for sharing new template
