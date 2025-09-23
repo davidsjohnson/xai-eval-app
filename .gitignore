@@ -22,12 +22,15 @@ Vagrantfile
 node_modules
 img/
 src/client/study_id*
+*.zip
 
 # keep studies for No-XAI Phase Tutorial and Baseline
 !src/client/study_id_10
 !src/client/study_id_11
 
 # keep studies for XAI Phase Tutorial and Baseline with Concept-Based XAI
+!src/client/study_id_40
+!src/client/study_id_41
 !src/client/study_id_50
 !src/client/study_id_51
 
