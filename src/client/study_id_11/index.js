@@ -408,9 +408,9 @@ async function radio_button_changed() {
 
 function set_suggested_diag(value)
 {
-    value = "Unavailable"; // Hide suggested diagnosis
-    suggested_diag1.textContent = value;
-    suggested_diag2.textContent = value;
+    value = "<span class=\"placeholder\">Not provided this phase</span>"; // Hide suggested diagnosis
+    suggested_diag1.innerHTML = value;
+    suggested_diag2.innerHTML = value;
 
     p_card = document.getElementById("patient-card");
 
