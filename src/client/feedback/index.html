@@ -30,6 +30,7 @@
         p {
             font-size: 18px;
             margin-bottom: 30px;
+            color: black;
         }
         .button {
             background-color: #4CAF50;
@@ -42,6 +43,33 @@
         }
         .button:hover {
             background-color: #45a049;
+        }
+
+        #hash_result {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .completion-box {
+            display: inline-block;
+            margin: 0.5rem auto;
+            padding: 0.6rem 1rem;
+            font-weight: bold;
+            font-family: monospace;
+            background: #f8f8f8;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.3s ease;
+            width: fit-content;
+        }
+
+        .copy-hint {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.25rem;
+            text-align: center;
         }
     </style>
    <head>
@@ -78,7 +106,23 @@
 
             if (participant_id) {
                 const hash = hash_participant_id(participant_id, stage);
-                document.getElementById("hash_result").textContent = `Generated Hash: ${hash}`;
+                  document.getElementById("hash_result").innerHTML = `
+                    Task Completion Code:
+                    <div class="completion-box" id="completionBox">${hash}</div>
+                    <small class="copy-hint">Click the code to copy</small>
+                `;
+
+
+                const box = document.getElementById("completionBox");
+                box.addEventListener("click", () => {
+                    navigator.clipboard.writeText(hash);
+                    box.style.background = "#e7f9e7";
+                    box.textContent = "Copied!";
+                    setTimeout(() => {
+                        box.textContent = hash;
+                        box.style.background = "#f8f8f8";
+                    }, 1000);
+                });
             }
         });
     </script>
@@ -88,9 +132,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>Feedback Submitted Successfully</h1>
-        <p>Thank you for your feedback! We appreciate your input and will use it to improve our service.</p>
-        <p id="hash_result">Loading hash...</p>
+        <h1>Diagnoses Submitted Successfully</h1>
+        <p>Thank you for your participation! Please copy the code below, 
+        return to LimeSurvey, and then enter it to proceed to the next step.</p>
+        <p id="hash_result">Loading completion code...</p>
         <!-- <button class="button" onclick="window.location.href='/index.html'">Back to Home</button>
         -->
     </div>
