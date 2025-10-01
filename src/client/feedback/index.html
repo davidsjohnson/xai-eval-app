@@ -47,7 +47,7 @@
    <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
-        const HASH_INTROS = { training: 'a1c', validation_nodiag: 'b55', validation_noxai: 'z81' };
+        const HASH_INTROS = { training_stage: 'a1c', noAI_stage: 'b55', XAI_stage: 'z81' };
 
         function hash_participant_id(participant_id, stage, length = 15) {
             const hashText = participant_id + `supersecret_stage-${stage}`;
@@ -60,10 +60,24 @@
             return urlParams.get('participant_id');
         }
 
+        function get_study_id_from_url() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('study_id');
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const participant_id = get_participant_id_from_url();
+            const study_id = get_study_id_from_url();
+            
+            let stage = "XAI_stage"; // default
+            if (study_id === "10") {
+                stage = "training_stage";
+            } else if (study_id === "11") {
+                stage = "noAI_stage";
+            }
+
             if (participant_id) {
-                const hash = hash_participant_id(participant_id, "training");
+                const hash = hash_participant_id(participant_id, stage);
                 document.getElementById("hash_result").textContent = `Generated Hash: ${hash}`;
             }
         });
