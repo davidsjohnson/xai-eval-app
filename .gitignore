@@ -29,6 +29,7 @@ src/client/study_id*
 !src/client/study_id_11
 
 # keep studies for XAI Phase Tutorial and Baseline with Concept-Based XAI
+!src/client/study_id_12
 !src/client/study_id_20
 !src/client/study_id_21
 !src/client/study_id_30
