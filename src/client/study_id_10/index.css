@@ -487,6 +487,7 @@ button[disabled]:hover {
   border-radius: 8px;
   overflow: hidden;
   margin-left: 0;
+  position: relative;
 }
 
 /* Card Title */
@@ -569,6 +570,51 @@ button[disabled]:hover {
   /* top-align both columns */
   padding: 8px 15px 0 15px;
   /* avoid margin-collapsing wiggle */
+  opacity: 0.5;                      /* make it fade out smoothly */
+  transition: opacity 0.3s ease, visibility 0s 0.3s; /* delay visibility hide */
+}
+
+.card-content.show {
+  visibility: visible;             /* make visible again */
+  opacity: 1;                      /* fade in */
+  transition: opacity 0.3s ease;   /* reset visibility delay */
+}
+
+/* === Overlay message (toggle-hint) === */
+.toggle-hint {
+  position: absolute;
+    top: 2rem;    /* start a bit below the title */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* center within the card */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    padding: 2rem;
+    text-align: left;
+  
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(3px);
+    /* softens background slightly */
+    border-radius: 0.5rem;
+  
+    font-size: 1rem;
+    line-height: 1.4em;
+    color: #333;
+    font-style: italic;
+  
+    cursor: pointer;
+    user-select: none;
+    opacity: .99;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.toggle-hint.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* 2) Make right column stick to the top, fixed width */

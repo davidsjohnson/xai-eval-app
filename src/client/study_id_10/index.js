@@ -319,6 +319,7 @@ function db_update_duplicate_entry_action(participant_id, study_id, current_page
 
 function next_button_action()
 {
+    
     let ret = get_radio_button_status();
     if(ret == null ){
         alert("Please select an option before proceeding to the next page.");
@@ -326,6 +327,27 @@ function next_button_action()
     }
 
     db_update();
+
+    // Hide the card content again after advancing
+    const card = document.querySelector(".card-row2-col2");
+    if (card) {
+        const content = card.querySelector(".card-content");
+        const hint = card.querySelector(".toggle-hint");
+
+        if (content && hint) {
+            // Temporarily disable transition to avoid flicker
+            content.style.transition = "none";
+            content.classList.remove("show");
+            hint.classList.remove("hidden");
+
+            // Force reflow so browser applies style
+            void content.offsetHeight;
+
+            // Re-enable transitions for next user toggle
+            content.style.transition = "";
+        }
+    }
+
 }
 
 async function db_get_and_set_participant_diagnosis_prev_button_click(participant_id, study_id, page_nr) {
@@ -565,3 +587,17 @@ window.addEventListener('popstate', () => {
   button_toggle_next_or_submit();
 });
 
+// Toggle card content visibility on click for tutorial only
+document.addEventListener("DOMContentLoaded", function () {
+    const card = document.querySelector(".card-row2-col2");
+    const content = card.querySelector(".card-content");
+    const hint = card.querySelector(".toggle-hint");
+
+    card.addEventListener("click", function (event) {
+        // prevent re-triggering when clicking inside the content
+        if (event.target.closest(".card-content")) return;
+
+        content.classList.toggle("show");
+        hint.classList.toggle("hidden");
+    });
+})
