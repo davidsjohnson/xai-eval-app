@@ -18,6 +18,7 @@ sqlite3 database/database_bck.db "DELETE FROM sqlite_sequence WHERE name='access
 # List your subfolders here (relative to script location)
 SUBFOLDERS=("src/client/study_id_10/img" 
             "src/client/study_id_11/img"
+            "src/client/study_id_12/img"
             "src/client/study_id_20/img"
             "src/client/study_id_21/img"
             "src/client/study_id_30/img"
@@ -30,6 +31,7 @@ SUBFOLDERS=("src/client/study_id_10/img"
 # List your individual files here (relative or absolute paths)
 FILES=("src/client/study_id_10/input.json"
        "src/client/study_id_11/input.json"
+       "src/client/study_id_12/input.json"
        "src/client/study_id_20/input.json"
        "src/client/study_id_21/input.json"
        "src/client/study_id_30/input.json"
