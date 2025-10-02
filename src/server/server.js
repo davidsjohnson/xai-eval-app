@@ -13,7 +13,7 @@ const path = require('path');
 const project_root = "../";
 const app = express();
 const db_path = path.join(__dirname, project_root, 'database/database.db');
-const PORT = 7000;
+const PORT = process.env.PORT || 7000;
 const client_ui_web_pages_location='client';
 let db;
 

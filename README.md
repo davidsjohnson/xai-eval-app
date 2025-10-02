@@ -77,7 +77,7 @@ To start the application (for Ubuntu users), run:
 - This script runs a Docker container based on the image created in the previous step.
 - The **database/database.db** file contains the database tables (**participant_feedback** and **study**).
 - The **src/client** folder (which contains the client logic) is shared between the Docker container and the host.
-- The web application runs under tcp port 7000
+- The web application runs by default at tcp port 7000
 
 ## Creating a New Study
 

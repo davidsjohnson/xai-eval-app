@@ -1,6 +1,6 @@
 #!/bin/bash
-PORT=7000
+PORT=${1:-7000}
 # Kill Port
 sudo fuser -k "$PORT"/tcp
 cd app_live
-./run.docker.sh
+./run.docker.sh "$PORT"

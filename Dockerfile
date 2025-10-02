@@ -17,9 +17,11 @@ RUN ls -al /app
 # Install required npm packages
 RUN npm install
 
-# Expose port 7000
-EXPOSE 7000
+# Expose port from build argument or default to 7000
+# You can override the PORT value at build time using: docker build --build-arg PORT=your_port
+ARG PORT=7000
+EXPOSE ${PORT}
 
-# Start the application
+# Start the application and pass the port as an environment variable
+ENV PORT=${PORT}
 CMD ["node", "server/server.js"]
-
