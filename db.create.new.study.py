@@ -93,5 +93,6 @@ if __name__ == "__main__":
 
             create_record_in_study_table(study_id, study_type, total_pages)
             show_study_table()
-        except ValueError:
+        except ValueError as e:
             print("Error: All arguments must be integers.")
+            print(e)
