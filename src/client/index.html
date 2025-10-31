@@ -43,8 +43,9 @@
             width: 450px;
             padding: 20px;
             border-radius: 10px;
+            border: 1px solid #dcdfe3;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            background: #f9f9f9;
+            background: #f9fbfc;
             margin-top: -100px;
         }
 
@@ -57,6 +58,25 @@
             border-radius: 5px;
             font-size: 16px;
         }
+
+        input[readonly] {
+            background: linear-gradient(to bottom, #ecefec, #e3e6e3);
+            color: #555;
+            border: 1px solid #bfc3bf;
+            border-radius: 4px;
+            box-shadow: inset 0 2px 3px rgba(0,0,0,0.08);
+            cursor: not-allowed;
+            caret-color: transparent;  /* hides the blinking cursor */
+            user-select: none;         /* optional: prevent text selection */
+        }
+
+
+        input[readonly]:focus {
+            outline: none;               /* no blue outline */
+            box-shadow: none;
+        }
+
+
 
         /* Start button */
         button {
@@ -103,11 +123,11 @@
     <div class="container">
         <div class="form-row">
             <label for="participant_id">Participant ID:</label>
-            <input type="text" id="participant_id" placeholder="Enter Participant ID">
+            <input type="text" id="participant_id" placeholder="Enter Participant ID" readonly>
         </div>
         <div class="form-row">
             <label for="study_id">Study ID:</label>
-            <input type="text" id="study_id" placeholder="Enter Study ID">
+            <input type="text" id="study_id" placeholder="Enter Study ID" readonly>
         </div>
         <button id="start_button">Start</button>
     </div>
