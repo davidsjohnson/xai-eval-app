@@ -49,6 +49,7 @@ src/client/study_id*
 !src/client/study_id_511
 !src/client/study_id_512
 !src/client/study_id_611
+!src/client/study_id_711
 
 # ignore XAI image files
 */img/
