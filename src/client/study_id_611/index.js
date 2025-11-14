@@ -131,6 +131,10 @@ function get_x_ray_image()
     return x_ray_image.src;
 }
 
+function set_x_ray_trait(val) {
+    x_ray_trait_span.textContent = val;
+}
+
 function get_params_from_url()
 {
     const params = new URLSearchParams(window.location.search);
@@ -455,7 +459,8 @@ function csv_json_get_main_attributes(page_nr)
     l_true_diag = input.TRUE_DIAG[index];
     l_suggested_diag = input.SUGGESTED_DIAG[index];
     l_image = "img/" + input.X_RAY_IMAGE[index];
-    attributes = [l_patient_id, l_image, l_x_ray_loc, l_true_diag, l_suggested_diag]
+    l_trait = input.X_RAY_TRAIT[index];
+    attributes = [l_patient_id, l_image, l_x_ray_loc, l_true_diag, l_suggested_diag, l_trait]
     return attributes;
 }
 
@@ -466,7 +471,8 @@ function set_main_attributes_in_html_page(page_nr, attr)
     set_x_ray_image(attr[1]);
     set_x_ray_location(attr[2]);
     set_true_diag(attr[3]);
-    set_suggested_diag(attr[4])
+    set_suggested_diag(attr[4]);
+    set_x_ray_trait(attr[5]);
     set_progress(page_nr, csv_json_get_total_page_count());
 }
 
