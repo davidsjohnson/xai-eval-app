@@ -75,7 +75,7 @@
    <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
-        const HASH_INTROS = { training_stage: 'a1c', noAI_stage: 'b55', XAI_stage: 'z81' };
+        const HASH_INTROS = { training_stage: 'a1c', noAI_stage: 'b55', XAI_stage1: 'z81', XAI_stage2: 'wx5' };
 
         function hash_participant_id(participant_id, stage, length = 15) {
             const hashText = participant_id + `supersecret_stage-${stage}`;
@@ -97,11 +97,13 @@
             const participant_id = get_participant_id_from_url();
             const study_id = get_study_id_from_url();
             
-            let stage = "XAI_stage"; // default
+            let stage = "XAI_stage1"; // default
             if (study_id === "10") {
                 stage = "training_stage";
             } else if (study_id === "11") {
                 stage = "noAI_stage";
+            } else if ((study_id.slice(-1) === "2") & (study_id.length === 3)) {
+                stage = "XAI_stage2";
             }
 
             if (participant_id) {
