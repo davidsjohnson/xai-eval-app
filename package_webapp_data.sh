@@ -36,7 +36,9 @@ SUBFOLDERS=("src/client/study_id_10/img"
             "src/client/study_id_50/img"
             "src/client/study_id_51/img"
             "src/client/study_id_511/img"
-            "src/client/study_id_512/img")
+            "src/client/study_id_512/img"
+            "src/client/study_id_611/img"
+            "src/client/study_id_711/img")
 
 # List your individual files here (relative or absolute paths)
 FILES=("src/client/study_id_10/input.json"
@@ -59,7 +61,9 @@ FILES=("src/client/study_id_10/input.json"
        "src/client/study_id_50/input.json"
        "src/client/study_id_51/input.json"
        "src/client/study_id_511/input.json"
-       "src/client/study_id_512/input.json")
+       "src/client/study_id_512/input.json"
+       "src/client/study_id_611/input.json"
+       "src/client/study_id_711/input.json")
 
 # Name of the output zip file
 ZIP_NAME="webapp_data.zip"
