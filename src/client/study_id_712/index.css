@@ -192,6 +192,7 @@ main {
   background: none;
   border-radius: 8px;
   grid-template-columns: var(--grid-template-row1-columns);
+  grid-template-columns: 1fr 2fr; 
   height: var(--row1-height);
   /* Fixed height */
   border: var(--border1);
@@ -230,7 +231,7 @@ main {
   background: white;
   box-shadow: 0 0px 8px rgba(0, 0, 0, 0.20);
   border-radius: 8px;
-  grid-template-rows: 8% 85% 7%;
+  grid-template-rows: 8% 90% 2%;
   /* Row heights as specified */
 
   overflow: hidden;
@@ -278,6 +279,53 @@ main {
   /*vertical horizantal*/
   margin: 8px 0;
 }
+
+/**** Description List Formatting ****/
+/* Container around the list */
+#concept-card-descriptions { 
+  padding: 0.8rem 1rem;
+  display: flex;
+  justify-content: center;   /* center list horizontally */
+  align-items: center;       /* center list vertically */
+}
+
+/* The list itself */
+.concept-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 auto;
+  width: 95%;        /* shrink so centering is accurate */
+}
+
+/* Each concept item */
+.concept-list li {
+  position: relative;
+  height: 1.35rem;
+  padding: 0.6rem 0.8rem 0.6rem 1.2rem;
+  margin-bottom: 0.35rem;
+
+  background: #f9fafb;
+  border-radius: 6px;
+  font-size: 1.0rem;
+  line-height: 1.25rem;
+
+  text-align: left;                 /* keep readable */
+}
+
+.concept-list li.healthy-li {
+  border-left: 3px solid var(--green); /* green left border */
+}
+
+.concept-list li.unhealthy-li {
+  border-left: 3px solid var(--orange); /* orange left border */
+  
+}
+
+/* Remove last bottom spacing */
+.concept-list li:last-child {
+  margin-bottom: 0;
+}
+
 
 .main-row1>.card-row1-col2-3-4-5:first-child.healthy {
   box-shadow: 0px 0px 18px rgba(var(--green-rgb), 0.4);

@@ -33,7 +33,7 @@
   --border2: none;
 
   /*Viki_Commment: Only the following has to be modified between 3CARDS, 4CARDS, 5CARDS and 6CARDS layout*/
-  --grid-row1-ncolumns: 5;
+  --grid-row1-ncolumns: 2;
   /* viki_comment: only change this value to increase or decrease columns in first row */
   --grid-template-row1-columns: repeat(var(--grid-row1-ncolumns), 1fr);
   /* Use var() inside repeat() */
@@ -155,12 +155,12 @@ header .progress-text {
 }
 
 .unhealthy {
-  color: var(--orange) !important;
+  color: var(--orange);
   font-weight: bold;
 }
 
 .healthy {
-  color: var(--green) !important;
+  color: var(--green);
   font-weight: bold;
 }
 
@@ -192,6 +192,7 @@ main {
   background: none;
   border-radius: 8px;
   grid-template-columns: var(--grid-template-row1-columns);
+  grid-template-columns: 1fr 2fr;
   height: var(--row1-height);
   /* Fixed height */
   border: var(--border1);
@@ -230,7 +231,7 @@ main {
   background: white;
   box-shadow: 0 0px 8px rgba(0, 0, 0, 0.20);
   border-radius: 8px;
-  grid-template-rows: 8% 73% 19%;
+  grid-template-rows: 8% 90% 2%;
   /* Row heights as specified */
 
   overflow: hidden;
@@ -257,7 +258,7 @@ main {
   object-fit: contain;
   display: block;
   border-bottom: none;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   border-radius: 8px;
 }
