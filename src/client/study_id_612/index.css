@@ -499,38 +499,6 @@ button[disabled]:hover {
   margin-bottom: 20px;
 }
 
-/* Numbered Biomarkers List */
-.card-row2-col1 .biomarkers-list {
-  color: #555;
-  list-style-type: decimal;
-  /* Changes to numbered list */
-  list-style-position: inside;
-  padding-left: 20px;
-  font-size: 16px;
-  margin: 0;
-}
-
-/* Warning Title */
-.card-row2-col1 .card-warning {
-  font-size: 20px;
-  margin: 0;
-  font-weight: bold;
-  color: var(--orange);
-  margin-top: var(--warning-title-y-placement);
-  padding-left: 10px;
-}
-
-/* Warning Text */
-.card-row2-col1 .card-warning-text {
-  color: #555;
-  font-size: 15px;
-  margin: 0;
-  color: #555;
-  line-height: 1.5;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
 /* Card Title */
 .card-row2-col1 .title {
   color: #555;

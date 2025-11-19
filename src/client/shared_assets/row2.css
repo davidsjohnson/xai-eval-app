@@ -1,0 +1,76 @@
+/* Numbered Biomarkers List */
+.biomarkers {
+  padding: 0.5rem 0.8rem;
+}
+
+.biomarkers-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.biomarkers-list li {
+  width: 80%;
+  /* make items narrower */
+  margin: 0.25rem auto;
+  /* center list items */
+  padding: 0.25rem 0.8rem;
+  border-left: 2px solid #d1d5db;
+  background-color: #fbfbfb;
+  border-radius: 4px;
+  font-size: 0.94rem;
+  line-height: 1.4;
+  color: #374151;
+  text-align: left;
+  /* ensure text stays left-aligned */
+}
+
+/* Warning Title */
+.card-row2-col1 .card-warning {
+  font-size: 20px;
+  margin: 0;
+  font-weight: 600;
+  color: #B91C1C;
+  margin-top: var(--warning-title-y-placement);
+  padding-left: 10px;
+}
+
+.card-warning::before {
+  content: "⚠️";
+  margin-right: 0.4rem;
+  font-size: 1.1rem;
+}
+
+/* Warning Text */
+.card-warning-text {
+  padding: 0.5rem 0.8rem;
+}
+
+.card-warning-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card-warning-list li {
+    border-left: 3px solid #b91c1c74;
+    background-color: #fafafa;
+    /* lighter, almost white */
+    padding: 0.25rem 0.75rem;
+    border-radius: 3px;
+    font-size: 0.94rem;
+    margin: 0.25rem auto;
+    width: 80%;
+}
+
+/* Highlight the first (most important) item */
+.card-warning-list li:first-child {
+  background-color: #FDF3F3;
+  /* slightly warmer tint */
+  border-left-color: #B91C1C;
+  /* full-opacity accent */
+  font-weight: 500;
+  margin-bottom: 0.85rem;
+  /* extra spacing below */
+  position: relative;
+}
