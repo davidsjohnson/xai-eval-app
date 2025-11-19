@@ -7,6 +7,7 @@
   <title>xai.ui/latest</title>
   <link rel="icon" href="data:image/x-icon;,">
   <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="../shared_assets/row2.css" />
   <script src="index.js" defer></script>
 </head>
 
@@ -69,12 +70,14 @@
         <!-- Card for OCDegen Biomarkers in Column 2 of main-row1 -->
         <div class="card-row2-col1">
           <h3 class="title">OCDegen Symptoms</h3>
+          <div class="biomarkers">
           <ul class="biomarkers-list">
             <li>Strong Spine Bend</li>
             <li>Strong Bone Variation</li>
             <li>Tucked Head</li>
             <li>Main Bones Mutation</li>
           </ul>
+          </div>
         </div>
 
         <!-- interaction -->
@@ -117,15 +120,15 @@
         </div>
 
         <div class="card-row2-col1">
-          <h3 class="card-warning">Warning</h3>
-          <p class="card-warning-text">
-            OCDegen can be fatal if not diagnosed and treated early. Treatment, however, is costly and
-            highly invasive.
-            Please
-            verify all diagnoses before making your final decision. Furthermore, incorrect responses
-            negatively affect your
-            performance bonus.
-          </p>
+          <h3 class="card-warning">Important</h3>
+          <div class="card-warning-text">
+            <ul class="card-warning-list">
+              <li><strong>Incorrect answers</strong> reduce your bonus.</li>
+              <li><strong>OCDegen can be fatal</strong> if not treated early.</li>
+              <li>Treatment is <strong>costly and highly invasive</strong>.</li>
+              <li><strong>Verify all diagnoses</strong> before finalizing.</li>
+            </ul>
+          </div>
         </div><!-- <div class="card-row2-col1">  -->
 
       </div> <!-- /main-row2 -->
