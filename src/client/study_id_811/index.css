@@ -231,7 +231,9 @@ main {
   background: white;
   box-shadow: 0 0px 8px rgba(0, 0, 0, 0.20);
   border-radius: 8px;
-  grid-template-rows: 8% 90% 2%;
+  .main-row1 > .card-row1-col2-3-4-5:nth-child(2) {
+  grid-template-rows: 8% auto 0% !important;
+}
   /* Row heights as specified */
 
   overflow: hidden;
@@ -778,4 +780,11 @@ input[type="radio"]:checked::after {
 
 .hidden {
   visibility: hidden;
+}
+
+#evidence-image {
+  width: 90% !important;
+  height: auto !important;
+  max-height: 70% !important;
+  object-fit: contain !important;
 }

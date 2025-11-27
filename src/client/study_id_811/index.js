@@ -444,29 +444,23 @@ function set_true_diag(value)
 
 }
 
-//get total pagecount for the study
-function csv_json_get_total_page_count()
-{
-    return input.PATIENT_ID.length;
+function csv_json_get_total_page_count() {
+    return input.p_id.length;
 }
 
-function csv_json_get_main_attributes(page_nr)
-{
+function csv_json_get_main_attributes(page_nr) {
+    const index = page_nr - 1;
 
-    index = page_nr - 1;
-    l_patient_id = input.PATIENT_ID[index];
-    l_x_ray_loc  = input.X_RAY_LOCATION[index];
-    l_true_diag = input.TRUE_DIAG[index];
-    l_suggested_diag = input.SUGGESTED_DIAG[index];
-    l_image = "img/" + input.X_RAY_IMAGE[index];
-    l_trait = input.X_RAY_TRAIT[index];
-    attributes = [l_patient_id, l_image, l_x_ray_loc, l_true_diag, l_suggested_diag, l_trait]
-    return attributes;
+    const l_patient_id = input.p_id[index];
+    const l_image      = "img/" + input.filename[index];
+
+    return [
+        l_patient_id,
+        l_image
+    ];
 }
 
-function set_main_attributes_in_html_page(page_nr, attr)
-{
-    //attributes = [patient_id, image, x_ray_loc, true_diag, suggested_diag]
+function set_main_attributes_in_html_page(page_nr, attr) {
     set_patient_id(attr[0]);
     set_x_ray_image(attr[1]);
     set_x_ray_location(attr[2]);
@@ -476,30 +470,69 @@ function set_main_attributes_in_html_page(page_nr, attr)
     set_progress(page_nr, csv_json_get_total_page_count());
 }
 
-function csv_json_get_all_attributes_and_set_in_html_page(page_nr)
-{
-    attr = csv_json_get_main_attributes(page_nr);
-    set_main_attributes_in_html_page(page_nr, attr);
-    attr = csv_json_get_additional_attributes(page_nr);
-    set_additional_attributes_in_html_page(page_nr, attr);
+function csv_json_get_additional_attributes(page_nr) {
+    return ["Weight of Evidence"];
 }
 
-function csv_json_get_additional_attributes(page_nr)
-{
-
-    index = page_nr - 1;
-    l_patient_id = input.PATIENT_ID[index];
-
-    concept_card_1_title    = "Concept Contributions";
-    concept_card_1_image    = "img/"       + input.contribution_plot[index];
-    attributes = [concept_card_1_title, concept_card_1_image];
-    return attributes;
+function set_additional_attributes_in_html_page(page_nr, attr) {
+    const index = page_nr - 1;
+    document.getElementById("evidence-title").textContent = attr[0];
+    buildDiagnosisSelector(index);
+    loadDiagnosisEvidence(index, "Healthy");
 }
 
-function set_additional_attributes_in_html_page(page_nr, attr)
-{
-    document.getElementById("concept-card-1-title").textContent = attr[0];
-    document.getElementById("concept-card-1-image").src = attr[1];
+function buildDiagnosisSelector(index) {
+    const selector = document.getElementById("diagnosis-selector");
+    selector.innerHTML = "";
+
+    const diagnoses = ["Healthy", "OCDegen"];
+
+    diagnoses.forEach(diag => {
+        const btn = document.createElement("button");
+        btn.textContent = diag;
+        btn.type = "button";
+        btn.style.marginRight = "6px";
+        btn.style.padding = "4px 8px";
+        btn.style.borderRadius = "4px";
+        btn.style.border = "1px solid #ccc";
+        btn.style.cursor = "pointer";
+
+        btn.addEventListener("click", () => {
+            loadDiagnosisEvidence(index, diag);
+        });
+
+        selector.appendChild(btn);
+    });
+}
+
+function loadDiagnosisEvidence(index, diagnosis) {
+    let imgFile = null;
+
+    if (diagnosis === "Healthy") {
+        imgFile = input.Healthy[index];
+    } else if (diagnosis === "OCDegen") {
+        imgFile = input.OCDegen[index];
+    }
+
+    const imgEl = document.getElementById("evidence-image");
+
+    if (!imgFile) {
+        imgEl.src = "";
+        imgEl.alt = "No evidence available";
+        return;
+    }
+
+    imgEl.src = "plots/" + imgFile.split("/").pop();
+    console.log("WoE image path", imgEl.src);
+    imgEl.alt = diagnosis;
+}
+
+function csv_json_get_all_attributes_and_set_in_html_page(page_nr) {
+    const mainAttr = csv_json_get_main_attributes(page_nr);
+    set_main_attributes_in_html_page(page_nr, mainAttr);
+
+    const addAttr = csv_json_get_additional_attributes(page_nr);
+    set_additional_attributes_in_html_page(page_nr, addAttr);
 }
 
 
