@@ -230,7 +230,7 @@ main {
   background: white;
   box-shadow: 0 0px 8px rgba(0, 0, 0, 0.20);
   border-radius: 8px;
-  grid-template-rows: 8% 73% 19%;
+  grid-template-rows: 8% 85% 7%;
   /* Row heights as specified */
 
   overflow: hidden;

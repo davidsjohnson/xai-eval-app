@@ -482,13 +482,18 @@ function csv_json_get_additional_attributes(page_nr) {
     concept_card_2_image = "img/" + input.Example2[index];
     concept_card_2_caption = input.Example2_Caption[index];
 
-    concept_card_3_title = "Similar Example 3";
+    concept_card_3_title = "Similar Counterexample 1";
     concept_card_3_image = "img/" + input.Example3[index];
     concept_card_3_caption = input.Example3_Caption[index];
 
+    concept_card_4_title = "Similar Counterexample 2";
+    concept_card_4_image = "img/" + input.Example4[index];
+    concept_card_4_caption = input.Example4_Caption[index];
+
     attributes = [concept_card_1_title, concept_card_1_image, concept_card_1_caption,
         concept_card_2_title, concept_card_2_image, concept_card_2_caption,
-        concept_card_3_title, concept_card_3_image, concept_card_3_caption];
+        concept_card_3_title, concept_card_3_image, concept_card_3_caption,
+        concept_card_4_title, concept_card_4_image, concept_card_4_caption];
 
     return attributes;
 }
@@ -529,6 +534,12 @@ function set_additional_attributes_in_html_page(page_nr, attr) {
     document.getElementById("concept-card-3-image").src = attr[7];
     document.getElementById("concept-card-3-caption").innerHTML =
         wrap(attr[8]);
+
+    // Example 4
+    document.getElementById("concept-card-4-title").textContent = attr[9];
+    document.getElementById("concept-card-4-image").src = attr[10];
+    document.getElementById("concept-card-4-caption").innerHTML =
+        wrap(attr[11]);
 }
 
 async function init_page() {
