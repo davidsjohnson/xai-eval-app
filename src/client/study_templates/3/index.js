@@ -21,27 +21,7 @@ const x_ray_image = document.getElementById("patient-x-ray-image");
 
 let diagnosis = null;
 
-function get_page_nr_from_url()
-{
-    const url_params = get_params_from_url();
-    if(url_params.page_nr == null){
-        return 1; //if page_nr is null in the url it should be the first page ( or page refresh happened without url encoding details )
-    }
 
-    return parseInt(url_params.page_nr);
-}
-
-function get_study_id_from_url()
-{
-    const url_params = get_params_from_url();
-    return url_params.study_id;
-}
-
-function get_participant_id_from_url()
-{
-    const url_params = get_params_from_url();
-    return url_params.participant_id;
-}
 
 function get_radio_button_status()
 {
@@ -425,7 +405,7 @@ function csv_json_get_total_page_count()
 function csv_json_get_main_attributes(page_nr)
 {
 
-    index = page_nr - 1;
+    index = window.shuffledIndices[page_nr-1]; // get the shuffled index for this page number
     l_patient_id = input.PATIENT_ID[index];
     l_x_ray_loc  = input.X_RAY_LOCATION[index];
     l_true_diag = input.TRUE_DIAG[index];
@@ -457,7 +437,7 @@ function csv_json_get_all_attributes_and_set_in_html_page(page_nr)
 function csv_json_get_additional_attributes(page_nr)
 {
 
-    index = page_nr - 1;
+    index = window.shuffledIndices[page_nr-1]; // get the shuffled index for this page number
     l_patient_id = input.PATIENT_ID[index];
 
     concept_card_1_title    = "Concept 1";
@@ -485,22 +465,6 @@ function set_additional_attributes_in_html_page(page_nr, attr)
 }
 
 
-
-async function init_page()
-{
-    if (input == null) {
-        console.log('Input is null, returning.');
-        return;
-    }
-
-    console.log('App is running!');
-    let participant_id = get_participant_id_from_url();
-    let study_id = get_study_id_from_url();
-    let page_nr = get_page_nr_from_url();
-    db_get_and_set_participant_diagnosis(participant_id, study_id, page_nr);
-    csv_json_get_all_attributes_and_set_in_html_page(page_nr);
-    log_page_visit(participant_id, study_id, page_nr);
-}
 
 async function load_json_data() {
     try {
