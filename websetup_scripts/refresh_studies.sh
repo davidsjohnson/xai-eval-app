@@ -29,6 +29,9 @@ cd "$SCRIPT_DIR/.." || { echo "Failed to change directory to parent of script di
 # setup study data in tmp/
 rm -rf tmp
 mkdir -p tmp 
+./websetup_scripts/csv2webapp.sh 10 1 study_data/no_AI/tutorial_data/input_example.csv study_data/no_AI/tutorial_data/study_images $skip_arg
+./websetup_scripts/csv2webapp.sh 11 1 study_data/no_AI/main_data/input_example.csv study_data/no_AI/main_data/study_images $skip_arg
+
 ./websetup_scripts/csv2webapp.sh 121 1 study_data/no_XAI/main_data/input_examples_phase1.csv study_data/no_XAI/main_data/images_phase1 $skip_arg
 ./websetup_scripts/csv2webapp.sh 122 1 study_data/no_XAI/main_data/input_examples_phase2.csv study_data/no_XAI/main_data/images_phase2 $skip_arg
 
@@ -43,6 +46,12 @@ mkdir -p tmp
 
 ./websetup_scripts/csv2webapp.sh 511 5 study_data/concept_based/main_data/input_examples_phase1.csv study_data/concept_based/main_data/images_phase1 $skip_arg
 ./websetup_scripts/csv2webapp.sh 512 5 study_data/concept_based/main_data/input_examples_phase2.csv study_data/concept_based/main_data/images_phase2 $skip_arg
+
+./websetup_scripts/csv2webapp.sh 611 2 study_data/concept_based/main_data/input_examples_phase1.csv study_data/concept_based/main_data/images_phase1 $skip_arg
+./websetup_scripts/csv2webapp.sh 612 2 study_data/concept_based/main_data/input_examples_phase2.csv study_data/concept_based/main_data/images_phase2 $skip_arg
+
+./websetup_scripts/csv2webapp.sh 711 2 study_data/concept_based/main_data/input_examples_phase1.csv study_data/concept_based/main_data/images_phase1 $skip_arg
+./websetup_scripts/csv2webapp.sh 712 2 study_data/concept_based/main_data/input_examples_phase2.csv study_data/concept_based/main_data/images_phase2 $skip_arg
 
 # setup subphase directories in src/client/
 ./websetup_scripts/setup_subphases.sh
