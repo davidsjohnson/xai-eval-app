@@ -35,8 +35,8 @@ mkdir -p tmp
 ./websetup_scripts/csv2webapp.sh 121 1 study_data/no_XAI/main_data/input_examples_phase1.csv study_data/no_XAI/main_data/images_phase1 $skip_arg
 ./websetup_scripts/csv2webapp.sh 122 1 study_data/no_XAI/main_data/input_examples_phase2.csv study_data/no_XAI/main_data/images_phase2 $skip_arg
 
-./websetup_scripts/csv2webapp.sh 211 2 study_data/saliency_xai2/main_data/input_examples_phase1.csv study_data/saliency_xai2/main_data/images_phase1 $skip_arg
-./websetup_scripts/csv2webapp.sh 212 2 study_data/saliency_xai2/main_data/input_examples_phase2.csv study_data/saliency_xai2/main_data/images_phase2 $skip_arg
+./websetup_scripts/csv2webapp.sh 211 2 study_data/saliency_xai_lrp_a1b0/main_data/input_examples_phase1.csv study_data/saliency_xai_lrp_a1b0/main_data/images_phase1 $skip_arg
+./websetup_scripts/csv2webapp.sh 212 2 study_data/saliency_xai_lrp_a1b0/main_data/input_examples_phase2.csv study_data/saliency_xai_lrp_a1b0/main_data/images_phase2 $skip_arg
 
 ./websetup_scripts/csv2webapp.sh 311 3 study_data/example_based/main_data/input_examples_phase1.csv study_data/example_based/main_data/images_phase1 $skip_arg
 ./websetup_scripts/csv2webapp.sh 312 3 study_data/example_based/main_data/input_examples_phase2.csv study_data/example_based/main_data/images_phase2 $skip_arg
