@@ -250,16 +250,48 @@ main {
 }
 
 /* Second Row - Image */
-.card-row1-col2-3-4-5 .image {
+/* Default behavior for other images in this card */
+.card-row1-col2-3-4-5 .image:not(.shap-img) {
   width: 100%;
   height: 100%;
   background: none;
   object-fit: contain;
   display: block;
   border-bottom: none;
-  justify-content: center;
+  border-radius: 0px;
+}
+
+.image-wrapper {
+  grid-row: 2 / 3;
+  /* make sure it sits in the image row */
+  display: inline-flex;
+  /* prevents full-width stretching */
   align-items: center;
-  border-radius: 8px;
+  justify-content: center;
+  /* center the pair in the card */
+  gap: 4px;
+  /* small gap between image + colorbar */
+  height: 100%;
+  margin: 0 auto;
+  /* center the whole block horizontally */
+}
+
+
+/* Narrower, content-hugging SHAP image when next to colorbar */
+.card-row1-col2-3-4-5 .image-wrapper .shap-img {
+  width: auto;
+  /* <— key: stop stretching */
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.colorbar-img {
+  width: auto;
+  /* adjust as needed */
+  height: 100%;
+  display: block;
 }
 
 /* Third Row - Text */
