@@ -256,8 +256,8 @@ function button_toggle_next_or_submit() {
     if (isNaN(total_pages) || total_pages < 1) { total_pages = 1; }
 
     /* default state: show both buttons in normal style */
-    button_prev.style.display = 'inline-block';
-    button_prev.disabled = false;
+    button_prev.style.display = 'none';
+    button_prev.disabled = true;
     button_next.style.display = 'inline-block';
     button_next.disabled = get_radio_button_status() === null;
     button_submit.disabled = true;
@@ -523,26 +523,35 @@ radio_buttons.forEach((radio) => {
 });
 
 // Keeps the page in-sync when the user clicks the browser Back/Forward buttons
+function preventBack() {
+    history.pushState(null, "", window.location.href);
+}
+
+window.addEventListener("load", preventBack);
+
 window.addEventListener('popstate', () => {
+
+    preventBack();
+    
     const pid = get_participant_id_from_url();
-  const sid = get_study_id_from_url();
-  if (sessionStorage.getItem(`study_done_${pid}_${sid}`) === 'true') {
-      window.location.replace(`/feedback/index.html?participant_id=${pid}&study_id=${sid}`);
-      return;               // nothing else in the handler runs
-  }
+    const sid = get_study_id_from_url();
+    if (sessionStorage.getItem(`study_done_${pid}_${sid}`) === 'true') {
+        window.location.replace(`/feedback/index.html?participant_id=${pid}&study_id=${sid}`);
+        return;               // nothing else in the handler runs
+    }
 
-  const page_nr = get_page_nr_from_url();
+    const page_nr = get_page_nr_from_url();
 
-  // Refresh the main content for the new page number
-  csv_json_get_all_attributes_and_set_in_html_page(page_nr);
+    // Refresh the main content for the new page number
+    csv_json_get_all_attributes_and_set_in_html_page(page_nr);
 
-  // Re-load any diagnosis already stored for that page
-  db_get_and_set_participant_diagnosis(
-    get_participant_id_from_url(),
-    get_study_id_from_url(),
-    page_nr
-  );
+    // Re-load any diagnosis already stored for that page
+    db_get_and_set_participant_diagnosis(
+        get_participant_id_from_url(),
+        get_study_id_from_url(),
+        page_nr
+    );
 
-  // Update the Next/Submit button label
-  button_toggle_next_or_submit();
+    // Update the Next/Submit button label
+    button_toggle_next_or_submit();
 });

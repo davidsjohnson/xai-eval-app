@@ -810,3 +810,7 @@ input[type="radio"]:checked::after {
 .hidden {
   visibility: hidden;
 }
+
+.invisible {
+  display: none;
+}

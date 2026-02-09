@@ -233,8 +233,8 @@ function button_toggle_next_or_submit() {
     if (isNaN(total_pages) || total_pages < 1) { total_pages = 1; }
 
     /* default state: show both buttons in normal style */
-    button_prev.style.display = 'inline-block';
-    button_prev.disabled = false;
+    button_prev.style.display = 'none';
+    button_prev.disabled = true;
     button_next.style.display = 'inline-block';
     button_next.disabled = get_radio_button_status() === null;
     button_submit.disabled = true;

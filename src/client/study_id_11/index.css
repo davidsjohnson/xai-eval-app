@@ -779,6 +779,10 @@ input[type="radio"]:checked::after {
   visibility: hidden;
 }
 
+.invisible {
+  display: none;
+}
+
 .placeholder {
   color: #777;           /* light gray tone */
   font-style: italic;    /* makes it look informational */
