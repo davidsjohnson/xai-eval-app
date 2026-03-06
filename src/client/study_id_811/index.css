@@ -192,7 +192,6 @@ main {
   background: none;
   border-radius: 8px;
   grid-template-columns: var(--grid-template-row1-columns);
-  grid-template-columns: 1fr 2fr;
   height: var(--row1-height);
   /* Fixed height */
   border: var(--border1);
@@ -231,9 +230,7 @@ main {
   background: white;
   box-shadow: 0 0px 8px rgba(0, 0, 0, 0.20);
   border-radius: 8px;
-  .main-row1 > .card-row1-col2-3-4-5:nth-child(2) {
-  grid-template-rows: 8% auto 0% !important;
-}
+  grid-template-rows: 8% 73% 19%;
   /* Row heights as specified */
 
   overflow: hidden;
@@ -260,7 +257,7 @@ main {
   object-fit: contain;
   display: block;
   border-bottom: none;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   border-radius: 8px;
 }
@@ -331,13 +328,13 @@ main {
   /* Space between radio button and label text */
 }
 
-.main-row2 .user-diagnosis .rectangle .healthy-label {
+.healthy-label {
   background-color: var(--green);
   /* Green background for Healthy */
   color: white;
 }
 
-.main-row2 .user-diagnosis .rectangle .unhealthy-label {
+.unhealthy-label {
   background-color: var(--orange);
   /* Orange background for Unhealthy */
   color: white;
@@ -575,7 +572,7 @@ button[disabled]:hover {
 }
 
 /* 2) Make right column stick to the top, fixed width */
-.card-row2-col2 .right-options {
+.right-options {
   align-self: start;
   /* top within its grid cell */
   width: 14rem;
@@ -587,7 +584,7 @@ button[disabled]:hover {
   padding: 0.3rem 0.4rem;
 }
 
-.card-row2-col2 .right-options p {
+.right-options p {
   margin: 0;
   /* kill default top/bottom margins */
   padding: 0;
@@ -683,7 +680,7 @@ input[type="radio"]:checked::after {
 }
 
 /* Style “Your Diagnosis” pills (right-options) */
-.card-row2-col2 .right-options {
+.right-options {
   display: flex;
   gap: 1rem;
   justify-content: center;
@@ -693,7 +690,7 @@ input[type="radio"]:checked::after {
   /* a little breathing room under the heading */
 }
 
-.card-row2-col2 .right-options label {
+.right-options label {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -705,8 +702,7 @@ input[type="radio"]:checked::after {
   width: 10rem !important;
 }
 
-
-.card-row2-col2 .right-options .healthy-label {
+.healthy-label {
   /* background-color: var(--green); */
   background: linear-gradient(to top, var(--green), #229b62);
   /* consistent with your green button */
@@ -715,7 +711,7 @@ input[type="radio"]:checked::after {
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.card-row2-col2 .right-options .unhealthy-label {
+.unhealthy-label {
   background: linear-gradient(to top, var(--orange), #f07d5f);
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
@@ -723,7 +719,7 @@ input[type="radio"]:checked::after {
 }
 
 /* 2. Ensure the radio circle is visible again */
-.card-row2-col2 .right-options input[type="radio"] {
+.right-options input[type="radio"] {
   /* small white ring */
   width: 14px;
   height: 14px;
@@ -734,7 +730,7 @@ input[type="radio"]:checked::after {
 }
 
 /* draw the inner dot only when checked */
-.card-row2-col2 .right-options input[type="radio"]::before {
+.right-options input[type="radio"]::before {
   content: '';
   position: absolute;
   top: 2px;
@@ -748,23 +744,23 @@ input[type="radio"]:checked::after {
 }
 
 /* MAKE the radio dot fully opaque */
-.card-row2-col2 .right-options input[type="radio"] {
+.right-options input[type="radio"] {
   background-color: white !important;
   /* white background */
 }
 
-.card-row2-col2 .right-options input[type="radio"]:checked::after {
+.right-options input[type="radio"]:checked::after {
   background-color: var(--bg-blue) !important;
   /* contrasting inner dot */
 }
 
 /* Reduce space between “Your Diagnosis” and the pills */
-.card-row2-col2 .right-options {
+.right-options {
   gap: 0.3rem !important;
   /* was 1rem */
 }
 
-.card-row2-col2 .right-options h4 {
+.right-options h4 {
   margin-bottom: 0.2rem !important;
   /* was 0.6rem */
 }
@@ -779,12 +775,5 @@ input[type="radio"]:checked::after {
 }
 
 .hidden {
-  visibility: hidden;
-}
-
-#evidence-image {
-  width: 90% !important;
-  height: auto !important;
-  max-height: 70% !important;
-  object-fit: contain !important;
+  display: none;
 }

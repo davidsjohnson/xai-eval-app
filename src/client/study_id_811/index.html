@@ -6,10 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>xai.ui/latest</title>
   <link rel="icon" href="data:image/x-icon;,">
-        <link rel="stylesheet" href="index.css" />
-  <link rel="stylesheet" href="../shared_assets/row2.css" />
-  <link rel="stylesheet" href="../shared_assets/row2.css" />
-  <link rel="stylesheet" href="../shared_assets/row2.css" />
+  <link rel="stylesheet" href="index.css" />
   <script src="index.js" defer></script>
 </head>
 
@@ -51,19 +48,37 @@
           </div>
         </div>
 
-        <!-- Weight of Evidence card -->
+        <!-- SHAP image card -->
         <div class="card-row1-col2-3-4-5">
-          <div id="evidence-title" class="title">Weight of Evidence</div>
+          <div id="concept-card-1-title" class="title"></div>
+          <div>
+            <div id="diagnosis-selector" class="right-options" style="flex-direction: row; justify-content:left; align-items:end;">
+              <h4 style="flex: none;">Select Diagnosis:</h4>
 
-          <!-- condition buttons -->
-          <div id="diagnosis-selector" style="padding: 4px 10px;"></div>
+              <label class="healthy-label" style="display:flex; height:14px">
+                <input id="diagnosis-healthy"
+                       type="radio"
+                       name="diagnosis"
+                       value="healthy" 
+                       checked= True/>
+                Healthy
+              </label>
 
-          <!-- selected WoE plot -->
-          <img id="evidence-image"
-               class="image"
-               src=""
-               alt="Evidence plot" />
+              <label class="unhealthy-label"  style="display:flex; height:14px">
+                <input id="diagnosis-unhealthy"
+                       type="radio"
+                       name="diagnosis"
+                       value="unhealthy" />
+                OCDegen
+              </label>
+            </div>
 
+            <img id="concept-card-1-image"
+                class="image"
+                src=""
+                alt="Weight of Evidence" />
+          </div>
+          <!-- caption removed on purpose -->
           <div class="caption" style="display:none"></div>
         </div>
       </div> <!-- /main-row1 -->
@@ -74,7 +89,7 @@
 
         <!-- Card for OCDegen Biomarkers in Column 2 of main-row1 -->
         <div class="card-row2-col1">
-          <h3 class="title">OCDegen Symptoms</h3>
+          <h3 class="title">OCDegen Biomarkers</h3>
           <ul class="biomarkers-list">
             <li>Strong Spine Bend</li>
             <li>Strong Bone Variation</li>
@@ -90,13 +105,14 @@
           <div class="card-content">
             <!-- left column -->
             <div class="left-content">
-              <p><b>AI Diagnosis:</b>
+              <p><b>Suggested Diagnosis:</b>
                  <span id="suggested-diag-location2" class="unhealthy"></span></p>
 
               <p><b>True Diagnosis:</b>
                  <span id="true-diag" class="healthy"></span></p>
 
-              <p><b>Present Symptoms:</b> <span id="X_RAY_Trait"></span></p>
+              <!-- caption comes here, same font-weight, no colour -->
+              <p><b>Caption:</b> <span id="concept-card-1-caption"></span></p>
             </div>
 
             <!-- right column -->
@@ -123,15 +139,15 @@
         </div>
 
         <div class="card-row2-col1">
-          <h3 class="card-warning">Important</h3>
-          <div class="card-warning-text">
-            <ul class="card-warning-list">
-              <li><strong>Incorrect answers</strong> reduce your bonus.</li>
-              <li><strong>OCDegen can be fatal</strong> if not treated early.</li>
-              <li>Treatment is <strong>costly and highly invasive</strong>.</li>
-              <li><strong>Verify all diagnoses</strong> before finalizing.</li>
-            </ul>
-          </div>
+          <h3 class="card-warning">Warning</h3>
+          <p class="card-warning-text">
+            OCDegen can be fatal if not diagnosed and treated early. Treatment, however, is costly and
+            highly invasive.
+            Please
+            verify all diagnoses before making your final decision. Furthermore, incorrect responses
+            negatively affect your
+            performance bonus.
+          </p>
         </div><!-- <div class="card-row2-col1">  -->
 
       </div> <!-- /main-row2 -->
