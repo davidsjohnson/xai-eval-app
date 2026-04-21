@@ -74,7 +74,6 @@
     </style>
    <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="../shared_assets/js/common.js"></script>
 <script>
     const HASH_INTROS = {
         training_stage: 'a1c',
@@ -82,6 +81,49 @@
         XAI_stage1: 'z81',
         XAI_stage2: 'wx5'
     };
+
+    function showError(msg) {
+        console.error(msg);
+
+        const existing = document.getElementById('seq-error-box');
+        if (existing) {
+            existing.remove();
+        }
+
+        const box = document.createElement('div');
+        box.id = 'seq-error-box';
+        box.style.maxWidth = '700px';
+        box.style.margin = '20px auto';
+        box.style.padding = '16px 20px';
+        box.style.border = '1px solid #d9a3a3';
+        box.style.borderLeft = '4px solid #b00020';
+        box.style.background = '#fff8f8';
+        box.style.borderRadius = '6px';
+        box.style.color = '#333';
+        box.style.fontSize = '16px';
+        box.style.lineHeight = '1.5';
+
+        const title = document.createElement('div');
+        title.textContent = 'We encoutered a problem.';
+        title.style.fontWeight = 'bold';
+        title.style.marginBottom = '8px';
+        title.style.color = '#7a0015';
+
+        const message = document.createElement('div');
+        message.textContent = msg;
+        message.style.marginBottom = '8px';
+
+        const help = document.createElement('div');
+        help.textContent = 'Unfortunately, we could not load your study condition. Please contact the researcher via Prolific with the contents of this error message.';
+
+        box.appendChild(title);
+        box.appendChild(message);
+        box.appendChild(help);
+
+        const target = document.body;
+
+        target.prepend(box);
+    }
 
     function hash_participant_id(participant_id, stage, length = 15) {
         const hashText = participant_id + `supersecret_stage-${stage}`;
@@ -108,18 +150,30 @@
         }
     }
 
-    function determineStage(study_id, dataseq) {
+    async function determineStage(study_id, participant_id) {
         if (study_id === "10") return "training_stage";
         if (study_id === "11") return "noAI_stage";
 
         if (study_id?.length === 3) {
+
+            const dataseq = await getDataSeq(participant_id);
+            if (!dataseq) {
+                showError(`No dataseq assignment found for participant ID: ${participant_id}`);
+                return;
+            }
+
             const last = study_id.slice(-1);
             if ((dataseq === "a" && last === "2") || (dataseq === "b" && last === "1")) {
                 return "XAI_stage2";
+            } else if ((dataseq === "a" && last === "1") || (dataseq === "b" && last === "2")) {
+                return "XAI_stage1";
             }
+            showError(`Data sequence ${dataseq} is not valid for study ID: ${study_id} and participant ID: ${participant_id}`);
+            return null;
         }
 
-        return "XAI_stage1";
+        showError(`Invalid Study ID: ${study_id} for participant ID: ${participant_id}`);
+        return null;
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
@@ -131,13 +185,8 @@
             return;
         }
 
-        const dataseq = await getDataSeq(participant_id);
-        if (!dataseq) {
-            showError(`No assignment found for participant ID: ${participant_id}`);
-            return;
-        }
-
-        const stage = determineStage(study_id, dataseq);
+        const stage = await determineStage(study_id, participant_id);
+        if (!stage) return;
         const hash = hash_participant_id(participant_id, stage);
 
         document.getElementById("hash_result").innerHTML = `
