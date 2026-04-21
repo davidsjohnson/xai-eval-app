@@ -111,3 +111,52 @@ async function init_page() {
     csv_json_get_all_attributes_and_set_in_html_page(page_nr);
     log_page_visit(participant_id, study_id, page_nr);
 }
+
+function showError(msg) {
+    console.error(msg);
+
+    disableNextButton();
+
+    const existing = document.getElementById('seq-error-box');
+    if (existing) {
+        existing.remove();
+    }
+
+    const box = document.createElement('div');
+    box.id = 'seq-error-box';
+    box.style.maxWidth = '700px';
+    box.style.margin = '20px auto';
+    box.style.padding = '16px 20px';
+    box.style.border = '1px solid #d9a3a3';
+    box.style.borderLeft = '4px solid #b00020';
+    box.style.background = '#fff8f8';
+    box.style.borderRadius = '6px';
+    box.style.color = '#333';
+    box.style.fontSize = '16px';
+    box.style.lineHeight = '1.5';
+
+    const title = document.createElement('div');
+    title.textContent = 'We encoutered a problem.';
+    title.style.fontWeight = 'bold';
+    title.style.marginBottom = '8px';
+    title.style.color = '#7a0015';
+
+    const message = document.createElement('div');
+    message.textContent = msg;
+    message.style.marginBottom = '8px';
+
+    const help = document.createElement('div');
+    help.textContent = 'Unfortunately, we could not load your study condition. Please contact the researcher via Prolific with the contents of this error message.';
+
+    box.appendChild(title);
+    box.appendChild(message);
+    box.appendChild(help);
+
+    const target =
+        document.querySelector('form') ||
+        document.querySelector('.group-container') ||
+        document.querySelector('#limesurvey') ||
+        document.body;
+
+    target.prepend(box);
+}

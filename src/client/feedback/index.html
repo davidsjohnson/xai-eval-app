@@ -74,60 +74,94 @@
     </style>
    <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script>
-        const HASH_INTROS = { training_stage: 'a1c', noAI_stage: 'b55', XAI_stage1: 'z81', XAI_stage2: 'wx5' };
+    <script src="../shared_assets/js/common.js"></script>
+<script>
+    const HASH_INTROS = {
+        training_stage: 'a1c',
+        noAI_stage: 'b55',
+        XAI_stage1: 'z81',
+        XAI_stage2: 'wx5'
+    };
 
-        function hash_participant_id(participant_id, stage, length = 15) {
-            const hashText = participant_id + `supersecret_stage-${stage}`;
-            const fullHash = CryptoJS.SHA256(hashText).toString(CryptoJS.enc.Hex);
-            return HASH_INTROS[stage] + fullHash.slice(0, length - 3); // Truncate
+    function hash_participant_id(participant_id, stage, length = 15) {
+        const hashText = participant_id + `supersecret_stage-${stage}`;
+        const fullHash = CryptoJS.SHA256(hashText).toString(CryptoJS.enc.Hex);
+        return HASH_INTROS[stage] + fullHash.slice(0, length - 3);
+    }
+
+    function getUrlParam(name) {
+        return new URLSearchParams(window.location.search).get(name);
+    }
+
+    async function getDataSeq(participant_id) {
+        const JSON_URL = 'https://www.hcxai-group.de/share/seq_lookup.json';
+
+        try {
+            const response = await fetch(JSON_URL, { cache: 'no-store' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+            const data = await response.json();
+            return data[participant_id]?.dataseq ?? null;
+        } catch (error) {
+            console.error("Error fetching seq lookup:", error);
+            return null;
         }
+    }
 
-        function get_participant_id_from_url() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('participant_id');
-        }
+    function determineStage(study_id, dataseq) {
+        if (study_id === "10") return "training_stage";
+        if (study_id === "11") return "noAI_stage";
 
-        function get_study_id_from_url() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('study_id');
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const participant_id = get_participant_id_from_url();
-            const study_id = get_study_id_from_url();
-            
-            let stage = "XAI_stage1"; // default
-            if (study_id === "10") {
-                stage = "training_stage";
-            } else if (study_id === "11") {
-                stage = "noAI_stage";
-            } else if ((study_id.slice(-1) === "2") & (study_id.length === 3)) {
-                stage = "XAI_stage2";
+        if (study_id?.length === 3) {
+            const last = study_id.slice(-1);
+            if ((dataseq === "a" && last === "2") || (dataseq === "b" && last === "1")) {
+                return "XAI_stage2";
             }
+        }
 
-            if (participant_id) {
-                const hash = hash_participant_id(participant_id, stage);
-                  document.getElementById("hash_result").innerHTML = `
-                    Task Completion Code:
-                    <div class="completion-box" id="completionBox">${hash}</div>
-                    <small class="copy-hint">Click the code to copy</small>
-                `;
+        return "XAI_stage1";
+    }
 
+    document.addEventListener("DOMContentLoaded", async () => {
+        const participant_id = getUrlParam("participant_id");
+        const study_id = getUrlParam("study_id");
 
-                const box = document.getElementById("completionBox");
-                box.addEventListener("click", () => {
-                    navigator.clipboard.writeText(hash);
-                    box.style.background = "#e7f9e7";
-                    box.textContent = "Copied!";
-                    setTimeout(() => {
-                        box.textContent = hash;
-                        box.style.background = "#f8f8f8";
-                    }, 1000);
-                });
+        if (!participant_id) {
+            showError("Missing participant_id in URL.");
+            return;
+        }
+
+        const dataseq = await getDataSeq(participant_id);
+        if (!dataseq) {
+            showError(`No assignment found for participant ID: ${participant_id}`);
+            return;
+        }
+
+        const stage = determineStage(study_id, dataseq);
+        const hash = hash_participant_id(participant_id, stage);
+
+        document.getElementById("hash_result").innerHTML = `
+            Task Completion Code:
+            <div class="completion-box" id="completionBox">${hash}</div>
+            <small class="copy-hint">Click the code to copy</small>
+        `;
+
+        const box = document.getElementById("completionBox");
+        box.addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText(hash);
+                box.style.background = "#e7f9e7";
+                box.textContent = "Copied!";
+                setTimeout(() => {
+                    box.textContent = hash;
+                    box.style.background = "#f8f8f8";
+                }, 1000);
+            } catch (err) {
+                console.error("Clipboard copy failed:", err);
             }
         });
-    </script>
+    });
+</script>
     </head>
  
     </script>
